@@ -1,103 +1,82 @@
+"use client";
+import Button from "@/components/Buttons/Button";
+import Header from "@/components/Header";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import Image from "next/image";
+import Gradient from "@/components/Cards/Gradient";
+
+const gradientCardData = [
+  {
+    text: " Start building at Genus lab, we train you in cutting-edge techcode, design, AI, and more and pay you to work on real projects while you’re still in training. Why wait years to start earning? Learn by doing. Earn by building. Launch your tech career now. Learn more",
+    heading: "Earn While you learn",
+  },
+  {
+    text: " Tap into local opportunities with a global mission. Our regional teams give you hands-on experience, mentorship, and peer collaboration right where you are. Work on real projects, contribute to community-driven solutions, and build your network—all while advancing your tech career.",
+    heading: "join a regional Team",
+  },
+  {
+    text: " Think you’re smart? Prove it. Take on weekly tech quizzes, climb the leaderboard, and win your share of ₦120 million+ in cash, gadgets, and exclusive opportunities. The more correct answers, the more you earn. It's not just learning—it's winning.",
+    heading: "Win ₦120M+ in Prizes",
+  },
+];
 
 export default function Home() {
+  const text = `Unlock Your 
+Potential with
+<span className="text">Cutting-edge</span> Tech Solutions`;
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <>
+      <Header />
+      <section className="hero bg-[url(/images/banner.png)] bg-top-left bg-cover w-full aspect-1440/851">
+        <div className="wrapper  flex justify-start items-center h-full">
+          <div className="intro-container max-w-[800px]  ">
+            <div className="intro-text-wrapper flex flex-col gap-[1rem] ">
+              <h1 className="intro-heading text-5xl whitespace-pre font-extrabold leading-15 text-shadow-white text-shadow-sm">
+                Unlock Your{"\n"}
+                Potential with{"\n"}
+                <span className="text text-blue ">Cutting-edge</span> Tech
+                Solutions
+              </h1>
+              <p className="intro-sub-text text-shadow-white text-shadow-sm">
+                Join a vibrant community of learners and professionals. Access
+                top-tier courses, explore exciting job opportunities, and
+                connect with industry experts.
+              </p>
+            </div>
+            <div className="w-fit flex-col flex gap-[16px]">
+              <div className="intro-image-wrapper">
+                <Image
+                  src={"/images/intro-image.png"}
+                  width={433}
+                  height={221}
+                  alt="intro image"
+                />
+              </div>
+              <div className="hidden nav-md:flex gap-[10px] justify-center">
+                <Button
+                  handler={() => console.log("hello world login")}
+                  text="Join Quiz"
+                  cat="linear"
+                  Icon={<MdOutlineKeyboardDoubleArrowRight color="white" />}
+                />
+                <Button
+                  handler={() => console.log("hello world")}
+                  text="Watch Live Show"
+                  cat="primary"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+      <div className="divider flex justify-center px-[2rem] py-[4rem] max-w-[1049px] m-auto rounded-[20px] relative -translate-y-1/4 min-h-[332px] z-[1] bg-white">
+        {gradientCardData.map((a, b) => {
+          if (b === 1) {
+            return <Gradient text={a.text} heading={a.heading} active={true} />;
+          }
+          return <Gradient text={a.text} heading={a.heading} />;
+        })}
+      </div>
+    </>
   );
 }
