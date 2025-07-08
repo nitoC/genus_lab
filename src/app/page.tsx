@@ -69,7 +69,7 @@ Potential with
           </div>
         </div>
       </section>
-      <div className="divider flex justify-center px-[2rem] py-[4rem] max-w-[1049px] m-auto rounded-[20px] relative -translate-y-1/4 min-h-[332px] z-[1] bg-white">
+      <div className="divider hidden md:flex justify-center px-[2rem] py-[4rem] max-w-[1049px] m-auto rounded-[20px] relative -translate-y-1/4 min-h-[332px] z-[1] bg-white">
         {gradientCardData.map((a, b) => {
           if (b === 1) {
             return <Gradient text={a.text} heading={a.heading} active={true} />;
