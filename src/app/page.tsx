@@ -28,7 +28,7 @@ Potential with
     <>
       <Header />
       <section className="hero bg-[url(/images/banner.png)] bg-top-left bg-cover w-full aspect-1440/851">
-        <div className="wrapper  flex justify-start items-center h-full">
+        <div className="wrapper hidden md:flex justify-start items-center h-full">
           <div className="intro-container max-w-[800px]  ">
             <div className="intro-text-wrapper flex flex-col gap-[1rem] ">
               <h1 className="intro-heading text-5xl whitespace-pre font-extrabold leading-15 text-shadow-white text-shadow-sm">
