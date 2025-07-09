@@ -2,7 +2,11 @@
 
 @theme {
   --color-blue: #3a94ff;
+  --color-green: #1eac86;
+  --color-pink: #fb40ff;
   --breakpoint-nav-md: 1010px;
+  --breakpoint-section-md: 1100px;
+  --text-clamp: clamp(32px, 5vw, 48px);
 }
 .wrapper {
   max-width: 1300px;

@@ -27,27 +27,40 @@ const Header = () => {
       <nav className="flex grow justify-between items-center">
         <ul className="nav-links nav-md:flex gap-[20px] hidden">
           <li>
-            <Link className="flex items-center gap-[5px]" href={"#"}>
+            <Link
+              className="flex items-center gap-[5px] hover:text-blue transition-colors"
+              href={"#"}
+            >
               Home <IoIosArrowDown />
             </Link>
           </li>
           <li>
-            <Link className="flex items-center gap-[5px]" href={"#"}>
+            <Link
+              className="flex items-center gap-[5px] hover:text-blue transition-colors"
+              href={"#"}
+            >
               Academy
               <IoIosArrowDown />
             </Link>
           </li>
           <li>
-            <Link className="flex items-center gap-[5px]" href={"#"}>
+            <Link
+              className="flex items-center gap-[5px] hover:text-blue transition-colors"
+              href={"#"}
+            >
               Job Board
               <IoIosArrowDown />
             </Link>
           </li>
           <li>
-            <Link href={"#"}>Quiz Arena</Link>
+            <Link href={"#"} className="hover:text-blue transition-colors">
+              Quiz Arena
+            </Link>
           </li>
           <li>
-            <Link href={"#"}>About</Link>
+            <Link href={"#"} className="hover:text-blue transition-colors">
+              About
+            </Link>
           </li>
         </ul>
         <div className="hidden nav-md:flex gap-[10px]">

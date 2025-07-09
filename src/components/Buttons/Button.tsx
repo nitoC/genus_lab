@@ -15,7 +15,7 @@ const Button = ({ text, handler, Icon, cat }: IButton) => {
           ? "bg-blue text-white hover:bg-blue-300 transition duration-700"
           : cat === "linear"
           ? "bg-linear-to-r from-white to-blue text-black flex items-center gap-1.5 justify-around"
-          : "border hover:bg-blue transition duration-700 border-blue hover:text-white  text-black"
+          : "border text hover:bg-blue transition duration-700 border-blue hover:text-white  text-black"
       } rounded-[16px] px-[30px] cursor-pointer`}
       onClick={handler}
     >
