@@ -12,3 +12,8 @@
   max-width: 1300px;
   margin: auto;
 }
+.rs-picker-input-group {
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+}

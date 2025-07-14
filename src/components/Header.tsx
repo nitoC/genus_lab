@@ -64,16 +64,18 @@ const Header = () => {
           </li>
         </ul>
         <div className="hidden nav-md:flex gap-[10px]">
-          <Button
-            handler={() => console.log("hello world login")}
-            text="Login"
-            cat="secondary"
-          />
-          <Button
-            handler={() => console.log("hello world")}
-            text="Signup"
-            cat="primary"
-          />
+          <Link
+            className="py-[10px] border text hover:bg-blue transition duration-700 border-blue hover:text-white  text-black rounded-[16px] px-[30px]"
+            href={"/login"}
+          >
+            Login
+          </Link>
+          <Link
+            className="py-[10px] bg-blue text-white hover:bg-blue-300 transition duration-700 rounded-[16px] px-[30px]"
+            href={"/signup"}
+          >
+            Signup
+          </Link>
         </div>
       </nav>
       <button className="btn menu-btn nav-md:hidden">

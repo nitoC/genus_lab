@@ -7,6 +7,15 @@ import Gradient from "@/components/Cards/Gradient";
 import Group from "@/assets/icons/Group";
 import GradCap from "@/assets/icons/GradCap";
 import Trophy from "@/assets/icons/Trophy";
+import Play from "@/assets/icons/Play";
+import Link from "next/link";
+
+import Flutterwave from "@/assets/images/svg/flutterwave.svg";
+import Amazon from "@/assets/images/svg/amazon.svg";
+import Palmpay from "@/assets/images/svg/palmpay.svg";
+import Genus from "@/assets/images/svg/genus_villa_logo transparent 1.svg";
+import Paypal from "@/assets/images/svg/PayPal.svg";
+import Footer from "@/components/Footer";
 
 const gradientCardData = [
   {
@@ -116,7 +125,7 @@ Potential with
           })}
         </div>
       </div>
-      <section className=" wrapper section-container flex flex-col gap-[3rem]">
+      <section className=" wrapper py-[2rem] md:py-[6rem] section-container flex flex-col gap-[3rem]">
         <div className="heading">
           <h2
             className="text-center p-[1rem]"
@@ -127,8 +136,8 @@ Potential with
           </h2>
         </div>
         <div className="">
-          <div className="flex-container">
-            <div className="flex justify-center items-center py-[1rem] section-md:py-0 section-md:items-stretch flex-col section-md:flex-row nav-md:justify-between gap-[1rem] section-md:rounded-[2rem] bg-[#F5F9FF]">
+          <div className="flex-container px-[1rem] ">
+            <div className="flex max-w-[350px] m-auto  sm:max-w-full md:m-0 justify-center items-center py-[1rem] section-md:py-0 section-md:items-stretch flex-col section-md:flex-row nav-md:justify-between gap-[1rem] rounded-[2rem] bg-[#F5F9FF]">
               <div className="img-container max-w-[578px] md:min-h-[386px] overflow-hidden rounded-[32px] ">
                 <Image
                   src={"/images/Student Img.png"}
@@ -138,7 +147,7 @@ Potential with
                   layout="responsive"
                 />
               </div>
-              <div className="section-content items-center flex flex-col gap-[1rem] p-[3rem]">
+              <div className="section-content items-center flex flex-col gap-[1rem] p-[1rem] sm:p-[3rem]">
                 <h2
                   className="text-center"
                   style={{ fontSize: "clamp(20px,8vw, 40px)" }}
@@ -146,7 +155,7 @@ Potential with
                   <span className="text-blue">Genus Lab</span>
                   <span style={{ color: "#0DF280" }}> Academy</span>
                 </h2>
-                <p className="max-w-[515px]">
+                <div className="max-w-[515px]">
                   🚀 Dive into expert-led bootcamps and real-world learning
                   across:
                   <ul className="list-disc p-[1rem]">
@@ -155,14 +164,102 @@ Potential with
                     <li>Learning Crypto & Blockchain</li>
                     <li>Digital Marketing</li>
                   </ul>
-                  ⏰ Next Bootcamp Starts Soon – Spots are limited! 📚 Browse
-                  the Curriculum, read Student Reviews, Join Now to get started.
-                </p>
+                  ⏰ Next Bootcamp Starts Soon – Spots are limited! <br />
+                  📚 Browse the Curriculum, read Student Reviews, Join Now to
+                  get started.
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+      <section className="bg-[#F5F9FF]">
+        <div className="content-wrapper wrapper flex flex-col py-[4rem] px-[1rem] gap-[2rem] ">
+          <div className="wrap flex gap-[1rem] flex-col   section-md:flex-row  justify-center md:justify-between">
+            <div className="img-wrapper w-[100%] md:min-w-[510px] bg-[url(/images/studio.png)] bg-[#0077ff88] bg-blend-overlay bg-cover rounded-[30px] bg-top-center section-md:max-w-[605px] aspect-[578/386]">
+              <div className="item-container flex flex-col justify-center h-full p-[1rem]">
+                <div className="item-text-container max-w-[404px]">
+                  <h3 className="text-white text-[40px]">
+                    GenusLab Studio – Live & On-Demand
+                  </h3>
+                  <Link className="text-white underline" href="#">
+                    Watch Live
+                  </Link>
+                </div>
+                <div className="icon">
+                  <Play width={100} />
+                </div>
+              </div>
+            </div>
+            <div className="item-content rounded-[30px] bg-white items-center w-[100%] flex flex-col gap-[1rem] p-[1rem] sm:p-[3rem]">
+              <h2
+                className="text-center"
+                style={{ fontSize: "clamp(20px,8vw, 40px)" }}
+              >
+                <span className="text-blue">🎥 Studio Events</span>
+              </h2>
+              <p className="max-w-[515px] p-[1rem]">
+                {" "}
+                🎙️ Catch us LIVE from the GenusLab Studio <br />
+                📼 Watch replays of past tech talks, panels, and showcases{" "}
+                <br />
+                🏆 Upcoming PAQC Events:
+              </p>
+            </div>
+          </div>
+          <div className="wrap-reverse flex gap-[1rem] flex-col-reverse    section-md:flex-row  justify-center md:justify-between">
+            <div className="item-content rounded-[30px] bg-white items-center w-[100%] flex flex-col gap-[1rem] p-[1rem] sm:p-[3rem]">
+              <h2
+                className="text-center"
+                style={{ fontSize: "clamp(20px,8vw, 40px)" }}
+              >
+                <span className="text-blue">🔍 Job Board –</span>
+              </h2>
+              <p className="max-w-[515px] p-[1rem]">
+                {" "}
+                💼 Browse jobs by category, location, or skill
+                <br />
+                🕒 Filter by full-time, remote, internships, and more
+                <br />
+                📌 Save your favorites and apply directly{" "}
+                <Link href={"#"}>Learn More</Link>.
+              </p>
+            </div>
+            <div className="wrap flex gap-[1rem] flex-col section-md:flex-row  justify-center md:justify-between section-md:items-center">
+              <div className="img-wrapper w-[100%] md:min-w-[510px] bg-[url(/images/Job.png)] bg-[#0f101188] bg-blend-overlay bg-cover rounded-[30px] bg-top-center section-md:max-w-[605px] aspect-[578/386]">
+                <div className="item-container flex flex-col justify-center h-full p-[1rem]">
+                  <div className="item-text-container max-w-[404px]">
+                    <h3 className="text-white text-[40px]">
+                      🔎 Find Your Next Opportunity with GenusLab Jobs
+                    </h3>
+                    <Link className="text-white underline" href="#">
+                      Learn more
+                    </Link>
+                  </div>
+                  {/* <div className="icon">
+                    <Play width={100} />
+                  </div> */}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div className="wrapper divider ">
+        <div className="divider-container m-auto hidden md:flex max-w-[800px] justify-between px-[1rem] py-[2rem] gap-[2rem]">
+          <Image width={100} height={100} alt="sponsors logo" src={Genus} />
+          <Image
+            width={100}
+            height={100}
+            alt="sponsors logo"
+            src={Flutterwave}
+          />
+          <Image width={100} height={100} alt="sponsors logo" src={Paypal} />
+          <Image width={100} height={100} alt="sponsors logo" src={Amazon} />
+          <Image width={100} height={100} alt="sponsors logo" src={Palmpay} />
+        </div>
+      </div>
+      <Footer />
     </>
   );
 }
