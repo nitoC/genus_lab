@@ -36,7 +36,7 @@ export default function Footer() {
             <input
               type="email"
               placeholder="Enter Your Email..."
-              className="flex-1 px-5 py-3 text-sm outline-none"
+              className="md:flex-1 px-5 py-3 text-sm outline-none"
             />
             <button
               type="submit"
@@ -48,7 +48,7 @@ export default function Footer() {
         </div>
 
         {/* social icons */}
-        <div className="flex items-center justify-start gap-6 md:justify-end">
+        <div className="flex items-center flex-wrap justify-start gap-6 md:justify-end">
           {[FaFacebookF, FaInstagram, FaYoutube, FaXTwitter, FaTiktok].map(
             (Icon, i) => (
               <a
