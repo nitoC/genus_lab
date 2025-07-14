@@ -137,7 +137,7 @@ const page = () => {
 
                 <button
                   type="submit"
-                  className="w-full rounded-md bg-primary py-3 font-medium text-white transition hover:brightness-110"
+                  className="w-full rounded-md bg-blue py-3 font-medium text-white transition hover:brightness-110"
                 >
                   Continue
                 </button>

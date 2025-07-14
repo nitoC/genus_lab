@@ -4,6 +4,7 @@ import CustomInput from "@/components/FormItems/CustomInput";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 /* ------------------------------------------------------------------
@@ -144,9 +145,16 @@ const page = () => {
 
                 <button
                   type="submit"
-                  className="w-full rounded-md bg-primary py-3 font-medium text-white transition hover:brightness-110"
+                  className="w-full rounded-md bg-blue py-3 font-medium text-white transition hover:brightness-110"
                 >
-                  Continue
+                  Login
+                </button>
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-center gap-3 rounded-md bg-gray-100 py-3 text-sm font-medium transition hover:bg-gray-200"
+                >
+                  <FcGoogle className="text-lg" />
+                  Log in with Google
                 </button>
               </form>
             </div>
