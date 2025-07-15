@@ -139,7 +139,7 @@ const page = () => {
             </div>
           </div>
         </div>
-        <p className="md:text-[24px] text-[16px] text-mygrey text-center leading-relaxed p-[1rem] md:p-[2rem]">
+        <p className="md:text-[24px] text-[16px] text-mygrey text-center leading-relaxed p-[2rem] md:p-[3rem]">
           Genus Lab is where ideas evolve into digital experiences. We
           specialize in crafting cutting-edge apps and websites, intuitive
           native applications, and visually compelling product branding and
