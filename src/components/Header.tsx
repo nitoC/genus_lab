@@ -1,88 +1,145 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import MenuIcon from "@/assets/icons/Menu";
-import Button from "./Buttons/Button";
 import { IoIosArrowDown } from "react-icons/io";
-const Header = () => {
+import { FiX } from "react-icons/fi";
+import MenuIcon from "@/assets/icons/Menu";
+
+const navLinks = [
+  { label: "Home", href: "/", hasArrow: true },
+  { label: "Academy", href: "/academy", hasArrow: true },
+  { label: "Job Board", href: "#", hasArrow: true },
+  { label: "Quiz Arena", href: "#" },
+  { label: "About", href: "/about" },
+];
+
+export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  /* ── lock body scroll when menu open ── */
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+  }, [isOpen]);
+
+  const closeMenu = () => setIsOpen(false);
+
   return (
-    <header className="flex gap-[40px] justify-between w-full px-10 py-10 min-w-[345px] md: mx-auto items-center">
-      <div className="logo">
-        <Link href={"/"}>
+    <header className="relative w-full min-w-[345px] px-10 py-10">
+      {/* ── main bar ─────────────────────────────────── */}
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-10">
+        {/* logo */}
+        <Link href="/" className="block">
           <Image
-            className="md:hidden"
-            src={"/images/logo_mobile.png"}
+            src="/images/logo_mobile.png"
+            alt="logo"
             width={146}
             height={49}
-            alt="logo"
+            className="md:hidden"
           />
           <Image
-            className="hidden md:inline-block"
-            src={"/images/logo_desktop.png"}
+            src="/images/logo_desktop.png"
+            alt="logo"
             width={216}
             height={65}
-            alt="logo"
+            className="hidden md:inline-block"
           />
         </Link>
+
+        {/* desktop nav */}
+        <nav className="hidden nav-md:flex flex-1 items-center justify-between">
+          <ul className="flex gap-5">
+            {navLinks.map((l) => (
+              <li key={l.label}>
+                <Link
+                  href={l.href}
+                  className="flex items-center gap-1 transition-colors hover:text-blue"
+                >
+                  {l.label}
+                  {l.hasArrow && <IoIosArrowDown />}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex gap-2">
+            <Link
+              href="/login"
+              className="rounded-[16px] border border-blue px-6 py-2 text-black transition hover:bg-blue hover:text-white"
+            >
+              Login
+            </Link>
+            <Link
+              href="/signup"
+              className="rounded-[16px] bg-blue px-6 py-2 text-white transition hover:bg-blue-300"
+            >
+              Signup
+            </Link>
+          </div>
+        </nav>
+
+        {/* burger button */}
+        {!isOpen ? (
+          <button
+            onClick={() => setIsOpen((o) => !o)}
+            aria-label="Toggle menu"
+            className="nav-md:hidden cursor-pointer"
+          >
+            <MenuIcon />
+          </button>
+        ) : (
+          <button
+            onClick={closeMenu}
+            aria-label="Close menu"
+            className="nav-md:hidden cursor-pointer"
+          >
+            <FiX size={20} />
+          </button>
+        )}
       </div>
-      <nav className="flex grow justify-between items-center">
-        <ul className="nav-links nav-md:flex gap-[20px] hidden">
-          <li>
-            <Link
-              className="flex items-center gap-[5px] hover:text-blue transition-colors"
-              href={"#"}
-            >
-              Home <IoIosArrowDown />
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex items-center gap-[5px] hover:text-blue transition-colors"
-              href={"#"}
-            >
-              Academy
-              <IoIosArrowDown />
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex items-center gap-[5px] hover:text-blue transition-colors"
-              href={"#"}
-            >
-              Job Board
-              <IoIosArrowDown />
-            </Link>
-          </li>
-          <li>
-            <Link href={"#"} className="hover:text-blue transition-colors">
-              Quiz Arena
-            </Link>
-          </li>
-          <li>
-            <Link href={"#"} className="hover:text-blue transition-colors">
-              About
-            </Link>
-          </li>
+
+      {/* ── mobile dropdown ──────────────────────────── */}
+      <div
+        className={`nav-md:hidden absolute left-0 right-0 top-full overflow-hidden bg-white shadow-lg transition-[height] duration-300 ${
+          isOpen ? "h-[440px]" : "h-0"
+        }`}
+      >
+        {/* close button */}
+        {/* 
+          <FiX />
+        </button> */}
+
+        <ul className="mt-14 flex flex-col items-start gap-6 px-10">
+          {navLinks.map((l) => (
+            <li key={l.label} onClick={closeMenu}>
+              <Link
+                href={l.href}
+                className="flex items-center gap-1 text-lg transition-colors hover:text-blue"
+              >
+                {l.label}
+              </Link>
+            </li>
+          ))}
         </ul>
-        <div className="hidden nav-md:flex gap-[10px]">
+
+        <div className="mt-8 flex flex-col gap-4 px-10">
           <Link
-            className="py-[10px] border text hover:bg-blue transition duration-700 border-blue hover:text-white  text-black rounded-[16px] px-[30px]"
-            href={"/login"}
+            onClick={closeMenu}
+            href="/login"
+            className="rounded-[16px] border border-blue px-6 py-2 text-center text-black transition hover:bg-blue hover:text-white"
           >
             Login
           </Link>
           <Link
-            className="py-[10px] bg-blue text-white hover:bg-blue-300 transition duration-700 rounded-[16px] px-[30px]"
-            href={"/signup"}
+            onClick={closeMenu}
+            href="/signup"
+            className="rounded-[16px] bg-blue px-6 py-2 text-center text-white transition hover:bg-blue-300"
           >
             Signup
           </Link>
         </div>
-      </nav>
-      <button className="btn menu-btn nav-md:hidden">
-        <MenuIcon />
-      </button>
+      </div>
     </header>
   );
-};
-
-export default Header;
+}

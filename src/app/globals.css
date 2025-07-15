@@ -4,9 +4,12 @@
   --color-blue: #3a94ff;
   --color-green: #1eac86;
   --color-pink: #fb40ff;
+  --color-mygrey: #818690;
   --breakpoint-nav-md: 1010px;
   --breakpoint-section-md: 1100px;
   --text-clamp: clamp(32px, 5vw, 48px);
+  --text-clamp2: clamp(20px, 5vw, 40px);
+  --text-clamp-sm: clamp(16px, 5vw, 33px);
 }
 .wrapper {
   max-width: 1300px;

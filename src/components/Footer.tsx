@@ -31,16 +31,16 @@ export default function Footer() {
           {/* newsletter */}
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex max-w-md overflow-hidden rounded-full bg-white shadow"
+            className="flex justify-between max-w-md overflow-hidden rounded-full bg-white shadow"
           >
             <input
               type="email"
               placeholder="Enter Your Email..."
-              className="md:flex-1 px-5 py-3 text-sm outline-none"
+              className="flex-1 px-2 md:px-5 py-3 text-sm outline-none"
             />
             <button
               type="submit"
-              className="whitespace-nowrap bg-blue relative z-[2] rounded-[32px] px-8 py-3 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-offset-2"
+              className="whitespace-nowrap bg-blue relative z-[2] rounded-[32px] px-5 md:px-8 py-3 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-offset-2"
             >
               Subscribe
             </button>

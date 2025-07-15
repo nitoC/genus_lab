@@ -179,7 +179,7 @@ Potential with
             <div className="img-wrapper w-[100%] md:min-w-[510px] bg-[url(/images/studio.png)] bg-[#0077ff88] bg-blend-overlay bg-cover rounded-[30px] bg-top-center section-md:max-w-[605px] aspect-[578/386]">
               <div className="item-container flex flex-col justify-center h-full p-[1rem]">
                 <div className="item-text-container max-w-[404px]">
-                  <h3 className="text-white text-[40px]">
+                  <h3 className="text-white text-clamp2">
                     GenusLab Studio – Live & On-Demand
                   </h3>
                   <Link className="text-white underline" href="#">
@@ -229,7 +229,7 @@ Potential with
               <div className="img-wrapper w-[100%] md:min-w-[510px] bg-[url(/images/Job.png)] bg-[#0f101188] bg-blend-overlay bg-cover rounded-[30px] bg-top-center section-md:max-w-[605px] aspect-[578/386]">
                 <div className="item-container flex flex-col justify-center h-full p-[1rem]">
                   <div className="item-text-container max-w-[404px]">
-                    <h3 className="text-white text-[40px]">
+                    <h3 className="text-white text-clamp2">
                       🔎 Find Your Next Opportunity with GenusLab Jobs
                     </h3>
                     <Link className="text-white underline" href="#">

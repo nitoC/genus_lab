@@ -8,8 +8,11 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import CustomInput from "@/components/FormItems/CustomInput";
 import CustomDropdown from "@/components/FormItems/CustomSelect";
-import { DatePicker } from "rsuite";
-import "rsuite/dist/rsuite.min.css";
+import { DayPicker } from "react-day-picker";
+import classNames from "react-day-picker/style.module.css";
+import CustomDatePicker from "@/components/FormItems/CustomDatePicker";
+
+console.log(classNames);
 
 /* --------------------------------------------------------------------
    Sign Up Page
@@ -18,6 +21,7 @@ export default function SignUpPage() {
   const [agree, setAgree] = useState(false);
   const [gender, setGender] = useState("");
   const [marketing, setMarketing] = useState("");
+  const [dob, setDob] = useState<Date>();
 
   return (
     <main className="min-h-screen bg-gray-50 py-10">
@@ -33,7 +37,7 @@ export default function SignUpPage() {
               priority
             />
             <Image
-              src="/images/logo.svg"
+              src="/images/logo.png"
               alt="Logo"
               width={70}
               height={70}
@@ -73,22 +77,14 @@ export default function SignUpPage() {
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div className="relative w-full">
                     <div
-                      className="relative w-full rounded-md border border-gray-300 bg-gray-100 px-2 py-1 text-sm
+                      className="relative w-full rounded-md border border-gray-300 bg-gray-100 text-sm
                transition focus-within:border-primary focus-within:bg-white
                focus-within:ring-2 focus-within:ring-pink/30"
                     >
-                      <DatePicker
-                        format="dd/MM/yyyy"
-                        placeholder="Select date"
-                        placement="bottomStart"
-                        className="!bg-transparent !outline-none !border-none !shadow-none !w-full"
-                        style={{
-                          fontSize: "0.875rem",
-                          background: "transparent",
-                          outline: "none",
-                          border: "none",
-                          boxShadow: "none",
-                        }} // Tailwind: text-sm
+                      <CustomDatePicker
+                        value={dob}
+                        onChange={setDob}
+                        placeholder="Date of Birth"
                       />
                       <FaCalendarAlt className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-500" />
                     </div>
@@ -143,7 +139,7 @@ export default function SignUpPage() {
                 <button
                   type="submit"
                   disabled={!agree}
-                  className="w-full rounded-md bg-primary py-3 font-medium text-white transition enabled:hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="w-full rounded-md bg-blue py-3 font-medium !text-white transition enabled:hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Sign up
                 </button>

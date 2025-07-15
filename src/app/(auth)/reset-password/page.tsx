@@ -1,5 +1,6 @@
 "use client";
 
+import CustomInput from "@/components/FormItems/CustomInput";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -21,7 +22,7 @@ const WrappedInput: React.FC<WrappedInputProps> = ({
   <div
     className={`relative w-full rounded-md border border-gray-300 bg-gray-100 px-4 py-3 text-sm
                 transition focus-within:border-primary focus-within:bg-white
-                focus-within:ring-2 focus-within:ring-pink/30 ${className}`}
+                focus-within:ring-2 focus-within:ring-primary/30 ${className}`}
   >
     <input
       {...props}
@@ -115,7 +116,7 @@ const page = () => {
             <div className="w-full max-w-md text-center">
               {/* success badge – show conditionally in real app */}
               {/* <span className="inline-block rounded-full bg-emerald-600/90 px-6 py-1.5 text-xs font-medium text-white">
-                Password Updated
+                Email sent
               </span> */}
 
               {/* logo */}
@@ -128,18 +129,17 @@ const page = () => {
               />
 
               <h1 className="mb-10 text-2xl font-semibold md:text-3xl">
-                Create New Password
+                Enter Your mail to reset password!
               </h1>
 
               <form onSubmit={handleSubmit} className="space-y-5">
-                <PasswordInput id="password" placeholder="Enter Password" />
-                <PasswordInput id="confirm" placeholder="Verify Password" />
+                <CustomInput id="email" placeholder="Enter email" />
 
                 <button
                   type="submit"
                   className="w-full rounded-md bg-blue py-3 font-medium text-white transition hover:brightness-110"
                 >
-                  Continue
+                  Reset
                 </button>
               </form>
             </div>

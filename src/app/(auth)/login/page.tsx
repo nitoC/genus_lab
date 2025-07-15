@@ -23,7 +23,7 @@ const WrappedInput: React.FC<WrappedInputProps> = ({
   <div
     className={`relative w-full rounded-md border border-gray-300 bg-gray-100 px-4 py-3 text-sm
                 transition focus-within:border-primary focus-within:bg-white
-                focus-within:ring-2 focus-within:ring-primary/30 ${className}`}
+                focus-within:ring-2 focus-within:ring-pink/30 ${className}`}
   >
     <input
       {...props}
@@ -83,6 +83,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ id, placeholder }) => {
 
 const page = () => {
   /* for demo only */
+  const [agree, setAgree] = useState(false);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: call your API here
@@ -122,7 +123,7 @@ const page = () => {
 
               {/* logo */}
               <Image
-                src="/images/logo.svg"
+                src="/images/logo.png"
                 alt="Logo"
                 width={80}
                 height={80}
@@ -136,12 +137,25 @@ const page = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
-                <CustomInput
-                  color="blue"
-                  id="email"
-                  placeholder="Enter Email"
-                />
+                <CustomInput id="email" placeholder="Enter Email" />
                 <PasswordInput id="confirm" placeholder="Verify Password" />
+                <p className="mt-2 text-sm flex items-center justify-between">
+                  <label className="flex items-center gap-3 text-xs">
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4 accent-primary"
+                      checked={agree}
+                      onChange={() => setAgree(!agree)}
+                    />
+                    <span>Remember for 30 days </span>
+                  </label>
+                  <Link
+                    href="/reset-password"
+                    className="font-medium text-blue"
+                  >
+                    Forgot password?
+                  </Link>
+                </p>
 
                 <button
                   type="submit"
@@ -156,6 +170,12 @@ const page = () => {
                   <FcGoogle className="text-lg" />
                   Log in with Google
                 </button>
+                <p className="text-gray-600">
+                  Don't have an account?{" "}
+                  <Link className="text-blue" href={"/signup"}>
+                    Sign up
+                  </Link>
+                </p>
               </form>
             </div>
           </div>
