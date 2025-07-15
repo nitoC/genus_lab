@@ -117,9 +117,9 @@ const page = () => {
           <div className="flex flex-1 items-center justify-center px-6 py-14 sm:px-10 lg:px-16">
             <div className="w-full max-w-md text-center">
               {/* success badge – show conditionally in real app */}
-              <span className="inline-block rounded-full bg-emerald-600/90 px-6 py-1.5 text-xs font-medium text-white">
+              {/* <span className="inline-block rounded-full bg-emerald-600/90 px-6 py-1.5 text-xs font-medium text-white">
                 Password Updated
-              </span>
+              </span> */}
 
               {/* logo */}
               <Image
@@ -138,7 +138,7 @@ const page = () => {
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <CustomInput id="email" placeholder="Enter Email" />
-                <PasswordInput id="confirm" placeholder="Verify Password" />
+                <PasswordInput id="confirm" placeholder="Enter Password" />
                 <p className="mt-2 text-sm flex items-center justify-between">
                   <label className="flex items-center gap-3 text-xs">
                     <input
