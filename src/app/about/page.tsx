@@ -107,7 +107,7 @@ const page = () => {
         <h2 className="text-2xl p-[1rem] font-bold text-center ">
           Genus lab technologies
         </h2>
-        <div className="flex md:bg-[url(/images/bg-cover.png)] bg-top-right bg-cover flex-col md:w-[100%] items-center justify-center md:flex-row-reverse md:p-[3rem] md:py-[5rem] gap-[2rem] md:gap-[3rem]">
+        <div className="flex p-[1rem] md:bg-[url(/images/bg-cover.png)] bg-top-right bg-cover flex-col md:w-[100%] items-center justify-center md:flex-row-reverse md:p-[3rem] md:py-[5rem] gap-[2rem] md:gap-[3rem]">
           <div className="w-full max-w-[452px] aspect-[343/195] rounded-[32px] overflow-hidden">
             <Image
               src={"/images/About.png"}
@@ -154,7 +154,7 @@ const page = () => {
           <h3 className="text-center md:text-left font-bold text-[1rem] md:text-[33px]">
             Our Team
           </h3>
-          <div className="team-members-container w-full p-[3rem] overflow-hidden">
+          <div className="team-members-container w-full md:p-[3rem] overflow-hidden">
             <Marquee
               pauseOnHover // stop when the user hovers
               gradient={false} // disable default fade edges
