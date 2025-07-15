@@ -16,7 +16,7 @@ const Review = ({
 }) => {
   return (
     <div
-      className={`bg-gradient-to-r min-w-[320px] max-w-[419px] h-[500px] md:w-[419px] shrink-0 md:h-[369px] from-purple-400 via-pink-500 to-blue-500 p-[2px] rounded-[20px] shadow-lg `}
+      className={`bg-gradient-to-r max-w-[320px] md:max-w-[419px] h-[500px] md:w-[419px] shrink-0 md:h-[369px] from-purple-400 via-pink-500 to-blue-500 p-[2px] rounded-[20px] shadow-lg `}
     >
       <div className="bg-[#E6FAF9] rounded-[18px] p-6 md:p-8 text-center h-full flex flex-col justify-between">
         <div className="flex flex-col gap-[10px] justify-center mb-4">
@@ -42,10 +42,15 @@ const Review = ({
             <h3 className="text-xl text-left text-[20px] font-black mb-3 text-black">
               {name}
             </h3>
-            <p className="text-[20px] font-bold">
+            <p className="md:block hidden text-[20px] font-bold">
               {occupation && occupation?.length < 25
                 ? occupation
                 : occupation?.substring(0, 25) + "..."}
+            </p>
+            <p className="md:hidden block text-[20px] font-bold">
+              {occupation && occupation?.length < 16
+                ? occupation
+                : occupation?.substring(0, 16) + "..."}
             </p>
           </div>
         </div>
