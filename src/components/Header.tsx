@@ -66,13 +66,13 @@ export default function Header() {
           <div className="flex gap-2">
             <Link
               href="/login"
-              className="rounded-[16px] border border-blue px-6 py-2 text-black transition hover:bg-blue hover:text-white"
+              className=" font-bold rounded-[32px] border border-blue px-[2rem] py-[.6rem] text-blue transition hover:bg-blue hover:text-white"
             >
               Login
             </Link>
             <Link
               href="/signup"
-              className="rounded-[16px] bg-blue px-6 py-2 text-white transition hover:bg-blue-300"
+              className="font-bold rounded-[32px] bg-blue px-[2rem] py-[.6rem] text-white transition hover:bg-blue-300"
             >
               Signup
             </Link>
@@ -127,14 +127,14 @@ export default function Header() {
           <Link
             onClick={closeMenu}
             href="/login"
-            className="rounded-[16px] border border-blue px-6 py-2 text-center text-black transition hover:bg-blue hover:text-white"
+            className="rounded-[32px] border border-blue px-[2rem] py-[.6rem] text-center text-black transition hover:bg-blue hover:text-white"
           >
             Login
           </Link>
           <Link
             onClick={closeMenu}
             href="/signup"
-            className="rounded-[16px] bg-blue px-6 py-2 text-center text-white transition hover:bg-blue-300"
+            className="rounded-[32px] bg-blue px-[2rem] py-[.6rem] text-center text-white transition hover:bg-blue-300"
           >
             Signup
           </Link>

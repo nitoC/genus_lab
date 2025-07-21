@@ -42,11 +42,11 @@ Potential with
   return (
     <>
       <Header />
-      <section className="hero bg-[url(/images/banner.png)] bg-center md:bg-top-left bg-cover w-full md:aspect-1440/851">
+      <section className="hero   bg-cover w-full md:aspect-1440/851">
         <div className="wrapper p-[1rem]  md:flex justify-start items-center h-full md:py-[2rem]">
-          <div className="intro-container max-w-[800px]  ">
+          <div className="intro-container max-w-[600px]  ">
             <div className="intro-text-wrapper flex flex-col gap-[1rem] items-center md:items-start text-center md:text-start  ">
-              <h1 className="intro-heading text-clamp md:whitespace-pre font-extrabold leading-15 text-shadow-white text-shadow-sm">
+              <h1 className="intro-heading font-Geist text-[#080820] text-clamp md:whitespace-pre font-extrabold leading-15 text-shadow-white text-shadow-sm">
                 Unlock Your
                 <br />
                 Potential with
@@ -54,13 +54,13 @@ Potential with
                 <span className="text text-blue ">Cutting-edge</span> Tech
                 Solutions
               </h1>
-              <p className="intro-sub-text text-shadow-white text-shadow-sm">
+              <p className="intro-sub-text text-[1.3rem]">
                 Join a vibrant community of learners and professionals. Access
                 top-tier courses, explore exciting job opportunities, and
                 connect with industry experts.
               </p>
             </div>
-            <div className="w-fit flex-col flex justify-center md:justify-start gap-[16px] m-auto md:m-0">
+            <div className="w-fit py-[2rem] flex-col flex justify-center md:justify-start gap-[16px] m-auto md:m-0">
               <div className="intro-image-wrapper">
                 <Image
                   src={"/images/intro-image.png"}
@@ -74,7 +74,7 @@ Potential with
                   handler={() => console.log("hello world login")}
                   text="Join Quiz"
                   cat="linear"
-                  Icon={<MdOutlineKeyboardDoubleArrowRight color="white" />}
+                  Icon={<MdOutlineKeyboardDoubleArrowRight color="#3a94ff" />}
                 />
                 <Button
                   handler={() => console.log("hello world")}
@@ -84,7 +84,7 @@ Potential with
               </div>
               <div className="flex flex-col md:hidden items-stretch gap-[10px] md:justify-center">
                 <button
-                  className=" bg-blue text-white rounded-[16px] px-[30px] py-[10px] cursor-pointer"
+                  className=" bg-blue text-white rounded-[32px] px-[30px] py-[.6rem] cursor-pointer"
                   type="button"
                 >
                   Join Quiz
