@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense, useState, useContext } from "react";
-import dashPageContext from "@/app/context/dashPageContext";
+// import dashPageContext from "@/app/context/dashPageContext";
 // import { FiEye, FiEyeOff } from "@/assets/icons/DashIcons";
 const QuizzesPage = React.lazy(() => import("@/components/Dashboard/Quiz"));
 const DashboardPage = React.lazy(
