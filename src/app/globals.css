@@ -1,15 +1,47 @@
 @import "tailwindcss";
 
+:root {
+  --font-inter: "Inter", sans-serif;
+  --font-Geist: "Geist Mono", monospace;
+  --font-Oswald: "Oswald", sans-serif;
+}
+
 @theme {
+  --font-inter: var(--font-inter);
+  --font-Geist: var(--font-Geist);
+  --Oswald: var(--font-Oswald);
   --color-blue: #3a94ff;
   --color-green: #1eac86;
   --color-pink: #fb40ff;
   --color-mygrey: #818690;
+  --color-primary: "#00ADEF";
+  --color-light: #F9FBFC;
+  --color-dark: "#18181B";
+  --color-accent: "#00D38B";
   --breakpoint-nav-md: 1010px;
   --breakpoint-section-md: 1100px;
   --text-clamp: clamp(32px, 5vw, 48px);
   --text-clamp2: clamp(20px, 5vw, 40px);
   --text-clamp-sm: clamp(16px, 5vw, 33px);
+}
+
+.hero {
+  background-image: url("/images/banner.png"),
+    linear-gradient(45deg, white 20%, transparent, transparent);
+  background-position: 300px bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: overlay;
+}
+@media (max-width: 700px) {
+  .hero {
+    background-image: url("/images/banner.png"),
+      linear-gradient(360deg, white 60%, transparent);
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+  }
 }
 .wrapper {
   max-width: 1300px;

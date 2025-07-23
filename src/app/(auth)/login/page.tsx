@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 /* ------------------------------------------------------------------
    Reusable wrapped input (same shell used elsewhere)
@@ -82,6 +83,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ id, placeholder }) => {
 ------------------------------------------------------------------- */
 
 const page = () => {
+  const Router = useRouter();
   /* for demo only */
   const [agree, setAgree] = useState(false);
   const handleSubmit = (e: React.FormEvent) => {
@@ -159,12 +161,18 @@ const page = () => {
 
                 <button
                   type="submit"
+                  onClick={() => {
+                    Router.push("/dashboard");
+                  }}
                   className="w-full rounded-md bg-blue py-3 font-medium text-white transition hover:brightness-110"
                 >
                   Login
                 </button>
                 <button
                   type="button"
+                  onClick={() => {
+                    Router.push("/dashboard");
+                  }}
                   className="flex w-full items-center justify-center gap-3 rounded-md bg-gray-100 py-3 text-sm font-medium transition hover:bg-gray-200"
                 >
                   <FcGoogle className="text-lg" />

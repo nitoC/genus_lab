@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist_Mono, Inter, Oswald } from "next/font/google";
+import { clsx } from "clsx";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const oswald = Oswald({
+  variable: "--font-oswald",
   subsets: ["latin"],
 });
 
@@ -17,6 +18,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// const gothicM = Gothic_A1({
+//   variable: "--font-gothic",
+//   weight: ["800", "700", "400", "500"],
+// });
+
 export const metadata: Metadata = {
   title: "Genus Labs",
   description: "Tech Innovation in africa",
@@ -29,7 +35,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${InterFont.variable} antialiased`}>{children}</body>
+      <body
+        className={clsx(
+          InterFont.variable,
+          geistMono.variable,
+          `antialiased`,
+          oswald.variable
+        )}
+      >
+        {children}
+      </body>
     </html>
   );
 }
