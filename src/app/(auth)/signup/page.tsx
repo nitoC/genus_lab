@@ -8,7 +8,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import CustomInput from "@/components/FormItems/CustomInput";
 import CustomDropdown from "@/components/FormItems/CustomSelect";
-import { DayPicker } from "react-day-picker";
+// import { DayPicker } from "react-day-picker";
 import classNames from "react-day-picker/style.module.css";
 import CustomDatePicker from "@/components/FormItems/CustomDatePicker";
 
