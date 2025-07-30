@@ -17,7 +17,7 @@ import Sidebar from "@/components/Sidebar";
 // --- Reusable Input Components (from user code) ---
 // const WrappedInput = ({ className = "", hasIcon = false, ...props }) => (
 //   <div
-//     className={`relative w-full rounded-md border border-gray-300 bg-gray-100 px-4 py-3 text-sm transition focus-within:border-blue-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-500/30 ${className}`}
+//     className={`relative w-full rounded-md border border-gray-300 bg-gray-100 px-4 py-3 text-sm transition focus-within:border-blue-500 focus-within: focus-within:ring-2 focus-within:ring-blue-500/30 ${className}`}
 //   >
 //     <input
 //       {...props}
@@ -71,7 +71,7 @@ import Sidebar from "@/components/Sidebar";
 //   return (
 //     <main className="min-h-screen bg-blue-500 px-4 py-12 font-sans">
 //       <div className="mx-auto max-w-6xl">
-//         <div className="flex flex-col overflow-hidden rounded-3xl bg-white shadow-2xl ring-1 ring-black/5 lg:flex-row">
+//         <div className="flex flex-col overflow-hidden rounded-3xl  shadow-2xl ring-1 ring-black/5 lg:flex-row">
 //           {/* Left Artwork */}
 //           <div className="relative hidden bg-blue-600 sm:block sm:h-96 lg:flex-1 lg:min-h-[720px]">
 //             <img
@@ -166,7 +166,7 @@ import Sidebar from "@/components/Sidebar";
 // --- Header for Dashboard Pages ---
 
 // const DashboardHeader = ({ title, onMenuClick }) => (
-//   <header className="bg-white/80 backdrop-blur-lg sticky top-0 z-10 p-4 sm:p-6 flex items-center justify-between border-b border-gray-200">
+//   <header className="/80 backdrop-blur-lg sticky top-0 z-10 p-4 sm:p-6 flex items-center justify-between border-b border-gray-200">
 //     <div>
 //       <h1 className="text-2xl font-bold text-gray-800">{title}</h1>
 //     </div>
@@ -217,6 +217,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activePage, setActivePage] = useState("dashboard"); // Default to Quizzes
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [dark, setdark] = useState(false);
 
   // const handleLogin = () => setIsLoggedIn(true);
   const handleLogout = () => setIsLoggedIn(false);
@@ -257,13 +258,19 @@ export default function App() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen font-sans text-gray-900">
+    <div
+      className={`${
+        dark && "dark"
+      } dark:bg-gray-950 min-h-screen font-sans text-gray-900`}
+    >
       {/* Static Sidebar for large screens */}
       <div className="hidden lg:block">
         <Sidebar
           activePage={activePage}
           setActivePage={setActivePage}
           onLogout={handleLogout}
+          dark={dark}
+          setdark={() => setdark(!dark)}
         />
       </div>
 
@@ -275,7 +282,7 @@ export default function App() {
         onClick={() => setIsSidebarOpen(false)}
       ></div>
       <div
-        className={`fixed top-0 left-0 h-full bg-white z-50 transition-transform lg:hidden ${
+        className={`fixed top-0 left-0 h-full  z-50 transition-transform lg:hidden ${
           isSidebarOpen ? "translate-x-0" : "translate-x-[-1000px]"
         }`}
       >
@@ -286,6 +293,8 @@ export default function App() {
             setIsSidebarOpen(false);
           }}
           onLogout={handleLogout}
+          dark={dark}
+          setdark={() => setdark(!dark)}
         />
       </div>
 

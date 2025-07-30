@@ -1,3 +1,4 @@
+"use client";
 import {
   CompassIcon,
   HelpCircleIcon,
@@ -7,14 +8,22 @@ import {
   UserIcon,
 } from "@/assets/icons/DashIcons";
 
+import { MdModeNight } from "react-icons/md";
+import { IoSunnySharp } from "react-icons/io5";
+import { useState } from "react";
+
 const Sidebar = ({
   activePage,
   setActivePage,
   onLogout,
+  dark,
+  setdark,
 }: {
   activePage: string;
   setActivePage: (val: string) => void;
   onLogout: () => void;
+  dark: boolean;
+  setdark: () => void;
 }) => {
   const navItems = [
     { name: "Dashboard", icon: HomeIcon, page: "dashboard" },
@@ -25,7 +34,7 @@ const Sidebar = ({
   ];
 
   return (
-    <aside className="bg-white text-gray-700 w-64 min-h-screen p-6 flex-col flex fixed top-0 left-0 ">
+    <aside className=" text-gray-700 w-64 min-h-screen p-6 flex-col flex fixed top-0 left-0 ">
       <div className="text-3xl font-bold mb-10 text-blue-500">
         <img
           src="https://placehold.co/40x40/2A8CFF/FFFFFF?text=G"
@@ -68,6 +77,25 @@ const Sidebar = ({
           <LogOutIcon className="h-5 w-5" />
           <span>Logout</span>
         </a>
+      </div>
+      <div className="border-t border-gray-200 pt-4 space-y-2">
+        <button
+          onClick={() => {
+            setdark();
+          }}
+          className="flex items-center gap-4 p-3 rounded-lg transition-all text-base font-medium"
+        >
+          <span className="icon_slide w-[50px] block bg-blue/10 rounded-2xl">
+            <span
+              className={`block transition-all duration-500 dark:text-white ${
+                dark ? "translate-x-0" : "translate-x-[80%]"
+              }`}
+            >
+              <MdModeNight className={`h-5 w-5 ${dark && "hidden"}`} />
+              <IoSunnySharp className={`h-5 w-5 ${!dark && "hidden"}`} />
+            </span>
+          </span>
+        </button>
       </div>
       <div className="mt-6 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-xl p-5 text-white text-center">
         <p className="mb-2 font-semibold">Download our Mobile App</p>

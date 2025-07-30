@@ -10,7 +10,7 @@ const Header = ({ setSidebar }: { setSidebar: () => void }) => {
   const { page, setPage } = useContext(dashPageContext);
   return (
     <>
-      <header className="flex justify-between items-center px-6 py-4 bg-white text-black shadow-md">
+      <header className="flex justify-between items-center px-6 py-4 text-black shadow-md">
         <div className="lg:hidden">
           <Image
             src="/images/logo_mobile.png"
@@ -23,7 +23,7 @@ const Header = ({ setSidebar }: { setSidebar: () => void }) => {
         <input
           type="text"
           placeholder="Quick Search"
-          className="hidden lg:block w-1/2 p-2 rounded-md border border-gray-200"
+          className=" dark:text-mygrey hidden lg:block w-1/2 p-2 rounded-md border border-gray-200 dark:border-mygrey/40"
         />
         <div className="hidden lg:flex items-center gap-4">
           <button className="bg-gray-200 px-3 py-1 rounded-lg text-sm">
@@ -31,7 +31,7 @@ const Header = ({ setSidebar }: { setSidebar: () => void }) => {
           </button>
           <div className="flex items-center gap-2">
             <img src="/images/woman.png" className="w-8 h-8 rounded-full" />
-            <span>Chibyke Nwokolo</span>
+            <span className="dark:text-mygrey">Chibyke Nwokolo</span>
           </div>
         </div>
         <button onClick={setSidebar} className="block lg:hidden">

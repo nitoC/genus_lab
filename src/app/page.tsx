@@ -100,7 +100,7 @@ Potential with
           </div>
         </div>
       </section>
-      <div className="divider-wrapper border-b border-b-pink px-[2rem] py-[4rem] max-w-[1049px] m-auto rounded-[20px] relative md:-translate-y-[100px] min-h-[332px] z-[1] bg-white">
+      <div className="divider-wrapper border-b border-b-pink px-[2rem] py-[4rem] max-w-[1049px] m-auto rounded-[20px] relative section-md:-translate-y-[calc(10px+4vw)] min-h-[332px] z-[1] bg-white">
         <div className="divider flex-col md:flex-row flex gap-[1rem] md:gap-0 items-center justify-center ">
           {gradientCardData.map((a, b) => {
             if (b === 1) {
