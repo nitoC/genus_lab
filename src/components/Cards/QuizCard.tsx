@@ -6,7 +6,7 @@ const QuizCard = ({ title, time }: { title: string; time: string }) => (
       className="w-full mb-2 rounded"
     />
     <h4 className="font-bold text-md">{title}</h4>
-    <p className="text-primary font-medium">{time}</p>
+    <p className="text-mygrey font-medium dark:text-primary">{time}</p>
   </div>
 );
 

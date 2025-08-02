@@ -26,6 +26,49 @@
   --text-clamp2: clamp(20px, 5vw, 40px);
   --text-clamp-sm: clamp(16px, 5vw, 33px);
 }
+@layer components {
+  .btn-rich {
+    @apply relative overflow-hidden transition-all duration-500 ease-in-out px-6 py-2 rounded-full font-semibold tracking-wide;
+  }
+
+  .btn-rich::before {
+    content: "";
+    @apply absolute inset-0 transition-all duration-500 rounded-full;
+    z-index: -1;
+  }
+
+  .btn-green {
+    @apply bg-green-500 text-white shadow-md;
+  }
+
+  .btn-green:hover {
+    @apply scale-105 shadow-lg;
+  }
+
+  .btn-green::before {
+    @apply bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 opacity-0;
+  }
+
+  .btn-green:hover::before {
+    @apply opacity-100 blur-sm;
+  }
+
+  .btn-outline {
+    @apply border border-blue-500 text-blue-600 bg-white;
+  }
+
+  .btn-outline:hover {
+    @apply bg-blue-50 scale-105 shadow-md;
+  }
+
+  .btn-outline::before {
+    @apply bg-gradient-to-r from-blue-400 via-blue-600 to-blue-500 opacity-0;
+  }
+
+  .btn-outline:hover::before {
+    @apply opacity-10 blur-md;
+  }
+}
 
 .hero {
   background-image: url("/images/banner.png"),

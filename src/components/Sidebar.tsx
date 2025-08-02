@@ -34,7 +34,7 @@ const Sidebar = ({
   ];
 
   return (
-    <aside className=" text-gray-700 w-64 min-h-screen p-6 flex-col flex fixed top-0 left-0 ">
+    <aside className=" text-gray-700 dark:bg-gray-950 bg-white w-64 min-h-screen p-6 flex-col flex fixed top-0 left-0 ">
       <div className="text-3xl font-bold mb-10 text-blue-500">
         <img
           src="https://placehold.co/40x40/2A8CFF/FFFFFF?text=G"

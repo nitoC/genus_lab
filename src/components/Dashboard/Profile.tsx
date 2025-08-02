@@ -129,7 +129,9 @@ const ProfilePage = () => {
 
       {/* Profile Content */}
       <div>
-        <h3 className="text-2xl font-semibold mb-4">Profile overview</h3>
+        <h3 className="text-2xl font-semibold mb-4 dark:text-blue">
+          Profile overview
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-6 rounded-2xl relative overflow-hidden">
             <h4 className="text-lg font-semibold text-blue-100">
@@ -138,16 +140,18 @@ const ProfilePage = () => {
             <p className="text-4xl font-bold mt-2">N 1600</p>
             <CompassIcon className="absolute -right-4 -bottom-4 h-24 w-24 text-white/10" />
           </div>
-          <div className="text-black p-6 rounded-2xl border border-gray-700 relative overflow-hidden">
-            <h4 className="text-lg font-semibold text-gray">Rewards</h4>
+          <div className="text-black p-6 rounded-2xl dark:text-white border border-mygrey/30 relative overflow-hidden">
+            <h4 className="text-lg font-semibold ">Rewards</h4>
             <p className="text-4xl font-bold mt-2">N5000</p>
             <TrophyIcon className="absolute -right-4 -bottom-4 h-24 w-24 text-white/5" />
           </div>
         </div>
 
-        <h3 className="text-2xl font-semibold mb-4">Earnings Analytics</h3>
+        <h3 className="text-2xl font-semibold mb-4 dark:text-blue">
+          Earnings Analytics
+        </h3>
         <div className=" p-6 rounded-2xl border border-gray-700">
-          <h4 className="text-lg font-semibold text-black">
+          <h4 className="text-lg font-semibold text-black dark:text-mygrey">
             Earnings Over Time
           </h4>
           <p className="text-3xl font-bold mt-2">Total Earnings: N5000</p>

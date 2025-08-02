@@ -10,34 +10,43 @@ const QuizzesPage = () => {
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-800">Quizzes</h2>
+          <h2 className="text-3xl font-bold text-gray-800 dark:text-blue">
+            Quizzes
+          </h2>
           <p className="text-gray-500 mt-1">
             Here's a quick overview of your account and active quizzes.
           </p>
         </div>
 
-        <div className="mb-10 p-6 rounded-2xl shadow-lg bg-white relative overflow-hidden">
+        <div className="mb-10 p-6 rounded-2xl shadow-lg bg-white dark:bg-blue/50 relative overflow-hidden">
           <div className="relative z-10">
-            <p className="text-gray-500 text-sm">Last week score</p>
-            <p className="text-5xl font-bold text-gray-800 mt-2">85</p>
+            <p className="text-gray-500 text-sm dark:text-white">
+              Last week score
+            </p>
+            <p className="text-5xl font-bold text-gray-800 mt-2 dark:text-white">
+              85
+            </p>
           </div>
           <img
             src="https://placehold.co/150x150/2A8CFF/FFFFFF?text=G"
             alt="Quiz background"
             className="absolute right-4 top-1/2 -translate-y-1/2 h-24 w-24 opacity-20 rounded-full"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r dark:from-blue/80 dark:via-blue/40 from-white via-white to-transparent"></div>
         </div>
 
         <div className="mb-8">
-          <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4 dark:text-blue">
             Upcoming Quizzes
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
             {countdown.map((item) => (
-              <div key={item.label} className="bg-gray-100 p-6 rounded-xl">
+              <div
+                key={item.label}
+                className="bg-gray-100 dark:bg-mygrey/30 p-6 rounded-xl"
+              >
                 <p className="text-4xl font-bold text-blue-500">{item.value}</p>
-                <p className="text-sm text-gray-500 uppercase tracking-wider mt-1">
+                <p className="text-sm text-gray-500 dark:text-white/50 uppercase tracking-wider mt-1">
                   {item.label}
                 </p>
               </div>
