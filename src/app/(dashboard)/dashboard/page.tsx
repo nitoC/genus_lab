@@ -3,6 +3,9 @@ import React, { Suspense, useState, useContext } from "react";
 // import dashPageContext from "@/app/context/dashPageContext";
 // import { FiEye, FiEyeOff } from "@/assets/icons/DashIcons";
 const QuizzesPage = React.lazy(() => import("@/components/Dashboard/Quiz"));
+const ExplorerPage = React.lazy(
+  () => import("@/components/Dashboard/Explorer")
+);
 const DashboardPage = React.lazy(
   () => import("@/components/Dashboard/Dashboard")
 );
@@ -203,10 +206,8 @@ import Sidebar from "@/components/Sidebar";
 // --- Placeholder Pages ---
 
 const LeaderboardPage = () => <LeaderPage />;
-const ExploralPage = () => (
-  <div className="p-8">
-    <h2 className="text-2xl font-bold">Exploral Content</h2>
-  </div>
+const ExploralPage = ({ dark }: { dark: boolean }): React.JSX.Element => (
+  <ExplorerPage theme={dark ? "dark" : ""} />
 );
 const ProfilePage = () => <Profile />;
 
@@ -241,7 +242,7 @@ export default function App() {
       case "leaderboard":
         return <LeaderboardPage />;
       case "exploral":
-        return <ExploralPage />;
+        return <ExploralPage dark={dark} />;
       case "profile":
         return <ProfilePage />;
       default:
