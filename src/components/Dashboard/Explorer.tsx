@@ -213,11 +213,11 @@ const ExploralPage = ({ theme }: { theme: string }) => {
               <tr>
                 <th className="py-3 px-4">Rank</th>
                 <th className="py-3 px-4">Title</th>
+                <th className="py-3 px-4">Point Range</th>
                 <th className="py-3 px-4">Monthly Points</th>
-                <th className="py-3 px-4">Daily Points</th>
-                <th className="py-3 px-4">Points</th>
-                <th className="py-3 px-4">Level</th>
-                <th className="py-3 px-4">Last Level Rewards</th>
+                <th className="py-3 px-4">Reward Basic</th>
+                <th className="py-3 px-4">Reward Premium</th>
+                <th className="py-3 px-4">Non Cash Rewards</th>
               </tr>
             </thead>
             <tbody>
