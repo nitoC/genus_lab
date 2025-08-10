@@ -1,8 +1,11 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import BalanceCard from "../Cards/BalanceCard";
 import QuizCard from "../Cards/QuizCard";
+import { JoinQuizModal } from "../modals/Quiz";
 
 const dashboard = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <main className="p-6 space-y-6">
       <section>
@@ -27,7 +30,15 @@ const dashboard = () => {
           <QuizCard title="Genus Quiz Challenge" time="1:00pm-3:00pm" />
         </div>
         <div className="flex gap-4 mt-4">
-          <button className="btn-rich btn-green">Join Quiz</button>
+          <button
+            onClick={() => {
+              console.log("log");
+              setIsModalOpen(true);
+            }}
+            className="btn-rich btn-green"
+          >
+            Join Quiz
+          </button>
           <button className="btn-rich btn-outline dark:bg-transparent">
             View All Quizzes
           </button>
@@ -37,6 +48,10 @@ const dashboard = () => {
       <div className="bg-blue-700 rounded-xl text-center p-4 text-white font-medium animate-pulse">
         Next quiz in <span className="font-bold">5hours 43mins 20secs</span>
       </div>
+      <JoinQuizModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </main>
   );
 };
