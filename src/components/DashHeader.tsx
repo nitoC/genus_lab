@@ -34,7 +34,10 @@ const Header = ({ setSidebar }: { setSidebar: () => void }) => {
             <span className="dark:text-mygrey">Chibyke Nwokolo</span>
           </div>
         </div>
-        <button onClick={setSidebar} className="block lg:hidden">
+        <button
+          onClick={setSidebar}
+          className="block lg:hidden dark:text-white"
+        >
           <MenuIcon size={20} />
         </button>
       </header>
