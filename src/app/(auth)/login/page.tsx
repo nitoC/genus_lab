@@ -227,7 +227,6 @@ const LoginPage = () => {
                   <FcGoogle className="text-lg" />
                   Log in with Google
                 </button>
-
                 <p className="text-gray-600">
                   Don't have an account?{" "}
                   <Link className="text-blue" href={"/signup"}>

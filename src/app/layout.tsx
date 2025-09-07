@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { Geist_Mono, Inter, Oswald } from "next/font/google";
 import { clsx } from "clsx";
 import "./globals.css";
+<<<<<<< HEAD
 import Provider from "@/providers/Provider";
 import { ToastContainer } from "react-toastify";
+=======
+>>>>>>> dd4dc89641c5eaf5a11b295879c78fbf443aafc6
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -45,8 +48,12 @@ export default function RootLayout({
           oswald.variable
         )}
       >
+<<<<<<< HEAD
         <ToastContainer />
         <Provider>{children}</Provider>
+=======
+        {children}
+>>>>>>> dd4dc89641c5eaf5a11b295879c78fbf443aafc6
       </body>
     </html>
   );
