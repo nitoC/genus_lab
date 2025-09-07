@@ -14,7 +14,7 @@ export const tokenUser = async (payload: any) => {
 };
 export const loginUser = async (payload: any) => {
   console.log(payload, "login user payload");
-  const res = await axiosUser.get("oauth/login", payload);
+  const res = await axiosUser.post("oauth/login", payload);
   console.log(res, "login user payload");
   return res;
 };
