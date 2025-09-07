@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+:root {
+  --font-inter: "Inter", sans-serif;
+  --font-Geist: "Geist Mono", monospace;
+  --font-Oswald: "Oswald", sans-serif;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-inter: var(--font-inter);
+  --font-Geist: var(--font-Geist);
+  --Oswald: var(--font-Oswald);
+  --color-blue: #3a94ff;
+  --color-green: #1eac86;
+  --color-pink: #fb40ff;
+  --color-mygrey: #818690;
+  --color-primary: "#00ADEF";
+  --color-light: #f9fbfc;
+  --color-dark: "#18181B";
+  --color-accent: "#00D38B";
+  --breakpoint-nav-md: 1010px;
+  --breakpoint-section-md: 1100px;
+  --text-clamp: clamp(32px, 5vw, 48px);
+  --text-clamp2: clamp(20px, 5vw, 40px);
+  --text-clamp-sm: clamp(16px, 5vw, 33px);
+}
+@layer components {
+  .btn-rich {
+    @apply relative overflow-hidden transition-all duration-500 ease-in-out px-6 py-2 rounded-full font-semibold tracking-wide;
+  }
+
+  .btn-rich::before {
+    content: "";
+    @apply absolute inset-0 transition-all duration-500 rounded-full;
+    z-index: -1;
+  }
+
+  .btn-green {
+    @apply bg-green-500 text-white shadow-md;
+  }
+
+  .btn-green:hover {
+    @apply scale-105 shadow-lg;
+  }
+
+  .btn-green::before {
+    @apply bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 opacity-0;
+  }
+
+  .btn-green:hover::before {
+    @apply opacity-100 blur-sm;
+  }
+
+  .btn-outline {
+    @apply border border-blue-500 text-blue-600 bg-white;
+  }
+
+  .btn-outline:hover {
+    @apply bg-blue-50 scale-105 shadow-md;
+  }
+
+  .btn-outline::before {
+    @apply bg-gradient-to-r from-blue-400 via-blue-600 to-blue-500 opacity-0;
+  }
+
+  .btn-outline:hover::before {
+    @apply opacity-10 blur-md;
+  }
+}
+
+.hero {
+  background-image: url("/images/banner.png"),
+    linear-gradient(45deg, white 20%, transparent, transparent);
+  background-position: 300px bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: overlay;
+}
+@media (max-width: 700px) {
+  .hero {
+    background-image: url("/images/banner.png"),
+      linear-gradient(360deg, white 60%, transparent);
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+  }
+}
+.wrapper {
+  max-width: 1300px;
+  margin: auto;
+}
+.rs-picker-input-group {
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+}
+.btn-animated-gradient {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-animated-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(58, 148, 255, 0.2),
+    rgba(151, 183, 223, 0.5),
+    rgba(58, 148, 255, 0.2)
+  );
+  transform: translateX(-100%);
+  transition: transform 0.4s ease-in-out;
+  z-index: 0;
+}
+
+.btn-animated-gradient:hover::before {
+  transform: translateX(0);
+}
+
+.btn-animated-gradient > * {
+  position: relative;
+  z-index: 1;
+}
+/* .rsuite-scope * {
+  all: revert;
+} */

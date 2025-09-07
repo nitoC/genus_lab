@@ -1,0 +1,246 @@
+"use client";
+
+import CustomInput from "@/components/FormItems/CustomInput";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import { loginUser, tokenUser } from "@/lib/api/apis";
+import { toast } from "react-toastify";
+
+interface WrappedInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  hasIcon?: boolean;
+}
+
+const WrappedInput: React.FC<WrappedInputProps> = ({
+  className = "",
+  hasIcon = false,
+  ...props
+}) => (
+  <div
+    className={`relative w-full rounded-md border border-gray-300 bg-gray-100 px-4 py-3 text-sm
+                transition focus-within:border-primary focus-within:bg-white
+                focus-within:ring-2 focus-within:ring-pink/30 ${className}`}
+  >
+    <input
+      {...props}
+      className={`w-full bg-transparent outline-none placeholder:text-gray-500 ${
+        hasIcon ? "pr-8" : ""
+      }`}
+    />
+  </div>
+);
+
+interface PasswordInputProps {
+  id: string;
+  placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const PasswordInput: React.FC<PasswordInputProps> = ({
+  id,
+  placeholder,
+  value,
+  onChange,
+}) => {
+  const [show, setShow] = useState(false);
+  return (
+    <div className="relative">
+      <WrappedInput
+        id={id}
+        type={show ? "text" : "password"}
+        placeholder={placeholder}
+        hasIcon
+        value={value}
+        onChange={onChange}
+      />
+      <button
+        type="button"
+        onClick={() => setShow((s) => !s)}
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+        aria-label={show ? "Hide password" : "Show password"}
+      >
+        {show ? <FiEyeOff /> : <FiEye />}
+      </button>
+    </div>
+  );
+};
+
+const LoginPage = () => {
+  const router = useRouter();
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [remember, setRemember] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setForm((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const validate = (): boolean => {
+    if (!form.email.trim()) {
+      toast.error("Email is required");
+      return false;
+    }
+    // Simple regex check
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      toast.error("Enter a valid email address");
+      return false;
+    }
+
+    if (!form.password) {
+      toast.error("Password is required");
+      return false;
+    }
+    // Example: require at least 6 characters
+    if (form.password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (loading) return;
+    if (!validate()) return;
+
+    setLoading(true);
+    try {
+      const respToken = await tokenUser({
+        email: form.email,
+      });
+
+      const resp = await loginUser({
+        api_key: respToken?.data,
+        Password: form.password,
+      });
+      console.log(resp, "login response");
+      if (resp?.data === "Oh no way!") {
+        toast.error("Invalid login details");
+        setLoading(false);
+        return;
+      }
+      if (resp?.data.length && resp?.data.length > 0) {
+        sessionStorage.setItem("user", JSON.stringify(resp?.data[0]));
+        toast.success("Logged in successfully");
+        // router.push("/dashboard");
+      } else {
+        toast.error(resp?.data || "Login failed");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        error instanceof Error ? error.message : "Login failed. Try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <main className="min-h-screen bg-blue px-4 py-12">
+      <div className="mx-auto max-w-6xl">
+        <div className="flex flex-col overflow-hidden rounded-3xl bg-white shadow-2xl ring-1 ring-black/5 lg:flex-row">
+          <div className="relative hidden sm:block sm:h-96 lg:flex-1 lg:min-h-[720px]">
+            <Image
+              src="/images/hand-main.png"
+              alt="Security Illustration"
+              fill
+              className="object-cover"
+              priority
+            />
+            <Link
+              href="/"
+              className="absolute right-5 top-5 rounded-full bg-blue/80 px-4 py-1.5 text-xs font-medium text-white backdrop-blur transition hover:bg-blue"
+            >
+              Back to website →
+            </Link>
+          </div>
+
+          <div className="flex flex-1 items-center justify-center px-6 py-14 sm:px-10 lg:px-16">
+            <div className="w-full max-w-md text-center">
+              <Image
+                src="/images/logo.png"
+                alt="Logo"
+                width={80}
+                height={80}
+                className="mx-auto my-8"
+              />
+              <div className="mb-10">
+                <h1 className="mb-1 text-2xl font-semibold md:text-3xl">
+                  Welcome Back!
+                </h1>
+                <p className="text-center">Please enter your login details</p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <CustomInput
+                  id="email"
+                  type="email"
+                  placeholder="Enter Email"
+                  value={form.email}
+                  onChange={handleChange}
+                />
+                <PasswordInput
+                  id="password"
+                  placeholder="Enter Password"
+                  value={form.password}
+                  onChange={handleChange}
+                />
+
+                <p className="mt-2 text-sm flex items-center justify-between">
+                  <label className="flex items-center gap-3 text-xs">
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4 accent-primary"
+                      checked={remember}
+                      onChange={() => setRemember(!remember)}
+                    />
+                    <span>Remember for 30 days</span>
+                  </label>
+                  <Link
+                    href="/reset-password"
+                    className="font-medium text-blue"
+                  >
+                    Forgot password?
+                  </Link>
+                </p>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full rounded-md bg-blue py-3 font-medium text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {loading ? "Logging in..." : "Login"}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => router.push("/dashboard")}
+                  className="flex w-full items-center justify-center gap-3 rounded-md bg-gray-100 py-3 text-sm font-medium transition hover:bg-gray-200"
+                >
+                  <FcGoogle className="text-lg" />
+                  Log in with Google
+                </button>
+
+                <p className="text-gray-600">
+                  Don't have an account?{" "}
+                  <Link className="text-blue" href={"/signup"}>
+                    Sign up
+                  </Link>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+};
+
+export default LoginPage;
