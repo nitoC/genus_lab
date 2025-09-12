@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 "use client";
-=======
->>>>>>> dd4dc89641c5eaf5a11b295879c78fbf443aafc6
 import React, { useState } from "react";
 const CompassIcon = (props: any) => (
   <svg

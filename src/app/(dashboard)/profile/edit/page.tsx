@@ -97,7 +97,7 @@ const AnimatedButton = ({
   );
 };
 
-export const App = () => {
+const EditProfile = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -249,4 +249,4 @@ export const App = () => {
   );
 };
 
-export default App;
+export default EditProfile;

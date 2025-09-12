@@ -3,7 +3,7 @@ import AllQuizzesSlot from "@/components/AllQuizzesSlot";
 import QuizEnrollmentCard from "@/components/QuizEnrollment";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const QuizzesPage = () => {
   // Target date in the future (e.g., 2 days from now)
@@ -163,4 +163,12 @@ const QuizzesLayout = () => {
   return <QuizzesPage />;
 };
 
-export default QuizzesLayout;
+const QuizPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <QuizzesLayout />
+    </Suspense>
+  );
+};
+
+export default QuizzesPage;

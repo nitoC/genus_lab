@@ -9,11 +9,7 @@ export const JoinQuizModal = ({
   onClose,
 }: {
   isOpen: boolean;
-<<<<<<< HEAD
   onClose: (val?: string) => void;
-=======
-  onClose: () => void;
->>>>>>> dd4dc89641c5eaf5a11b295879c78fbf443aafc6
 }) => {
   if (!isOpen) return null;
 
@@ -21,11 +17,7 @@ export const JoinQuizModal = ({
     <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 text-center relative">
         <button
-<<<<<<< HEAD
           onClick={() => onClose("closed")}
-=======
-          onClick={onClose}
->>>>>>> dd4dc89641c5eaf5a11b295879c78fbf443aafc6
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
         >
           <IoClose className="h-6 w-6" />
@@ -59,11 +51,7 @@ export const JoinQuizModal = ({
         </div>
 
         <button
-<<<<<<< HEAD
           onClick={() => onClose("enrolled")}
-=======
-          onClick={onClose}
->>>>>>> dd4dc89641c5eaf5a11b295879c78fbf443aafc6
           className="w-full bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 transition"
         >
           Continue

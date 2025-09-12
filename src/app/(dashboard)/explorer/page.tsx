@@ -1,7 +1,12 @@
 import { JSX, SVGProps } from "react";
 
-const ExploralPage = ({ theme }: { theme: string }) => {
-  const isDark = theme === "dark";
+const ExploralPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ theme?: string }>;
+}) => {
+  const params = await searchParams;
+  const isDark = params?.theme === "dark";
   const cardClass = isDark
     ? "bg-[#1a2634] border border-gray-700"
     : "bg-white border border-gray-200";
