@@ -1,6 +1,7 @@
 "use client";
 import BellIcon from "@/assets/icons/Bell";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
 const quizData = [
@@ -280,16 +281,16 @@ const LiveQuizPage = () => {
                 <div className="flex justify-center gap-6">
                   <button
                     className="px-8 py-3 bg-blue-500 text-white font-semibold rounded-full shadow-lg hover:bg-blue-600 transition"
-                    onClick={() => console.log("Try Again")}
+                    onClick={() => window.location.reload()}
                   >
                     Try Again
                   </button>
-                  <button
+                  <Link
+                    href={"/quiz"}
                     className="px-8 py-3 bg-green-500 text-white font-semibold rounded-full shadow-lg hover:bg-green-600 transition"
-                    onClick={() => window.location.reload()}
                   >
                     Dashboard
-                  </button>
+                  </Link>
                 </div>
               </div>
             )}

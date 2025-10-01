@@ -10,7 +10,10 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   // Start with safe defaults
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [activePage, setActivePage] = useState(path);
+  const [activePage, setActivePage] = useState(
+    path ? path.substring(1) : "dashbaord"
+  );
+  console.log(path, "path");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [dark, setDark] = useState(false);
 
@@ -57,7 +60,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       {/* Mobile sidebar */}
       <div
         className={`fixed top-0 left-0 h-full z-50 transition-transform lg:hidden ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          isSidebarOpen ? "translate-x-0" : "translate-x-[-1000px]"
         }`}
       >
         <Sidebar

@@ -586,4 +586,6 @@ const AddCard: React.FC<AddCardProps> = ({
   );
 };
 
+//localStorage
+
 export default Pay;

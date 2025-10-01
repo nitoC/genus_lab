@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 const QuizzesPage = () => {
+  const router = useRouter();
   // Target date in the future (e.g., 2 days from now)
   let text =
     "You Are  enrolled in the 'Global Trivia Challenge'. Here are your quiz details:";
@@ -126,7 +127,10 @@ const QuizzesPage = () => {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="btn-container flex gap-4">
                 {isCountdownFinished && (
-                  <button className="w-full sm:w-auto bg-green-500 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-green-600 transition-all">
+                  <button
+                    onClick={() => router.push("/quiz-live")}
+                    className="w-full sm:w-auto bg-green-500 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-green-600 transition-all"
+                  >
                     Join
                   </button>
                 )}
@@ -157,6 +161,7 @@ const QuizzesPage = () => {
 const QuizzesLayout = () => {
   const query = useSearchParams();
   const queryType = query.get("page");
+  console.log(queryType, "query type");
   if (queryType === "all") {
     return <AllQuizzesSlot />;
   }
@@ -171,4 +176,4 @@ const QuizPage = () => {
   );
 };
 
-export default QuizzesPage;
+export default QuizPage;

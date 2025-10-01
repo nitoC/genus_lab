@@ -218,7 +218,9 @@ export default function App() {
           {/* User Rankings Section */}
           <div className="mb-10 w-full">
             <div className="flex flex-col gap-4 mb-[1rem]">
-              <h2 className="font-bold mb-2 text-white">User Rankings</h2>
+              <h2 className="font-bold mb-2 text-black dark:text-white">
+                User Rankings
+              </h2>
               <p className="text-gray-400 mb-6">
                 View the current standings of users based on their performance.
               </p>

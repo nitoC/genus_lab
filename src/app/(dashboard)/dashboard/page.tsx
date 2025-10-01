@@ -70,13 +70,16 @@ const dashboard = () => {
               >
                 Join Quiz
               </button>
-              <button className="btn-rich btn-outline dark:bg-transparent">
+              <Link
+                href={"/quiz?page=all"}
+                className="btn-rich btn-outline dark:bg-transparent"
+              >
                 View All Quizzes
-              </button>
+              </Link>
             </div>
           </section>
           <section>
-            <div className="bg-blue-700 rounded-xl text-center p-4 text-white font-medium animate-pulse flex justify-between items-center">
+            <div className="rounded-xl text-center p-4 text-white font-medium animate-bl flex justify-between items-center">
               <div className="px-4">
                 Next quiz in{" "}
                 <span className="font-bold">5hours 43mins 20secs</span>

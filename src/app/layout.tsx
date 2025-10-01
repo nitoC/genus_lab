@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist_Mono, Inter, Oswald } from "next/font/google";
 import { clsx } from "clsx";
 import "./globals.css";
+
 import Provider from "@/providers/Provider";
 import { ToastContainer } from "react-toastify";
 

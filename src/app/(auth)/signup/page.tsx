@@ -63,7 +63,7 @@ export default function SignUpPage() {
     const nameRegex = /^[A-Za-z\s]+$/;
     const refCodeRegex = /^[A-Za-z0-9]*$/;
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&^()[\]{}])[A-Za-z\d@$!%*?#&^()[\]{}]{8,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&^()[\]{}])[A-Za-z\d@$!%*?#&^()[\]{}]{6,}$/;
 
     if (!user.fullname.trim()) {
       toast.error("Full name is required");
@@ -82,7 +82,7 @@ export default function SignUpPage() {
 
     if (!passwordRegex.test(user.password)) {
       toast.error(
-        "Password must be at least 8 characters long, include uppercase, lowercase, number, and a special character"
+        "Password must be at least 6 characters long, include uppercase, lowercase, number, and a special character"
       );
       return false;
     }

@@ -6,13 +6,6 @@ const ExploralPage = async ({
   searchParams: Promise<{ theme?: string }>;
 }) => {
   const params = await searchParams;
-  const isDark = params?.theme === "dark";
-  const cardClass = isDark
-    ? "bg-[#1a2634] border border-gray-700"
-    : "bg-white border border-gray-200";
-  const textClass = isDark ? "text-gray-300" : "text-gray-700";
-  const headingClass = isDark ? "text-white" : "text-gray-900";
-  const subTextClass = isDark ? "text-gray-400" : "text-gray-500";
 
   const leaderboardRanks = [
     {
@@ -70,10 +63,10 @@ const ExploralPage = async ({
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
-      viewBox="0 0 24 24"
       fill="currentColor"
+      viewBox="0 0 24 24"
     >
-      <path d="M12 2.04c-5.5 0-10 4.49-10 10s4.5 10 10 10 10-4.49 10-10-4.5-10-10-10zm1.6 11.45h-1.3v5.51h-2.3v-5.51h-1.1v-2.04h1.1v-1.5c0-1.07.5-2.79 2.7-2.79h1.8v2.04h-1.2c-.3 0-.7.15-.7.7v1.46h1.9l-.3 2.04z"></path>
+      <path d="M12 2.04c-5.5 0-10 4.49-10 10s4.5 10 10 10 10-4.49 10-10-4.5-10-10-10zm1.6 11.45h-1.3v5.51h-2.3v-5.51h-1.1v-2.04h1.1v-1.5c0-1.07.5-2.79 2.7-2.79h1.8v2.04h-1.2c-.3 0-.7.15-.7.7v1.46h1.9l-.3 2.04z" />
     </svg>
   );
 
@@ -85,20 +78,20 @@ const ExploralPage = async ({
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
-      viewBox="0 0 24 24"
       fill="currentColor"
+      viewBox="0 0 24 24"
     >
-      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
     </svg>
   );
 
   return (
-    <div className={`p-4 sm:p-6 lg:p-8 ${isDark ? "text-white" : ""}`}>
-      <div className="max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 lg:p-8 min-h-screen">
+      <div className="max-w-7xl mx-auto text-gray-800 dark:text-gray-200">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* Upcoming Quizzes */}
-          <div className={`lg:col-span-2 ${cardClass} p-6 rounded-2xl`}>
-            <h3 className={`text-lg font-semibold mb-4 ${headingClass}`}>
+          <div className="lg:col-span-2 p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <h3 className="text-lg font-semibold mb-4 dark:text-white">
               Upcoming Quizzes
             </h3>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -106,28 +99,28 @@ const ExploralPage = async ({
                 <span className="text-5xl font-bold">“?”</span>
               </div>
               <div className="flex-1 bg-blue-400/20 p-4 rounded-lg flex items-center justify-center text-blue-800 dark:text-blue-300 gap-2">
-                <span className="text-4xl font-bold bg-white/50 dark:bg-black/20 p-2 rounded">
+                <span className="text-4xl font-bold bg-white/50 dark:bg-black/30 p-2 rounded">
                   Q
                 </span>
-                <span className="text-4xl font-bold bg-white/50 dark:bg-black/20 p-2 rounded">
+                <span className="text-4xl font-bold bg-white/50 dark:bg-black/30 p-2 rounded">
                   A
                 </span>
               </div>
             </div>
-            <p className={`mt-4 text-sm font-semibold ${textClass}`}>
+            <p className="mt-4 text-sm font-semibold dark:text-gray-300">
               History Buffs Challenge & Science Whiz Showdown
             </p>
-            <p className={`text-xs ${subTextClass}`}>
+            <p className="text-xs dark:text-gray-400">
               Engage in thrilling quizzes and expand your knowledge.
             </p>
           </div>
 
           {/* Project Updates */}
-          <div className={`${cardClass} p-6 rounded-2xl flex flex-col`}>
-            <h3 className={`text-lg font-semibold mb-2 ${headingClass}`}>
+          <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex flex-col">
+            <h3 className="text-lg font-semibold mb-2 dark:text-white">
               Project Updates
             </h3>
-            <p className={`text-sm mb-4 ${subTextClass}`}>
+            <p className="text-sm mb-4 dark:text-gray-400">
               New Features and Improvements
             </p>
             <div className="mt-auto">
@@ -140,11 +133,13 @@ const ExploralPage = async ({
           </div>
 
           {/* Tech News */}
-          <div className={`${cardClass} p-6 rounded-2xl flex flex-col`}>
-            <h3 className={`text-lg font-semibold mb-2 ${headingClass}`}>
+          <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex flex-col">
+            <h3 className="text-lg font-semibold mb-2 dark:text-white">
               Tech News
             </h3>
-            <p className={`text-sm mb-4 ${subTextClass}`}>Latest Tech Trends</p>
+            <p className="text-sm mb-4 dark:text-gray-400">
+              Latest Tech Trends
+            </p>
             <div className="mt-auto">
               <img
                 src="https://placehold.co/400x200/1e40af/ffffff?text=Tech"
@@ -155,11 +150,11 @@ const ExploralPage = async ({
           </div>
 
           {/* Studio Quiz Winner */}
-          <div className={`${cardClass} p-6 rounded-2xl flex flex-col`}>
-            <h3 className={`text-lg font-semibold mb-2 ${headingClass}`}>
+          <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex flex-col">
+            <h3 className="text-lg font-semibold mb-2 dark:text-white">
               Studio Quiz Winner
             </h3>
-            <p className={`text-sm mb-4 ${subTextClass}`}>
+            <p className="text-sm mb-4 dark:text-gray-400">
               Congratulations to Evelyn S.
             </p>
             <div className="mt-auto">
@@ -173,25 +168,23 @@ const ExploralPage = async ({
 
           {/* Social Media & Announcements */}
           <div className="grid grid-rows-2 gap-6">
-            <div className={`${cardClass} p-4 rounded-2xl`}>
-              <h3 className={`text-md font-semibold mb-2 ${headingClass}`}>
+            <div className="p-4 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <h3 className="text-md font-semibold mb-2 dark:text-white">
                 Social Media
               </h3>
-              <div className="flex gap-4 text-gray-400">
+              <div className="flex gap-4 text-gray-500 dark:text-gray-400">
                 <FacebookIcon className="h-8 w-8 hover:text-blue-600 cursor-pointer" />
                 <StarIcon className="h-8 w-8 hover:text-yellow-500 cursor-pointer" />
                 <StarIcon className="h-8 w-8 hover:text-yellow-500 cursor-pointer" />
                 <StarIcon className="h-8 w-8 hover:text-yellow-500 cursor-pointer" />
               </div>
             </div>
-            <div
-              className={`${cardClass} p-4 rounded-2xl flex items-center gap-4`}
-            >
+            <div className="p-4 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex items-center gap-4">
               <div>
-                <h3 className={`text-md font-semibold ${headingClass}`}>
+                <h3 className="text-md font-semibold dark:text-white">
                   Latest Announcements
                 </h3>
-                <p className={`text-sm ${subTextClass}`}>
+                <p className="text-sm dark:text-gray-400">
                   New Quiz Categories Added!
                 </p>
               </div>
@@ -205,17 +198,13 @@ const ExploralPage = async ({
         </div>
 
         {/* Leaderboard Table */}
-        <div className={`${cardClass} p-6 rounded-2xl overflow-x-auto`}>
-          <h3 className={`text-xl font-semibold mb-4 ${headingClass}`}>
+        <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 overflow-x-auto">
+          <h3 className="text-xl font-semibold mb-4 dark:text-white">
             Leader board Ranks, Point Ranges & Rewards
           </h3>
-          <table className={`w-full text-left text-sm ${textClass}`}>
-            <thead
-              className={`border-b ${
-                isDark ? "border-gray-700" : "border-gray-200"
-              } ${subTextClass} uppercase`}
-            >
-              <tr>
+          <table className="w-full text-left text-sm">
+            <thead className="border-b uppercase dark:border-gray-600">
+              <tr className="text-gray-700 dark:text-gray-300">
                 <th className="py-3 px-4">Rank</th>
                 <th className="py-3 px-4">Title</th>
                 <th className="py-3 px-4">Point Range</th>
@@ -225,13 +214,11 @@ const ExploralPage = async ({
                 <th className="py-3 px-4">Non Cash Rewards</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-gray-600 dark:text-gray-300">
               {leaderboardRanks.map((item, index) => (
                 <tr
                   key={index}
-                  className={`border-b ${
-                    isDark ? "border-gray-800" : "border-gray-100"
-                  } hover:${isDark ? "bg-gray-800" : "bg-gray-50"}`}
+                  className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/40"
                 >
                   <td className="py-3 px-4 font-medium">{item.rank}</td>
                   <td className="py-3 px-4">{item.title}</td>
@@ -249,4 +236,5 @@ const ExploralPage = async ({
     </div>
   );
 };
+
 export default ExploralPage;

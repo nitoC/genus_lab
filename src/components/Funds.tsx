@@ -200,14 +200,14 @@ const Funds: React.FC = () => {
         <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
           <Link
             href={"/profile/pay"}
-            className="flex-1 max-w-xs mx-auto py-3 px-6 bg-gradient-to-r from-green-500 to-green-700 rounded-full font-bold dark:text-white shadow-lg flex items-center justify-center space-x-2"
+            className="flex-1 max-w-xs mx-auto py-3 px-6 bg-gradient-to-r from-green-500 to-green-700 rounded-full font-bold text-white shadow-lg flex items-center justify-center space-x-2"
           >
             <PlusIcon />
             <span>Add Funds</span>
           </Link>
           <Link
             href={"/profile/withdraw"}
-            className="flex-1 max-w-xs mx-auto py-3 px-6 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full font-bold dark:text-white shadow-lg flex items-center justify-center space-x-2"
+            className="flex-1 max-w-xs mx-auto py-3 px-6 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full font-bold text-white shadow-lg flex items-center justify-center space-x-2"
           >
             <MinusIcon />
             <span>Withdraw Funds</span>

@@ -76,7 +76,7 @@ const PreviousQuizPerformance = () => {
           <QuizPerformanceCard key={quiz.id} quizData={quiz} />
         ))}
         <div className="flex justify-center space-x-4 mt-8">
-          <button className="px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-200 transition-colors">
+          <button className="px-6 py-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-200 transition-colors">
             Prev
           </button>
           <button className="px-6 py-2 rounded-full border border-blue-500 text-white bg-blue-500 hover:bg-blue-600 transition-colors">

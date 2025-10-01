@@ -1,5 +1,10 @@
 "use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 const LeaderboardPage = () => {
+  const router = useRouter();
   const weeklyScoreData = [50, 65, 60, 75, 70, 85, 80];
   const yourScoreData = [60, 55, 70, 65, 80, 75, 78];
   const leaderboardData = [
@@ -39,83 +44,88 @@ const LeaderboardPage = () => {
   );
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 text-white min-h-full">
+    <div className="p-4 sm:p-6 lg:p-8 min-h-full bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Weekly Scores */}
-        <div className="bg-[#1a2634] p-6 rounded-2xl border border-gray-700">
-          <h3 className="text-lg font-semibold text-gray-300">Weekly Scores</h3>
+        <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-2xl border border-gray-300 dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+            Weekly Scores
+          </h3>
           <p className="text-4xl font-bold mt-2">Average: 85</p>
-          <p className="text-sm text-green-400">Last 7 Days +5%</p>
+          <p className="text-sm text-green-600 dark:text-green-400">
+            Last 7 Days +5%
+          </p>
           <div className="mt-4">
             <Chart data={weeklyScoreData} color="#4ade80" />
-            <div className="flex justify-between text-xs text-gray-400 mt-2 border-t border-gray-700 pt-2">
+            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2 border-t border-gray-300 dark:border-gray-700 pt-2">
               {days.map((day) => (
-                <span key={day}>{day}</span>
+                <Link href={"/leaderboard/info"} key={day}>
+                  {day}
+                </Link>
               ))}
             </div>
           </div>
         </div>
 
         {/* Top Quiz Winners */}
-        <div className="bg-[#1a2634] p-6 rounded-2xl border border-gray-700">
-          <h3 className="text-lg font-semibold text-gray-300">
+        <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-2xl border border-gray-300 dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
             Top Quiz Winners (Last Week)
           </h3>
           <p className="text-4xl font-bold mt-2">Top Score: 98</p>
-          <p className="text-sm text-green-400">Last Week +10%</p>
+          <p className="text-sm text-green-600 dark:text-green-400">
+            Last Week +10%
+          </p>
           <div className="mt-6 space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-gray-400">Winner 1</span>
-              <div className="w-2/3 h-4 bg-gray-700 rounded-full">
-                <div
-                  className="h-4 bg-blue-500 rounded-full"
-                  style={{ width: "98%" }}
-                ></div>
+            {["Winner 1", "Winner 2", "Winner 3"].map((winner, i) => (
+              <div className="flex items-center justify-between" key={i}>
+                <span className="text-gray-600 dark:text-gray-400">
+                  {winner}
+                </span>
+                <div className="w-2/3 h-4 bg-gray-300 dark:bg-gray-700 rounded-full">
+                  <div
+                    className="h-4 bg-blue-500 rounded-full"
+                    style={{ width: `${98 - i * 3}%` }}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-gray-400">Winner 2</span>
-              <div className="w-2/3 h-4 bg-gray-700 rounded-full">
-                <div
-                  className="h-4 bg-blue-500 rounded-full"
-                  style={{ width: "95%" }}
-                ></div>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-gray-400">Winner 3</span>
-              <div className="w-2/3 h-4 bg-gray-700 rounded-full">
-                <div
-                  className="h-4 bg-blue-500 rounded-full"
-                  style={{ width: "92%" }}
-                ></div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
         {/* Your Scores */}
-        <div className="bg-[#1a2634] p-6 rounded-2xl border border-gray-700">
-          <h3 className="text-lg font-semibold text-gray-300">
+        <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-2xl border border-gray-300 dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
             Your Scores (Last Week)
           </h3>
           <p className="text-4xl font-bold mt-2">Your Average: 78</p>
-          <p className="text-sm text-red-400">Last 7 Days -2%</p>
+          <p className="text-sm text-red-600 dark:text-red-400">
+            Last 7 Days -2%
+          </p>
           <div className="mt-4">
             <Chart data={yourScoreData} color="#3b82f6" />
-            <div className="flex justify-between text-xs text-gray-400 mt-2 border-t border-gray-700 pt-2">
+            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2 border-t border-gray-300 dark:border-gray-700 pt-2">
               {days.map((day) => (
-                <span key={day}>{day}</span>
+                <Link href={"/leaderboard/info"} key={day}>
+                  {day}
+                </Link>
               ))}
             </div>
           </div>
         </div>
 
         {/* Leaderboard */}
-        <div className="bg-[#1a2634] p-6 rounded-2xl border border-gray-700">
-          <h3 className="text-lg font-semibold text-gray-300">Leaderboard</h3>
+        <div
+          onClick={() => router.push("/leaderboard/table")}
+          className="bg-gray-100 dark:bg-gray-800 cursor-pointer p-6 rounded-2xl border border-gray-300 dark:border-gray-700"
+        >
+          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+            Leaderboard
+          </h3>
           <p className="text-4xl font-bold mt-2">Top Score: 95</p>
-          <p className="text-sm text-green-400">All Time +8%</p>
+          <p className="text-sm text-green-600 dark:text-green-400">
+            All Time +8%
+          </p>
           <div className="mt-6 h-48 flex items-end justify-around gap-2">
             {leaderboardData.map((user, i) => (
               <div
@@ -125,12 +135,14 @@ const LeaderboardPage = () => {
                 <div
                   className="w-full bg-blue-500 rounded-t-md"
                   style={{ height: `${user.score}%` }}
-                ></div>
-                <span className="text-xs mt-2 text-gray-300">{user.name}</span>
+                />
+                <span className="text-xs mt-2 text-gray-600 dark:text-gray-300">
+                  {user.name}
+                </span>
                 <img
                   src={`https://i.pravatar.cc/24?img=${i + 10}`}
                   alt={user.name}
-                  className="w-6 h-6 rounded-full mt-1 border-2 border-gray-500"
+                  className="w-6 h-6 rounded-full mt-1 border-2 border-gray-400 dark:border-gray-600"
                 />
               </div>
             ))}

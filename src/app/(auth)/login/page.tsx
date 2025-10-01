@@ -128,7 +128,7 @@ const LoginPage = () => {
       if (resp?.data.length && resp?.data.length > 0) {
         sessionStorage.setItem("user", JSON.stringify(resp?.data[0]));
         toast.success("Logged in successfully");
-        // router.push("/dashboard");
+        router.push("/dashboard");
       } else {
         toast.error(resp?.data || "Login failed");
       }
