@@ -93,21 +93,32 @@ const ProfilePage = () => {
   return (
     <div className="p-4 sm:p-6 lg:p-8 text-white min-h-full">
       {/* Profile Header */}
-      <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
-        <img
-          src="https://i.pravatar.cc/100?img=3"
-          alt="User Avatar"
-          className="w-24 h-24 rounded-full border-4 border-blue-500"
-        />
-        <div>
-          <h2 className="text-3xl font-bold">Chibuike Nwokolo</h2>
-          <p className="text-gray-400">@email.com</p>
-          <p className="text-gray-400">09094883903</p>
+      <h1>{activeTab}</h1>
+      {activeTab !== "Referral" ? (
+        <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
+          <img
+            src="https://i.pravatar.cc/100?img=3"
+            alt="User Avatar"
+            className="w-24 h-24 rounded-full border-4 border-blue-500"
+          />
+          <div>
+            <h2 className="text-3xl font-bold">Chibuike Nwokolo</h2>
+            <p className="text-gray-400">@email.com</p>
+            <p className="text-gray-400">09094883903</p>
+          </div>
+          <button className="ml-auto bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 transition-all">
+            Edit
+          </button>
         </div>
-        <button className="ml-auto bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 transition-all">
-          Edit
-        </button>
-      </div>
+      ) : (
+        <div>
+          <div className="left">
+            <h2>Referrals</h2>
+            <p>Share your referral link with friends and earn rewards</p>
+          </div>
+          <div className="right"></div>
+        </div>
+      )}
 
       {/* Profile Navigation */}
       <div className="border-b border-white mb-8">
@@ -142,8 +153,12 @@ const ProfilePage = () => {
             <CompassIcon className="absolute -right-4 -bottom-4 h-24 w-24 text-white/10" />
           </div>
           <div className="text-black p-6 rounded-2xl dark:text-white border border-mygrey/30 relative overflow-hidden">
-            <h4 className="text-lg font-semibold ">Rewards</h4>
-            <p className="text-4xl font-bold mt-2">N5000</p>
+            <h4 className="text-lg font-semibold ">
+              {activeTab === "Referral" ? "Referrals" : `Rewards`}
+            </h4>
+            <p className="text-4xl font-bold mt-2">
+              {activeTab === "Referral" ? "3" : `N5000`}
+            </p>
             <TrophyIcon className="absolute -right-4 -bottom-4 h-24 w-24 text-white/5" />
           </div>
         </div>

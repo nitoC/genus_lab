@@ -52,9 +52,9 @@ const Sidebar = ({
               setActivePage(item.page);
               router.push(`/${item.page}`);
             }}
-            className={`flex items-center gap-4 p-3 rounded-lg transition-all text-base font-medium relative ${
+            className={`flex text-blue-500 items-center gap-4 p-3 rounded-lg transition-all text-base font-medium relative ${
               activePage === item.page
-                ? "bg-blue-50 text-blue-500"
+                ? "bg-blue-50 "
                 : "hover:bg-gray-100"
             }`}
           >

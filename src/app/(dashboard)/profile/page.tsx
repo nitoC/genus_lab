@@ -95,24 +95,49 @@ const ProfilePage = () => {
   return (
     <div className="p-4 sm:p-6 lg:p-8 text-white min-h-full">
       {/* Profile Header */}
-      <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
-        <img
-          src="https://i.pravatar.cc/100?img=3"
-          alt="User Avatar"
-          className="w-24 h-24 rounded-full border-4 border-blue-500"
-        />
-        <div>
-          <h2 className="text-3xl font-bold">Chibuike Nwokolo</h2>
-          <p className="text-gray-400">@email.com</p>
-          <p className="text-gray-400">09094883903</p>
+      {activeTab !== "Referral" ? (
+        <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
+          <img
+            src="https://i.pravatar.cc/100?img=3"
+            alt="User Avatar"
+            className="w-24 h-24 rounded-full border-4 border-blue-500"
+          />
+          <div>
+            <h2 className="text-3xl font-bold">Chibuike Nwokolo</h2>
+            <p className="text-gray-400">@email.com</p>
+            <div className="title-container">
+              <h3 className="dark:text-white text-gray-900">Rank: 435</h3>
+              <p className="text-gray-400">Dev master</p>
+            </div>
+          </div>
+          <Link
+            href={"/profile/edit"}
+            className="ml-auto bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 transition-all"
+          >
+            Edit
+          </Link>
         </div>
-        <Link
-          href={"/profile/edit"}
-          className="ml-auto bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 transition-all"
-        >
-          Edit
-        </Link>
-      </div>
+      ) : (
+        <div className="flex flex-col gap-6 mb-8">
+          <div>
+            <h3 className="text-2xl font-semibold mb-4 text-blue">Referrals</h3>
+            <p className="text-gray-400 flex-2">
+              Invite friends and earn rewards! Share your referral link below:
+            </p>
+          </div>
+          <div className="mt-4 flex flex-col sm:flex-row gap-4">
+            <input
+              type="text"
+              readOnly
+              value="https://quizapp.com/referral/yourcode"
+              className="flex-1 p-3 rounded-lg dark:bg-gray-800 text-gray-800 dark:text-white border border-gray-700"
+            />
+            <button className="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-600 transition-all">
+              Copy Link
+            </button>
+          </div>
+        </div>
+      )}
       {/* Profile Navigation */}
       <div className="border-b border-white mb-8">
         <nav className="-mb-px flex space-x-8">
@@ -149,13 +174,19 @@ const ProfilePage = () => {
           </div>
           <div className="text-black p-6 rounded-2xl dark:text-white border border-mygrey/30 relative overflow-hidden">
             <h4 className="text-lg font-semibold ">
-              {activeTab === "Account" ? "Earnings" : "Rewards"}
+              {activeTab === "Account"
+                ? "Earnings"
+                : activeTab === "Referral"
+                ? "Referrals"
+                : "Rewards"}
             </h4>
-            <p className="text-4xl font-bold mt-2">N5000</p>
+            <p className="text-4xl font-bold mt-2">
+              {activeTab === "Referral" ? 3 : "N5000"}
+            </p>
             <TrophyIcon className="absolute -right-4 -bottom-4 h-24 w-24 text-white/5" />
           </div>
         </div>
-        {activeTab !== "Account" ? (
+        {activeTab === "Profile" && (
           <>
             <h3 className="text-2xl font-semibold mb-4 dark:text-blue">
               Earnings Analytics
@@ -177,11 +208,231 @@ const ProfilePage = () => {
               </div>
             </div>
           </>
-        ) : (
-          <Funds />
-        )}{" "}
+        )}
+        {activeTab === "Referral" && <Referrals />}
+        {activeTab === "Account" && <Funds />}
       </div>
     </div>
   );
 };
+
+const Referrals = () => {
+  const data = {
+    earningsOverTime: {
+      amount: 250,
+      change: 15, // Represents +15%
+      chartData: [],
+    },
+    rewardsBreakdown: {
+      activities: {
+        total: 15,
+        change: "+10%",
+        categories: [
+          { name: "Clicks", percentage: 70 },
+          { name: "Sign-ups", percentage: 50 },
+          { name: "Subscriptions", percentage: 90 },
+        ],
+      },
+      earningsSources: {
+        total: 200,
+        change: "+20%",
+        categories: [
+          { name: "Referrals", percentage: 60 },
+          { name: "Bonuses", percentage: 40 },
+          { name: "Renewals", percentage: 80 },
+        ],
+      },
+      quizWinnings: {
+        total: 50,
+        change: "+5%",
+        categories: [
+          { name: "Quiz 1", percentage: 80 },
+          { name: "Quiz 2", percentage: 50 },
+          { name: "Quiz 3", percentage: 90 },
+        ],
+      },
+    },
+  };
+  return (
+    <>
+      <div className="p-4 sm:p-6 lg:p-8 text-white min-h-full">
+        <div className="mt-8">
+          <h4 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
+            Your Referrals
+          </h4>
+          <div className="space-y-4">
+            <div className="p-4 dark:bg-gray-800 rounded-lg flex justify-between items-center">
+              <div>
+                <p className="font-semibold text-gray-800 dark:text-white">
+                  Jane Doe
+                </p>
+                <p className="text-sm text-gray-400">Joined: Jan 15, 2024</p>
+              </div>
+              <p className="text-green-400 font-semibold">+N500</p>
+            </div>
+            <div className="p-4 dark:bg-gray-800 rounded-lg flex justify-between items-center">
+              <div>
+                <p className="font-semibold text-gray-800 dark:text-white">
+                  John Smith
+                </p>
+                <p className="text-sm text-gray-400">Joined: Feb 20, 2024</p>
+              </div>
+              <p className="text-green-400 font-semibold">+N500</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col gap-10">
+        <WalletAnalytics earningsData={data.earningsOverTime} />
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+          Rewards Breakdown
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <BreakdownItem
+            title="Referral Activities"
+            total={data.rewardsBreakdown.activities.total}
+            change={data.rewardsBreakdown.activities.change}
+            categories={data.rewardsBreakdown.activities.categories}
+          />
+          <BreakdownItem
+            title="Earnings Sources"
+            total={data.rewardsBreakdown.earningsSources.total}
+            change={data.rewardsBreakdown.earningsSources.change}
+            categories={data.rewardsBreakdown.earningsSources.categories}
+          />
+          <BreakdownItem
+            title="Quiz Winnings"
+            total={data.rewardsBreakdown.quizWinnings.total}
+            change={data.rewardsBreakdown.quizWinnings.change}
+            categories={data.rewardsBreakdown.quizWinnings.categories}
+          />
+        </div>
+      </div>
+    </>
+  );
+};
+
+const WalletAnalytics = ({ earningsData }: any) => {
+  const timeTabs = ["Daily", "Weekly", "Monthly", "Yearly"];
+  const currentTab = "Monthly"; // Based on the screenshot
+
+  return (
+    <div className="space-y-4">
+      <h2 className="text-xl font-semibold">Wallet Analytics</h2>
+      <div className="flex space-x-4 border-b border-gray-200 text-sm mb-6">
+        {timeTabs.map((tab) => (
+          <button
+            key={tab}
+            className={`pb-2 transition duration-150 ${
+              tab === currentTab
+                ? "text-blue-600 border-b-2 border-blue-600 font-medium"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      <div className="bg-white p-6 border border-gray-200 rounded-xl shadow-sm space-y-4">
+        <h3 className="text-2xl font-bold text-gray-800">
+          N{earningsData.amount.toLocaleString()}
+          <span className="text-sm font-normal text-green-500 ml-2">
+            Last 30 Days +{earningsData.change}%
+          </span>
+        </h3>
+
+        {/* Chart Area - Simplification of the area chart */}
+        <div className="h-40 w-full relative">
+          {/* Placeholder for the line/area chart using a simplified, illustrative path */}
+          <svg
+            className="w-full h-full"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            {/* Base line for the x-axis */}
+            <line
+              x1="0"
+              y1="90"
+              x2="100"
+              y2="90"
+              stroke="#e5e7eb"
+              strokeWidth="0.5"
+            />
+            {/* Illustrative Area Path - This is a rough approximation of the shape */}
+            <path
+              d="M0 70 L5 50 L10 60 L15 40 L20 60 L25 50 L30 70 L35 40 L40 50 L45 30 L50 60 L55 30 L60 10 L65 70 L70 50 L75 10 L80 30 L85 20 L90 50 L95 40 L100 60"
+              fill="none"
+              stroke="#2563eb"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {/* Illustrative Fill Area Path */}
+            <path
+              d="M0 90 L0 70 L5 50 L10 60 L15 40 L20 60 L25 50 L30 70 L35 40 L40 50 L45 30 L50 60 L55 30 L60 10 L65 70 L70 50 L75 10 L80 30 L85 20 L90 50 L95 40 L100 60 L100 90 Z"
+              fill="url(#chartGradient)"
+              opacity="0.6"
+            />
+            {/* Gradient Definition */}
+            <defs>
+              <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor="#2563eb" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="#2563eb" stopOpacity="0.05" />
+              </linearGradient>
+            </defs>
+          </svg>
+          {/* Simple X-Axis Labels */}
+          <div className="flex justify-between text-xs text-gray-500 mt-1">
+            <span>1</span>
+            <span>5</span>
+            <span>10</span>
+            <span>15</span>
+            <span>20</span>
+            <span>25</span>
+            <span>30</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Renders a single bar chart item in the Rewards Breakdown section.
+ */
+const BreakdownItem = ({ title, total, change, categories }) => {
+  return (
+    <div className="p-4 bg-white border border-gray-200 rounded-xl shadow-sm space-y-3">
+      <h3 className="text-base font-medium">{title}</h3>
+      <p className="text-xl font-bold text-gray-800">
+        {/* Note: I kept the N (Naira symbol) in the data structure, but depending on the component, 
+           you might want to format it as a string */}
+        {isNaN(total) ? total : `N${total}`}
+        <span
+          className={`text-sm font-normal ml-2 ${
+            change.startsWith("+") ? "text-green-500" : "text-red-500"
+          }`}
+        >
+          Total {change}
+        </span>
+      </p>
+
+      <div className="space-y-3">
+        {categories.map((cat) => (
+          <div key={cat.name} className="flex flex-col">
+            <span className="text-xs text-gray-600 mb-1">{cat.name}</span>
+            <div className="w-full bg-gray-200 rounded-full h-2.5">
+              <div
+                className="bg-blue-600 h-2.5 rounded-full"
+                style={{ width: `${cat.percentage}%` }}
+              ></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export default ProfilePage;

@@ -1,57 +1,228 @@
-import { JSX, SVGProps } from "react";
+"use client";
+import RankTable from "@/components/RankTable";
+import { JSX, SVGProps, useState } from "react";
 
-const ExploralPage = async ({
-  searchParams,
-}: {
-  searchParams: Promise<{ theme?: string }>;
-}) => {
-  const params = await searchParams;
+function toRoman(num: number) {
+  const romanMap = [
+    { value: 1000, symbol: "M" },
+    { value: 900, symbol: "CM" },
+    { value: 500, symbol: "D" },
+    { value: 400, symbol: "CD" },
+    { value: 100, symbol: "C" },
+    { value: 90, symbol: "XC" },
+    { value: 50, symbol: "L" },
+    { value: 40, symbol: "XL" },
+    { value: 10, symbol: "X" },
+    { value: 9, symbol: "IX" },
+    { value: 5, symbol: "V" },
+    { value: 4, symbol: "IV" },
+    { value: 1, symbol: "I" },
+  ];
 
+  let result = "";
+
+  for (const { value, symbol } of romanMap) {
+    while (num >= value) {
+      result += symbol;
+      num -= value;
+    }
+  }
+
+  return result;
+}
+
+const ExploralPage = () => {
+  const [ranktable, setranktable] = useState(false);
+  const [rankData, setrankData] = useState<any>({});
   const leaderboardRanks = [
     {
       rank: 1,
-      title: "Grand Master",
-      monthlyPoints: "25,000+",
-      dailyPoints: "800+",
-      points: "5000+",
-      level: "25",
-      rewards: "2,500 + 1-month premium",
+      title: "Quiz overloard",
+      pointsRange: "2,000,000+",
+      monthlyPoints: "700,000+",
+      basic: "7000+",
+      premium: "17500+",
+      rewards: "GenusLab Trophy + Exclusive Crown Badge + VIP Access",
     },
     {
       rank: 2,
-      title: "Master",
-      monthlyPoints: "20,000-24,999",
-      dailyPoints: "600-799",
-      points: "3,751-4,999",
-      level: "24",
-      rewards: "1,500 + Badge",
+      title: "Mastermind",
+      pointsRange: "1,000,000-999,999",
+      monthlyPoints: "350,000-699,999",
+      basic: "3,500-6,999",
+      premium: "8750-17,499",
+      rewards: "Exclusive Hoodie + Mastermind Badge + Early Quiz Access",
     },
     {
       rank: 3,
-      title: "Expert",
-      monthlyPoints: "15,000-19,999",
-      dailyPoints: "500-599",
-      points: "2,501-3,750",
-      level: "21-23",
-      rewards: "1,000 + Badge",
+      title: "Brainiac",
+      pointsRange: "500,000–999,999",
+      monthlyPoints: "175,000 – 349,999",
+      basic: "1,750 – 3,499",
+      premium: "4,375 – 8,749",
+      rewards: "Premium Badge + Access to Bonus Quiz Packs",
     },
     {
       rank: 4,
-      title: "Pro",
-      monthlyPoints: "10,000-14,999",
-      dailyPoints: "400-499",
-      points: "1,751-2,500",
-      level: "18-20",
-      rewards: "750 + Badge",
+      title: "Quiz Pro",
+      pointsRange: "200,000–499,999",
+      monthlyPoints: "70,000 – 174,999",
+      basic: "700 – 1,749",
+      premium: "1,750 – 4,375",
+      rewards: "Quiz Boost Pack + Certificate of Excellence",
     },
     {
       rank: 5,
-      title: "Veteran",
-      monthlyPoints: "7,500-9,999",
-      dailyPoints: "300-399",
-      points: "1,151-1,750",
-      level: "15-17",
-      rewards: "500",
+      title: "Trivia titan",
+      pointsRange: "100,000–199,999",
+      monthlyPoints: "35,000 – 69,999",
+      basic: "350 – 699",
+      premium: "875 – 1,749",
+      rewards: "1 Month Free Premium + Trivia Titan Badge",
+    },
+    {
+      rank: 5,
+      title: "Trivia titan",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "1 Month Free Premium + Trivia Titan Badge",
+    },
+    {
+      rank: 6,
+      title: "Quiz Ace",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "Achievement Badge + XP Booster",
+    },
+    {
+      rank: 7,
+      title: "Knowledge Knight",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "Exclusive Notebook + Knowledge Knight Badge",
+    },
+    {
+      rank: 8,
+      title: "Smart Cookie",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "5XP Booster + Smart Cookie Badge",
+    },
+    {
+      rank: 9,
+      title: "Sharp Thinker",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "Free Merchandise (Sticker Pack or T-Shirt)",
+    },
+    {
+      rank: 10,
+      title: "Clever Clog",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "7 Days Free Premium Subscription",
+    },
+    {
+      rank: 11,
+      title: "Bright Spark",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "5,000 Bonus Points + Bright Spark Bad",
+    },
+    {
+      rank: 12,
+      title: "Quick Wits",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "3 Extra Lives + Quick Wits Badge",
+    },
+    {
+      rank: 13,
+      title: "Keen Mind",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "Special Badge + Quiz Booster",
+    },
+    {
+      rank: 14,
+      title: "Inquisitive Soul",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "3 Quiz Boosters + Inquisitive Soul Badge",
+    },
+    {
+      rank: 15,
+      title: "Curious Cat",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "2 Power-Ups + Curious Cat Badge",
+    },
+    {
+      rank: 16,
+      title: "Eager Learner",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "Double Points Weekend Access + Eager Learner Badge",
+    },
+    {
+      rank: 17,
+      title: "Knowledge Seeker",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "Free Entry to Next Quiz Contest + Knowledge Seeker Badge",
+    },
+    {
+      rank: 18,
+      title: "Aspiring Expert",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "50% Discount on Next Quiz + Aspiring Expert Badge",
+    },
+    {
+      rank: 19,
+      title: "Rising Star",
+      pointsRange: "7,500-9,999",
+      monthlyPoints: "300-399",
+      basic: "1,151-1,750",
+      premium: "15-17",
+      rewards: "Welcome Gift (Badge + Booster) + Rising Star Badge",
+    },
+    {
+      rank: 20,
+      title: "Fresh Mind",
+      pointsRange: "0–1,499",
+      monthlyPoints: "0 – 524",
+      basic: "0 – 5.24",
+      premium: "0 – 13.10",
+      rewards: "Encouragement Badge + Keep Learning Message",
     },
   ];
 
@@ -218,15 +389,31 @@ const ExploralPage = async ({
               {leaderboardRanks.map((item, index) => (
                 <tr
                   key={index}
-                  className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/40"
+                  onClick={() => {
+                    setrankData(item);
+                    setranktable(true);
+                    console.log(item);
+                  }}
+                  className="border-b cursor-pointer dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/40"
                 >
                   <td className="py-3 px-4 font-medium">{item.rank}</td>
                   <td className="py-3 px-4">{item.title}</td>
                   <td className="py-3 px-4">{item.monthlyPoints}</td>
-                  <td className="py-3 px-4">{item.dailyPoints}</td>
-                  <td className="py-3 px-4">{item.points}</td>
-                  <td className="py-3 px-4">{item.level}</td>
+                  <td className="py-3 px-4">{item.monthlyPoints}</td>
+                  <td className="py-3 px-4">{item.basic}</td>
+                  <td className="py-3 px-4">{item.premium}</td>
                   <td className="py-3 px-4">{item.rewards}</td>
+                  {ranktable && (
+                    <RankTable
+                      handleClose={(e: any) => {
+                        e.stopPropagation();
+                        console.log("clicked", ranktable);
+                        setranktable(false);
+                      }}
+                      rank={`${toRoman(rankData.rank)} ${rankData.title}`}
+                      dtheme={() => {}}
+                    />
+                  )}
                 </tr>
               ))}
             </tbody>

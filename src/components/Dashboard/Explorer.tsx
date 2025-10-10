@@ -1,6 +1,38 @@
-import { JSX, SVGProps } from "react";
+
+import { JSX, SVGProps, useState } from "react";
+import RankTable from "../RankTable";
+
+function toRoman(num: number) {
+  const romanMap = [
+    { value: 1000, symbol: "M" },
+    { value: 900, symbol: "CM" },
+    { value: 500, symbol: "D" },
+    { value: 400, symbol: "CD" },
+    { value: 100, symbol: "C" },
+    { value: 90, symbol: "XC" },
+    { value: 50, symbol: "L" },
+    { value: 40, symbol: "XL" },
+    { value: 10, symbol: "X" },
+    { value: 9, symbol: "IX" },
+    { value: 5, symbol: "V" },
+    { value: 4, symbol: "IV" },
+    { value: 1, symbol: "I" },
+  ];
+
+  let result = "";
+
+  for (const { value, symbol } of romanMap) {
+    while (num >= value) {
+      result += symbol;
+      num -= value;
+    }
+  }
+
+  return result;
+}
 
 const ExploralPage = ({ theme }: { theme: string }) => {
+  const [ranktTable, setranktTable] = useState(false);
   const isDark = theme === "dark";
   const cardClass = isDark
     ? "bg-[#1a2634] border border-gray-700"
@@ -213,18 +245,14 @@ const ExploralPage = ({ theme }: { theme: string }) => {
               <tr>
                 <th className="py-3 px-4">Rank</th>
                 <th className="py-3 px-4">Title</th>
-                <th className="py-3 px-4">Point Range</th>
-                <th className="py-3 px-4">Monthly Points</th>
-                <th className="py-3 px-4">Reward Basic</th>
-                <th className="py-3 px-4">Reward Premium</th>
-                <th className="py-3 px-4">Non Cash Rewards</th>
               </tr>
             </thead>
             <tbody>
               {leaderboardRanks.map((item, index) => (
                 <tr
                   key={index}
-                  className={`border-b ${
+                  onClick={() => setranktTable(true)}
+                  className={`border-b cursor-pointer ${
                     isDark ? "border-gray-800" : "border-gray-100"
                   } hover:${isDark ? "bg-gray-800" : "bg-gray-50"}`}
                 >
@@ -235,6 +263,13 @@ const ExploralPage = ({ theme }: { theme: string }) => {
                   <td className="py-3 px-4">{item.points}</td>
                   <td className="py-3 px-4">{item.level}</td>
                   <td className="py-3 px-4">{item.rewards}</td>
+                  {ranktTable && (
+                    <RankTable
+                      dtheme={isDark}
+                      handleClose={() => setranktTable(false)}
+                      rank={`${toRoman(item.rank)} ${item.title}`}
+                    />
+                  )}
                 </tr>
               ))}
             </tbody>
