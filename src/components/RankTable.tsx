@@ -121,10 +121,10 @@ const mockRankings = [
 // Helper Component for a single Rank Item
 const RankItem = ({ rank, name, score, avatarColor, avatarInitials }: any) => (
   <div
-    className="flex items-center justify-between p-3 my-2 shadow-lg rounded-2xl transition-colors duration-300
+    className="flex items-center justify-between p-3 my-2 shadow-sm rounded-2xl transition-colors duration-300
               bg-white dark:bg-gray-800
               hover:bg-blue-50 dark:hover:bg-gray-700
-              ring-4 ring-blue-300 dark:ring-indigo-600/50"
+               ring-blue-300 dark:ring-indigo-600/50"
   >
     {/* Rank Number */}
     <div className="font-extrabold text-2xl w-10 text-center text-blue-600 dark:text-indigo-400">

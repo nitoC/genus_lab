@@ -1,13 +1,12 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-// Define the types for the feature and the entire plan card data
+/* ---------- Types ---------- */
 interface Feature {
   name: string;
   isAvailable: boolean;
 }
-
 interface Plan {
   id: "free" | "basic" | "premium";
   name: string;
@@ -15,6 +14,7 @@ interface Plan {
   features: Feature[];
 }
 
+/* ---------- Data ---------- */
 const plans: Plan[] = [
   {
     id: "free",
@@ -72,350 +72,233 @@ const plans: Plan[] = [
   },
 ];
 
-// Inline SVG icons for check and cross
+/* ---------- Icons ---------- */
 const CheckIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
+    width="18"
+    height="18"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="lucide lucide-check text-green-500"
+    className="text-green-500"
   >
     <path d="M20 6 9 17l-5-5" />
   </svg>
 );
-
 const XIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
+    width="18"
+    height="18"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="lucide lucide-x text-red-500"
+    className="text-red-500"
   >
-    <path d="M18 6 6 18" />
-    <path d="m6 6 12 12" />
+    <path d="M18 6 6 18M6 6l12 12" />
   </svg>
 );
-
-// Inline SVG icons for the buttons
 const PlusIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="20"
     height="20"
-    viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
   >
     <line x1="12" y1="5" x2="12" y2="19" />
     <line x1="5" y1="12" x2="19" y2="12" />
   </svg>
 );
-
 const MinusIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="20"
     height="20"
-    viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
   >
     <line x1="5" y1="12" x2="19" y2="12" />
   </svg>
 );
 
-// Pricing card component to be rendered for each plan
+/* ---------- Pricing Card ---------- */
 const PricingCard: React.FC<{
   plan: Plan;
   changeModal: (val: boolean) => void;
   handlePlan: (val: Plan) => void;
   currentplan: Plan;
-}> = ({ plan, changeModal, currentplan, handlePlan }) => {
-  // Determine gradient color based on plan ID
-  // const [currentplan, setCurrentplan] = useState("free");
+}> = ({ plan, changeModal, handlePlan, currentplan }) => {
+  const isCurrent = plan.id === currentplan.id;
 
-  let borderColorClass = "";
-  switch (plan.id) {
-    case "free":
-      borderColorClass = "from-[#65E98B] via-[#65E98B] to-[#A088F5]";
-      break;
-    case "basic":
-      borderColorClass = "from-[#A088F5] via-[#65E98B] to-[#3C91F2]";
-      break;
-    case "premium":
-      borderColorClass = "from-[#A088F5] via-[#3C91F2] to-[#65E98B]";
-      break;
-  }
-
-  const isCurrentPlan = plan.id === currentplan.id;
-  const buttonGradientClass = isCurrentPlan
-    ? "from-[#Acaa] to-[#Accc]"
-    : "from-[#3C91F2] to-[#65E98B]";
+  const gradient = {
+    free: "from-[#65E98B] via-[#65E98B] to-[#A088F5]",
+    basic: "from-[#A088F5] via-[#65E98B] to-[#3C91F2]",
+    premium: "from-[#A088F5] via-[#3C91F2] to-[#65E98B]",
+  }[plan.id];
 
   return (
-    <>
-      <div
-        data-plan={plan.id}
-        className={`p-1 bg-gradient-to-tr ${borderColorClass} rounded-2xl`}
-      >
-        <div className="bg-white dark:bg-[#171A21] p-6 rounded-2xl space-y-4 h-full flex flex-col items-center text-black dark:text-white">
-          <h3 className="font-bold text-lg font-mono tracking-widest">
-            {plan.name}
-          </h3>
-          <p className="font-bold text-3xl font-mono">{plan.price}</p>
-          <ul className="w-full flex-grow space-y-2 text-sm">
-            {plan.features.map((feature, index) => (
-              <li key={index} className="flex items-center space-x-2">
-                {feature.isAvailable ? <CheckIcon /> : <XIcon />}
-                <span>{feature.name}</span>
-              </li>
-            ))}
-          </ul>
-          <button
-            data-plan={plan.id}
-            disabled={isCurrentPlan}
-            onClick={(e) => {
-              // alert(changeModal);
-              const planId = (e.currentTarget.getAttribute("data-plan") ||
-                "free") as "free" | "basic" | "premium";
-              // setCurrentplan(planId);
-              handlePlan(plan);
-              changeModal(true);
-            }}
-            className={`w-full cursor-pointer py-2 px-4 rounded-full font-bold text-white bg-gradient-to-r ${buttonGradientClass}`}
-          >
-            {isCurrentPlan ? "Current Plan" : "Get Started"}
-          </button>
-        </div>
-      </div>
-    </>
-  );
-};
+    <div
+      className={`p-[1px] rounded-2xl bg-gradient-to-tr ${gradient} shadow-xl hover:shadow-2xl transition-all duration-500 animate-float`}
+    >
+      <div className="bg-white dark:bg-[#171A21] rounded-2xl p-6 flex flex-col items-center h-full text-black dark:text-white transition-transform hover:scale-[1.03]">
+        <h3 className="font-bold text-xl tracking-widest mb-2">{plan.name}</h3>
+        <p className="font-extrabold text-3xl mb-4">{plan.price}</p>
 
-// Main AddFunds component
-const Funds: React.FC = () => {
-  const [changeModal, setChangeModal] = useState(false);
-  const [currentplan, setCurrentplan] = useState(plans[0]);
-  return (
-    <div className="min-h-screen dark:text-white p-4 font-sans flex flex-col items-center">
-      {/* Top section with account buttons */}
-      <header className="w-full max-w-7xl mb-12">
-        <h1 className="p-4 dark:text-blue text-xl md:text-2xl text-black font-semibold mb-4 lg:text-left text-center">
-          Account
-        </h1>
-        <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <Link
-            href={"/profile/pay"}
-            className="w-full sm:flex-1 max-w-xs mx-auto py-3 px-6 bg-gradient-to-r from-green-500 to-green-700 rounded-full font-bold text-white shadow-lg flex items-center justify-center space-x-2"
-          >
-            <PlusIcon />
-            <span>Add Funds</span>
-          </Link>
-          <Link
-            href={"/profile/withdraw"}
-            className="w-full sm:flex-1 max-w-xs mx-auto py-3 px-6 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full font-bold text-white shadow-lg flex items-center justify-center space-x-2"
-          >
-            <MinusIcon />
-            <span>Withdraw Funds</span>
-          </Link>
-        </div>
-      </header>
-
-      {/* Pricing section */}
-      <main className="w-full max-w-7xl flex flex-col gap-2">
-        <h2 className="text-2xl text-black dark:text-white md:text-3xl font-bold font-mono text-center mb-8 tracking-widest">
-          Upgrade to Premium
-        </h2>
-        <div className="flex flex-col lg:flex-row lg:justify-center items-stretch lg:items-center p-4 lg:p-0">
-          {plans.map((plan) => (
-            <div
-              key={plan.id}
-              className={`w-full ${
-                plan.id === "basic" ? "lg:-mx-8 lg:scale-109 lg:z-10" : ""
-              } p-4 lg:p-0`}
-            >
-              <PricingCard
-                plan={plan}
-                currentplan={currentplan}
-                changeModal={(val: boolean) => setChangeModal(val)}
-                handlePlan={(val: Plan) => {
-                  setCurrentplan(val);
-                }}
-              />
-            </div>
+        <ul className="space-y-2 text-sm w-full flex-grow">
+          {plan.features.map((f, i) => (
+            <li key={i} className="flex items-center gap-2">
+              {f.isAvailable ? <CheckIcon /> : <XIcon />}
+              <span
+                className={`${f.isAvailable ? "" : "opacity-50 line-through"}`}
+              >
+                {f.name}
+              </span>
+            </li>
           ))}
-        </div>
-      </main>
-      {changeModal && (
-        <SubscriptionModal
-          isVisible={changeModal}
-          onClose={() => {
-            setChangeModal(false);
+        </ul>
+
+        <button
+          disabled={isCurrent}
+          onClick={() => {
+            handlePlan(plan);
+            changeModal(true);
           }}
-          handlePlan={(val: Plan) => setCurrentplan(val)}
-          plan={currentplan.name}
-          amount={currentplan.price}
-        />
-      )}
+          className={`mt-6 w-full py-2.5 rounded-full font-semibold text-white bg-gradient-to-r from-[#3C91F2] to-[#65E98B] transition-all duration-300 hover:from-[#65E98B] hover:to-[#3C91F2] ${
+            isCurrent && "cursor-not-allowed opacity-60"
+          }`}
+        >
+          {isCurrent ? "Current Plan" : "Get Started"}
+        </button>
+      </div>
     </div>
   );
 };
 
-// Inline SVG for the Close button (X)
-const CloseIcon = ({ className = "w-6 h-6" }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M18 6L6 18M6 6l12 12" />
-  </svg>
-);
-
-// Inline SVG for the Checkmark icon (used in features and the title)
-const CheckMarkIcon = ({ className = "w-5 h-5" }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M20 6L9 17l-5-5" />
-  </svg>
-);
-
-// Icon for the Genus Lab Logo (Placeholder G icon)
-interface LogoIconProps {
-  className?: string;
-}
-
-const LogoIcon: React.FC<LogoIconProps> = (props) => (
-  <div
-    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl text-white ${
-      props.className || "bg-blue-600"
-    }`}
-  >
-    G
-  </div>
-);
-
-// Feature Checkmark Item
-const FeatureItem = ({ text }: { text: string }) => (
-  <div className="flex items-start mb-2 text-gray-700 dark:text-gray-300">
-    <CheckMarkIcon className="w-5 h-5 mr-2 text-green-500 flex-shrink-0 mt-1" />
-    <p className="text-sm font-medium">{text}</p>
-  </div>
-);
-
+/* ---------- Modal ---------- */
 const SubscriptionModal = ({ isVisible, onClose, plan, amount }: any) => {
-  if (!isVisible) return null;
+  const [visible, setVisible] = useState(isVisible);
+
+  useEffect(() => {
+    if (isVisible) setVisible(true);
+    else setTimeout(() => setVisible(false), 300);
+  }, [isVisible]);
+
+  if (!visible) return null;
 
   return (
-    // Backdrop Overlay (fixed position, semi-transparent black with blur)
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 bg-opacity-50 backdrop-blur-sm p-4 transition-opacity duration-300">
-      {/* Modal Container */}
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
+    >
       <div
-        onClick={onClose}
-        className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl transform transition-all duration-300 scale-100 opacity-100 overflow-hidden border border-gray-200 dark:border-gray-700"
+        className={`bg-white dark:bg-[#1c1f26] flex flex-col gap-10 rounded-2xl shadow-2xl max-w-md w-full p-8 text-center border border-gray-200 dark:border-gray-700 transform transition-all duration-300 ${
+          isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"
+        }`}
       >
-        {/* Header and Close Button */}
-        <div className="p-6 sm:p-8 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white">
-            Subscribe
-          </h2>
-          <button
-            onClick={onClose}
-            className="p-1 rounded-full text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-            aria-label="Close modal"
-          >
-            <CloseIcon className="w-6 h-6" />
-          </button>
+        <div className="p-4 bg-purple-50 dark:bg-indigo-900/20 rounded-xl border-2 border-dashed border-pink-400 dark:border-pink-600">
+          <h3 className="flex items-center text-md font-bold mb-3 text-pink-600 dark:text-pink-400">
+            Subscribe to {plan} Plan
+          </h3>
+          <p className="text-gray-500 dark:text-gray-400 mb-4">
+            Unlock all premium features and enjoy full access!
+          </p>
+          {/* <CheckMarkIcon className="w-4 h-4 mr-1" /> */}
+
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            Unlock full access to quizzes, exclusive content, and top-tier
+            learning tools with our **Premium Plan**.
+          </p>
+
+          <div className="ml-2">
+            {/* <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
+              • Subscription Details:
+            </p> */}
+            {/* <FeatureItem text="The plan is automatically renews monthly." />
+              <FeatureItem text="You can cancel auto-renewal at any time from your dashboard settings." /> */}
+          </div>
+        </div>
+        <div className="text-4xl font-extrabold text-blue-500 mb-6">
+          {amount}
         </div>
 
-        {/* Content Body */}
-        <div className="p-6 sm:p-8 space-y-6">
-          {/* Subscription Offer Box */}
-          <div className="p-4 bg-purple-50 dark:bg-indigo-900/20 rounded-xl border-2 border-dashed border-pink-400 dark:border-pink-600">
-            <h3 className="flex items-center text-md font-bold mb-3 text-pink-600 dark:text-pink-400">
-              <CheckMarkIcon className="w-4 h-4 mr-1" />
-              Subscribe to Genus Lab {plan} Plan
-            </h3>
-
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-              Unlock full access to quizzes, exclusive content, and top-tier
-              learning tools with our **Premium Plan**.
-            </p>
-
-            <div className="ml-2">
-              <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                • Subscription Details:
-              </p>
-              <FeatureItem text="The plan is automatically renews monthly." />
-              <FeatureItem text="You can cancel auto-renewal at any time from your dashboard settings." />
-            </div>
-          </div>
-
-          {/* Pricing and Logo */}
-          <div className="flex flex-col items-center space-y-4">
-            <div className="flex items-center justify-center space-x-2">
-              <div className="text-3xl flex justify-center items-center font-bold text-blue-500">
-                <img
-                  width={35}
-                  src="/images/logo.png"
-                  alt="Logo"
-                  className="rounded-lg"
-                />
-              </div>
-              {/* <div className="flex flex-col items-start"> */}
-              <span className="text-xs text-gray-400 dark:text-gray-500 font-semibold">
-                1-Month Plan
-              </span>
-              {/* </div> */}
-            </div>
-
-            <p className="text-4xl font-black text-gray-900 dark:text-white">
-              {amount}
-            </p>
-          </div>
-
-          {/* Action Button */}
-          <button
-            className="w-full py-3 bg-blue-600 text-white font-bold text-lg rounded-xl shadow-lg hover:bg-blue-700 transition duration-150 transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-blue-500/50"
-            onClick={(e) => {
-              e.stopPropagation();
-            }} // Typically would handle payment logic
-          >
-            Continue
-          </button>
-        </div>
+        <button
+          onClick={onClose}
+          className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-green-500 text-white shadow-lg hover:shadow-2xl transition"
+        >
+          Continue
+        </button>
       </div>
+    </div>
+  );
+};
+
+/* ---------- Main Page ---------- */
+const Funds: React.FC = () => {
+  const [modal, setModal] = useState(false);
+  const [currentPlan, setCurrentPlan] = useState(plans[0]);
+
+  return (
+    <div className="min-h-screen relative overflow-hidden flex flex-col items-center py-10 px-4 font-sans">
+      {/* Animated Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#3C91F2]/25 via-[#65E98B]/10 to-[#A088F5]/30 animate-gradient-x"></div>
+
+      <header className="relative z-10 w-full max-w-5xl mb-12 text-center">
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-6 bg-gradient-to-r from-blue-500 via-green-400 to-purple-400 text-transparent bg-clip-text">
+          Account Management
+        </h1>
+
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <Link
+            href="/profile/pay"
+            className="flex-1 max-w-xs py-3 bg-gradient-to-r from-green-500 to-green-700 rounded-full text-white font-bold flex items-center justify-center gap-2 shadow-lg hover:scale-105 transition"
+          >
+            <PlusIcon />
+            Add Funds
+          </Link>
+          <Link
+            href="/profile/withdraw"
+            className="flex-1 max-w-xs py-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full text-white font-bold flex items-center justify-center gap-2 shadow-lg hover:scale-105 transition"
+          >
+            <MinusIcon />
+            Withdraw Funds
+          </Link>
+        </div>
+      </header>
+
+      <main className="relative z-10 w-full max-w-6xl">
+        <h2 className="text-2xl text-gray-800 dark:text-white md:text-3xl font-bold text-center mb-10">
+          Upgrade Your Plan
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {plans.map((plan) => (
+            <PricingCard
+              key={plan.id}
+              plan={plan}
+              currentplan={currentPlan}
+              changeModal={setModal}
+              handlePlan={setCurrentPlan}
+            />
+          ))}
+        </div>
+      </main>
+
+      <SubscriptionModal
+        isVisible={modal}
+        onClose={() => setModal(false)}
+        plan={currentPlan.name}
+        amount={currentPlan.price}
+      />
     </div>
   );
 };
