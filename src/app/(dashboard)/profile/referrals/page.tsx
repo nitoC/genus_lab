@@ -87,7 +87,7 @@ const EarningsSummary = ({ totalBalance, referrals }: any) => {
 /**
  * Renders the table of referred friends.
  */
-const ReferredFriends = ({ friends }) => {
+const ReferredFriends = ({ friends }: any) => {
   return (
     <div className="bg-white p-6 border border-gray-200 rounded-xl shadow-sm">
       <h2 className="text-xl font-semibold mb-4">Referred Friends</h2>
@@ -100,7 +100,7 @@ const ReferredFriends = ({ friends }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {friends.map((friend) => (
+            {friends.map((friend: any) => (
               <tr key={friend.name} className="text-sm text-gray-800">
                 <td className="py-2 pr-4 font-medium flex items-center">
                   <MdOutlinePersonPin className="w-5 h-5 text-gray-400 mr-2 hidden sm:inline" />
@@ -119,7 +119,7 @@ const ReferredFriends = ({ friends }) => {
 /**
  * Renders the Wallet Analytics section with tabs and the Earnings Over Time chart.
  */
-const WalletAnalytics = ({ earningsData }) => {
+const WalletAnalytics = ({ earningsData }: any) => {
   const timeTabs = ["Daily", "Weekly", "Monthly", "Yearly"];
   const currentTab = "Monthly"; // Based on the screenshot
 
@@ -208,7 +208,7 @@ const WalletAnalytics = ({ earningsData }) => {
 /**
  * Renders a single bar chart item in the Rewards Breakdown section.
  */
-const BreakdownItem = ({ title, total, change, categories }) => {
+const BreakdownItem = ({ title, total, change, categories }: any) => {
   return (
     <div className="p-4 bg-white border border-gray-200 rounded-xl shadow-sm space-y-3">
       <h3 className="text-base font-medium">{title}</h3>
@@ -226,7 +226,7 @@ const BreakdownItem = ({ title, total, change, categories }) => {
       </p>
 
       <div className="space-y-3">
-        {categories.map((cat) => (
+        {categories.map((cat: any) => (
           <div key={cat.name} className="flex flex-col">
             <span className="text-xs text-gray-600 mb-1">{cat.name}</span>
             <div className="w-full bg-gray-200 rounded-full h-2.5">

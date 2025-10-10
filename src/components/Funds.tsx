@@ -146,8 +146,8 @@ const MinusIcon = () => (
 const PricingCard: React.FC<{
   plan: Plan;
   changeModal: (val: boolean) => void;
-  currentplan: Plan;
   handlePlan: (val: Plan) => void;
+  currentplan: Plan;
 }> = ({ plan, changeModal, currentplan, handlePlan }) => {
   // Determine gradient color based on plan ID
   // const [currentplan, setCurrentplan] = useState("free");
@@ -172,7 +172,10 @@ const PricingCard: React.FC<{
 
   return (
     <>
-      <div className={`p-1 bg-gradient-to-tr ${borderColorClass} rounded-2xl`}>
+      <div
+        data-plan={plan.id}
+        className={`p-1 bg-gradient-to-tr ${borderColorClass} rounded-2xl`}
+      >
         <div className="bg-white dark:bg-[#171A21] p-6 rounded-2xl space-y-4 h-full flex flex-col items-center text-black dark:text-white">
           <h3 className="font-bold text-lg font-mono tracking-widest">
             {plan.name}
@@ -187,11 +190,15 @@ const PricingCard: React.FC<{
             ))}
           </ul>
           <button
+            data-plan={plan.id}
             disabled={isCurrentPlan}
-            onClick={() => {
+            onClick={(e) => {
               // alert(changeModal);
-              changeModal(true);
+              const planId = (e.currentTarget.getAttribute("data-plan") ||
+                "free") as "free" | "basic" | "premium";
+              // setCurrentplan(planId);
               handlePlan(plan);
+              changeModal(true);
             }}
             className={`w-full cursor-pointer py-2 px-4 rounded-full font-bold text-white bg-gradient-to-r ${buttonGradientClass}`}
           >
@@ -249,7 +256,9 @@ const Funds: React.FC = () => {
                 plan={plan}
                 currentplan={currentplan}
                 changeModal={(val: boolean) => setChangeModal(val)}
-                handlePlan={(val: Plan) => setCurrentplan(val)}
+                handlePlan={(val: Plan) => {
+                  setCurrentplan(val);
+                }}
               />
             </div>
           ))}
@@ -375,13 +384,20 @@ const SubscriptionModal = ({ isVisible, onClose, plan, amount }: any) => {
 
           {/* Pricing and Logo */}
           <div className="flex flex-col items-center space-y-4">
-            <div className="flex items-center space-x-2">
-              <LogoIcon className="bg-blue-600 ring-4 ring-blue-200 dark:ring-blue-800" />
-              <div className="flex flex-col items-start">
-                <span className="text-xs text-gray-400 dark:text-gray-500 font-semibold">
-                  1-Month Plan
-                </span>
+            <div className="flex items-center justify-center space-x-2">
+              <div className="text-3xl flex justify-center items-center font-bold text-blue-500">
+                <img
+                  width={35}
+                  src="/images/logo.png"
+                  alt="Logo"
+                  className="rounded-lg"
+                />
               </div>
+              {/* <div className="flex flex-col items-start"> */}
+              <span className="text-xs text-gray-400 dark:text-gray-500 font-semibold">
+                1-Month Plan
+              </span>
+              {/* </div> */}
             </div>
 
             <p className="text-4xl font-black text-gray-900 dark:text-white">

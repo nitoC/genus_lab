@@ -192,7 +192,7 @@ const RankTable = ({
       className="min-h-screen cursor-default p-0 m-0 font-sans antialiased transition-colors duration-300
                   bg-gray-100 fixed inset-0 z-10 dark:bg-gray-900 lg:p-8"
     >
-      <div className="h-[100vh] overflow-auto">
+      <div className="h-[100vh] overflow-auto hori-scroll">
         <button className="cursor-pointer" onClick={handleClose}>
           <IoCloseCircle size={34} />
         </button>{" "}

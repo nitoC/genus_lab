@@ -334,8 +334,8 @@ const WalletAnalytics = ({ earningsData }: any) => {
         ))}
       </div>
 
-      <div className="bg-white p-6 border border-gray-200 rounded-xl shadow-sm space-y-4">
-        <h3 className="text-2xl font-bold text-gray-800">
+      <div className="bg-white dark:bg-gray-800 p-6 border border-gray-200 rounded-xl shadow-sm space-y-4">
+        <h3 className="text-2xl font-bold dark:text-white text-gray-800">
           N{earningsData.amount.toLocaleString()}
           <span className="text-sm font-normal text-green-500 ml-2">
             Last 30 Days +{earningsData.change}%
@@ -401,11 +401,11 @@ const WalletAnalytics = ({ earningsData }: any) => {
 /**
  * Renders a single bar chart item in the Rewards Breakdown section.
  */
-const BreakdownItem = ({ title, total, change, categories }) => {
+const BreakdownItem = ({ title, total, change, categories }: any) => {
   return (
-    <div className="p-4 bg-white border border-gray-200 rounded-xl shadow-sm space-y-3">
-      <h3 className="text-base font-medium">{title}</h3>
-      <p className="text-xl font-bold text-gray-800">
+    <div className="p-4 dark:bg-gray-800 bg-white border border-gray-200 rounded-xl shadow-sm space-y-3">
+      <h3 className="text-base font-medium dark:text-white">{title}</h3>
+      <p className="text-xl font-bold dark:text-white text-gray-800">
         {/* Note: I kept the N (Naira symbol) in the data structure, but depending on the component, 
            you might want to format it as a string */}
         {isNaN(total) ? total : `N${total}`}
@@ -419,10 +419,12 @@ const BreakdownItem = ({ title, total, change, categories }) => {
       </p>
 
       <div className="space-y-3">
-        {categories.map((cat) => (
+        {categories.map((cat: any) => (
           <div key={cat.name} className="flex flex-col">
-            <span className="text-xs text-gray-600 mb-1">{cat.name}</span>
-            <div className="w-full bg-gray-200 rounded-full h-2.5">
+            <span className="text-xs dark:text-white text-gray-600 mb-1">
+              {cat.name}
+            </span>
+            <div className="w-full dark:bg-gray-800 bg-gray-200 rounded-full h-2.5">
               <div
                 className="bg-blue-600 h-2.5 rounded-full"
                 style={{ width: `${cat.percentage}%` }}

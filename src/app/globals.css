@@ -47,6 +47,25 @@
 a {
   text-decoration: none !important;
 }
+
+/* For Chrome, Edge, Safari */
+.hori-scroll::-webkit-scrollbar {
+  width: 8px; /* or 0px to hide completely */
+}
+
+.hori-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.hori-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* For Firefox */
+.hori-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
 @layer components {
   .btn-rich {
     @apply relative overflow-hidden transition-all duration-500 ease-in-out px-6 py-2 rounded-full font-semibold tracking-wide;

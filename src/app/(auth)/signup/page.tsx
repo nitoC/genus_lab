@@ -226,7 +226,7 @@ export default function SignUpPage() {
                 <div className="grid gap-5 sm:grid-cols-2">
                   <CustomInput
                     id="fullname"
-                    placeholder="First Name"
+                    placeholder="FullName"
                     onChange={handleChange}
                     value={user.fullname}
                   />

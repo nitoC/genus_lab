@@ -35,9 +35,10 @@ const Sidebar = ({
 
   return (
     <aside className=" text-gray-700 dark:bg-gray-950 bg-white w-64 min-h-screen p-6 flex-col flex fixed top-0 left-0 ">
-      <div className="text-3xl font-bold mb-10 text-blue-500">
+      <div className="text-3xl flex justify-center items-center font-bold mb-10 text-blue-500">
         <img
-          src="https://placehold.co/40x40/2A8CFF/FFFFFF?text=G"
+          width={55}
+          src="/images/logo.png"
           alt="Logo"
           className="rounded-lg"
         />
@@ -53,9 +54,7 @@ const Sidebar = ({
               router.push(`/${item.page}`);
             }}
             className={`flex text-blue-500 items-center gap-4 p-3 rounded-lg transition-all text-base font-medium relative ${
-              activePage === item.page
-                ? "bg-blue-50 "
-                : "hover:bg-gray-100"
+              activePage === item.page ? "bg-blue-50 " : "hover:bg-gray-100"
             }`}
           >
             <item.icon className="h-5 w-5" />
