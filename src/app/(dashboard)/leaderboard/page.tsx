@@ -44,7 +44,7 @@ const LeaderboardPage = () => {
   );
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 min-h-full bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors">
+    <div className="p-4 sm:p-6 lg:p-8 min-h-full text-gray-900  dark:text-gray-100 transition-colors">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Weekly Scores */}
         <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-2xl border border-gray-300 dark:border-gray-700">

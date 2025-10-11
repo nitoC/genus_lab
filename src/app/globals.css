@@ -173,6 +173,21 @@ a {
     background-blend-mode: overlay;
   }
 }
+.gold {
+  color: #d4af37;
+  font-weight: bold;
+}
+.rank:nth-child(even) {
+  background-color: rgba(129, 200, 241, 0.142);
+}
+.silver {
+  color: #1cc46a;
+  font-weight: bold;
+}
+.platinum {
+  color: crimson;
+  font-weight: bold;
+}
 .wrapper {
   max-width: 1300px;
   margin: auto;

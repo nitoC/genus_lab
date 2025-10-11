@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { IoCloseCircle } from "react-icons/io5";
 
 // --- Icon Definitions (Replacing react-icons/fa) ---
@@ -61,56 +61,56 @@ const MoonIcon = (props: any) => (
 // Mock data for the leaderboard entries
 const mockRankings = [
   {
-    rank: 12,
+    rank: 1,
     name: "wildrider",
     score: 6088,
     avatarColor: "bg-red-400",
     avatarInitials: "WR",
   },
   {
-    rank: 13,
+    rank: 2,
     name: "3p1cfury",
     score: 6087,
     avatarColor: "bg-yellow-500",
     avatarInitials: "3F",
   },
   {
-    rank: 14,
+    rank: 4,
     name: "lilpunchbanana",
     score: 6086,
     avatarColor: "bg-green-400",
     avatarInitials: "LB",
   },
   {
-    rank: 15,
+    rank: 5,
     name: "redBladewaffle",
     score: 6085,
     avatarColor: "bg-pink-400",
     avatarInitials: "RW",
   },
   {
-    rank: 16,
+    rank: 6,
     name: "Neoblade",
     score: 6084,
     avatarColor: "bg-indigo-400",
     avatarInitials: "NB",
   },
   {
-    rank: 17,
+    rank: 7,
     name: "Umbra",
     score: 6083,
     avatarColor: "bg-teal-400",
     avatarInitials: "U",
   },
   {
-    rank: 18,
+    rank: 8,
     name: "Zero",
     score: 6082,
     avatarColor: "bg-purple-400",
     avatarInitials: "Z",
   },
   {
-    rank: 19,
+    rank: 9,
     name: "noisyBear",
     score: 6081,
     avatarColor: "bg-amber-400",
@@ -130,15 +130,20 @@ const RankItem = ({ rank, name, score, avatarColor, avatarInitials }: any) => (
     <div className="font-extrabold text-2xl w-10 text-center text-blue-600 dark:text-indigo-400">
       {rank}
     </div>
-
     {/* Avatar */}
-    <div
+    <img
+      src={`https://i.pravatar.cc/24?img=${
+        Math.floor(Math.random() * 20 + 1) + 10
+      }`}
+      alt={name}
+      className="w-10 h-10 rounded-full mt-1 border-2 border-gray-400 dark:border-gray-600"
+    />{" "}
+    {/* <div
       className={`w-12 h-12 flex items-center justify-center rounded-full shadow-md text-white font-bold text-lg
                     ${avatarColor}`}
     >
       {avatarInitials}
-    </div>
-
+    </div> */}
     {/* Username */}
     <div className="flex-1 mx-4 sm:mx-6 truncate">
       <span
@@ -148,7 +153,6 @@ const RankItem = ({ rank, name, score, avatarColor, avatarInitials }: any) => (
         {name}
       </span>
     </div>
-
     {/* Score/Trophy */}
     <div
       className="flex items-center space-x-2 p-2 rounded-full
@@ -167,10 +171,12 @@ const RankItem = ({ rank, name, score, avatarColor, avatarInitials }: any) => (
 const RankTable = ({
   dtheme,
   rank,
+  rankIcon,
   handleClose,
 }: {
   dtheme: any;
   rank: string;
+  rankIcon: ReactNode;
   handleClose: (e: any) => void;
 }) => {
   const [theme, setTheme] = useState("light");
@@ -189,6 +195,7 @@ const RankTable = ({
 
   return (
     <div
+      onClick={(e) => e.stopPropagation()}
       className="min-h-screen cursor-default p-0 m-0 font-sans antialiased transition-colors duration-300
                   bg-gray-100 fixed inset-0 z-10 dark:bg-gray-900 lg:p-8"
     >
@@ -231,7 +238,8 @@ const RankTable = ({
               bg-white dark:bg-gray-700 border-4 border-yellow-300 shadow-xl"
               >
                 {/* Used inline SVG component */}
-                <DiamondIcon className="w-10 h-10 text-blue-500 dark:text-indigo-400" />
+                {rankIcon}
+                {/* <DiamondIcon className="w-10 h-10 text-blue-500 dark:text-indigo-400" /> */}
               </div>
 
               {/* Title */}

@@ -25,11 +25,12 @@ const userRankings = [
     username: "Udochukwu",
     state: "OYO",
     score: 140,
+
     time: "2m35s",
     accuracy: "100%",
     reward: "₦1,000",
     totalEarned: "₦194,500",
-    tier: "green",
+    tier: "platinum",
   },
   {
     rank: 2,
@@ -154,64 +155,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-start min-h-screen dark:bg-black dark:text-gray-200 p-8 font-sans">
-      {/* <style>{`
-        .rs-calendar {
-          background-color: #0d0d0d !important;
-          border-radius: 12px !important;
-          border: 1px solid #2d2d2d !important;
-          box-shadow: none !important;
-        }
-        .rs-calendar-header {
-          border-bottom: 1px solid #2d2d2d !important;
-        }
-        .rs-calendar-table-row {
-          color: #fff !important;
-        }
-        .rs-calendar-table-row:nth-child(2) td:first-child .rs-calendar-cell {
-          color: #a0aec0 !important;
-        }
-        .rs-calendar-cell {
-          color: #a0aec0 !important;
-          border-radius: 8px !important;
-        }
-        .rs-calendar-cell:hover, .rs-calendar-cell-selected .rs-calendar-cell-content {
-          background-color: #3b82f6 !important;
-          color: #fff !important;
-        }
-        .rs-calendar-cell-selected .rs-calendar-cell-content {
-          background-color: #3b82f6 !important;
-          color: #fff !important;
-        }
-        .rs-calendar-cell-today .rs-calendar-cell-content {
-          color: #fff !important;
-        }
-        .rs-calendar-table-header-cell {
-          color: #fff !important;
-          font-weight: 500 !important;
-        }
-        .rs-panel {
-          background-color: #0d0d0d !important;
-          border: 1px solid #2d2d2d !important;
-          border-radius: 12px !important;
-          color: #fff !important;
-          box-shadow: none !important;
-        }
-        .rs-panel-heading {
-          background-color: transparent !important;
-        }
-        .rsuite-calendar-nav .rs-btn {
-          background-color: transparent !important;
-          color: #fff !important;
-        }
-        .rsuite-calendar-nav .rs-btn:hover {
-          background-color: rgba(255, 255, 255, 0.1) !important;
-        }
-        .rsuite-calendar-nav .rs-btn-group-justified .rs-btn {
-          border-left: none !important;
-        }
-      `}</style> */}
-
+    <div className="flex flex-col lg:flex-row items-start min-h-screen dark:bg-black/40 dark:text-gray-200 p-8 font-sans">
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col items-center lg:items-start p-4 lg:p-8">
         <div className="w-full max-w-4xl">
@@ -225,46 +169,51 @@ export default function App() {
                 View the current standings of users based on their performance.
               </p>
             </div>
-            <div className="dark:bg-gray-900 rounded-lg border-gray-800 border p-4 lg:p-6">
-              <div className="grid grid-cols-8 gap-4 text-gray-400 text-xs md:text-sm font-semibold border-b border-gray-700 pb-2 mb-2">
-                <span className="col-span-1">Rank</span>
-                <span className="col-span-2">Username</span>
-                <span className=" md:block col-span-1">State</span>
-                <span className="col-span-1">Score</span>
-                <span className=" md:block col-span-1">Time</span>
-                <span className="col-span-1">Accuracy</span>
-                <span className="col-span-1">Reward</span>
-                <span className=" md:block col-span-1">Total Earned</span>
-              </div>
-              {userRankings.map((user, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-8 gap-4 py-3 border-b border-gray-800 last:border-b-0 items-center"
-                >
-                  <span className="col-span-1 font-bold text-lg dark:text-white">
-                    {user.rank}
-                  </span>
-                  <span className="col-span-2 dark:text-white font-medium">
-                    {user.username}
-                  </span>
-                  <span className=" md:block col-span-1 text-gray-400">
-                    {user.state}
-                  </span>
-                  <span className="col-span-1 text-gray-400">{user.score}</span>
-                  <span className=" md:block col-span-1 text-gray-400">
-                    {user.time}
-                  </span>
-                  <span className="col-span-1 text-gray-400">
-                    {user.accuracy}
-                  </span>
-                  <span className="col-span-1 text-yellow-400 font-bold">
-                    {user.reward}
-                  </span>
-                  <span className=" md:block col-span-1 text-gray-400">
-                    {user.totalEarned}
-                  </span>
-                </div>
-              ))}
+            <div className="min-w-[400px] max-w-[500px] rounded-lg overflow-x-auto hori-scroll">
+              <table className="min-w-[600px] max-w-[1200px] dark:bg-gray-900 rounded-lg border-gray-800 border p-4 lg:p-6">
+                <thead className=" text-gray-400 w-full text-xs md:text-sm font-semibold border-b border-gray-700 pb-2 mb-2">
+                  <th className="p-5">Username</th>
+                  <th className="p-5">Rank</th>
+                  <th className="p-5">State</th>
+                  <th className="p-5">Tier</th>
+                  <th className="p-5">Score</th>
+                  <th className="p-5">Time</th>
+                  <th className="p-5">Accuracy</th>
+                  <th className="p-5">Reward</th>
+                  <th className="p-5">Total Earned</th>
+                </thead>
+                {userRankings.map((user, index) => (
+                  <tr
+                    key={index}
+                    className="p-5   border-b border-gray-800 last:border-b-0"
+                  >
+                    <td className="p-5 font-bold flex justify-around text-lg dark:text-white">
+                      {user.rank}
+                      <img
+                        src={`https://i.pravatar.cc/24?img=${index + 10}`}
+                        alt={user.username}
+                        className="w-6 h-6 rounded-full mt-1 border-2 border-gray-400 dark:border-gray-600"
+                      />
+                    </td>
+                    <td className="p-5 dark:text-white font-medium">
+                      {user.username}
+                    </td>
+                    <td className="p-5 text-gray-400">{user.state}</td>
+                    <td className={`p-5 ${user.tier}`}>{user.tier}</td>
+                    <td className="p-5 text-gray-400">{user.score}</td>
+                    <td className="p-5  text-gray-400">{user.time}</td>
+                    <td className="p-5 text-gray-400">{user.accuracy}</td>
+                    <td className="p-5 text-blue-400 font-bold">
+                      {user.reward}
+                    </td>
+                    <td className="p-5 text-gray-400">{user.totalEarned}</td>
+                  </tr>
+                ))}
+              </table>
+            </div>
+            <div className="pagination">
+              <button className="p-2 m-2 text-blue">Previous</button>
+              <button className="p-2 m-2 text-blue">Next</button>
             </div>
           </div>
         </div>

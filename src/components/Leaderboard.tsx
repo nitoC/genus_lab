@@ -265,7 +265,7 @@ export default function App() {
           <Panel
             header="Quiz Grade"
             bordered
-            className="p-4 rounded-lg dark:bg-gray-900 border border-gray-800"
+            className="p-4 rounded-lg border border-gray-800"
           >
             <p className="text-5xl font-extrabold dark:text-white">
               {selectedDayPerformance.grade}

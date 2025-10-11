@@ -1,6 +1,16 @@
 "use client";
 import RankTable from "@/components/RankTable";
 import { JSX, SVGProps, useState } from "react";
+import { FaChessKnight, FaCrown } from "react-icons/fa6";
+import { SiClevercloud, SiCoolermaster, SiPrometheus } from "react-icons/si";
+import { HiMiniCheckBadge } from "react-icons/hi2";
+import {
+  GiBlackKnightHelm,
+  GiBrainstorm,
+  GiGiftOfKnowledge,
+  GiPsychicWaves,
+} from "react-icons/gi";
+import { FaCentos } from "react-icons/fa";
 
 function toRoman(num: number) {
   const romanMap = [
@@ -34,10 +44,12 @@ function toRoman(num: number) {
 const ExploralPage = () => {
   const [ranktable, setranktable] = useState(false);
   const [rankData, setrankData] = useState<any>({});
+  const [startIndex, setstartIndex] = useState(0);
   const leaderboardRanks = [
     {
       rank: 1,
       title: "Quiz overloard",
+      Icon: <FaCrown size={20} color="gold" />,
       pointsRange: "2,000,000+",
       monthlyPoints: "700,000+",
       basic: "7000+",
@@ -47,6 +59,7 @@ const ExploralPage = () => {
     {
       rank: 2,
       title: "Mastermind",
+      Icon: <SiCoolermaster size={20} color="purple" />,
       pointsRange: "1,000,000-999,999",
       monthlyPoints: "350,000-699,999",
       basic: "3,500-6,999",
@@ -57,6 +70,7 @@ const ExploralPage = () => {
       rank: 3,
       title: "Brainiac",
       pointsRange: "500,000–999,999",
+      Icon: <GiBrainstorm size={20} color="crimson" />,
       monthlyPoints: "175,000 – 349,999",
       basic: "1,750 – 3,499",
       premium: "4,375 – 8,749",
@@ -66,6 +80,7 @@ const ExploralPage = () => {
       rank: 4,
       title: "Quiz Pro",
       pointsRange: "200,000–499,999",
+      Icon: <SiPrometheus size={20} color="blue" />,
       monthlyPoints: "70,000 – 174,999",
       basic: "700 – 1,749",
       premium: "1,750 – 4,375",
@@ -75,24 +90,18 @@ const ExploralPage = () => {
       rank: 5,
       title: "Trivia titan",
       pointsRange: "100,000–199,999",
+      Icon: <GiPsychicWaves size={20} color="green" />,
       monthlyPoints: "35,000 – 69,999",
       basic: "350 – 699",
       premium: "875 – 1,749",
       rewards: "1 Month Free Premium + Trivia Titan Badge",
     },
-    {
-      rank: 5,
-      title: "Trivia titan",
-      pointsRange: "7,500-9,999",
-      monthlyPoints: "300-399",
-      basic: "1,151-1,750",
-      premium: "15-17",
-      rewards: "1 Month Free Premium + Trivia Titan Badge",
-    },
+
     {
       rank: 6,
       title: "Quiz Ace",
       pointsRange: "7,500-9,999",
+      Icon: <FaCentos size={20} color="brown" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -102,6 +111,7 @@ const ExploralPage = () => {
       rank: 7,
       title: "Knowledge Knight",
       pointsRange: "7,500-9,999",
+      Icon: <FaChessKnight size={20} color="orange" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -111,6 +121,7 @@ const ExploralPage = () => {
       rank: 8,
       title: "Smart Cookie",
       pointsRange: "7,500-9,999",
+      Icon: <GiBlackKnightHelm size={20} color="#14213d" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -120,6 +131,7 @@ const ExploralPage = () => {
       rank: 9,
       title: "Sharp Thinker",
       pointsRange: "7,500-9,999",
+      Icon: <GiGiftOfKnowledge size={20} color="#ae2012" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -129,6 +141,7 @@ const ExploralPage = () => {
       rank: 10,
       title: "Clever Clog",
       pointsRange: "7,500-9,999",
+      Icon: <SiClevercloud size={20} color="#76c893" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -138,6 +151,7 @@ const ExploralPage = () => {
       rank: 11,
       title: "Bright Spark",
       pointsRange: "7,500-9,999",
+      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -148,6 +162,7 @@ const ExploralPage = () => {
       title: "Quick Wits",
       pointsRange: "7,500-9,999",
       monthlyPoints: "300-399",
+      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
       basic: "1,151-1,750",
       premium: "15-17",
       rewards: "3 Extra Lives + Quick Wits Badge",
@@ -156,6 +171,7 @@ const ExploralPage = () => {
       rank: 13,
       title: "Keen Mind",
       pointsRange: "7,500-9,999",
+      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -165,6 +181,7 @@ const ExploralPage = () => {
       rank: 14,
       title: "Inquisitive Soul",
       pointsRange: "7,500-9,999",
+      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -174,6 +191,7 @@ const ExploralPage = () => {
       rank: 15,
       title: "Curious Cat",
       pointsRange: "7,500-9,999",
+      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -183,6 +201,7 @@ const ExploralPage = () => {
       rank: 16,
       title: "Eager Learner",
       pointsRange: "7,500-9,999",
+      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -192,6 +211,7 @@ const ExploralPage = () => {
       rank: 17,
       title: "Knowledge Seeker",
       pointsRange: "7,500-9,999",
+      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -201,6 +221,7 @@ const ExploralPage = () => {
       rank: 18,
       title: "Aspiring Expert",
       pointsRange: "7,500-9,999",
+      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -210,6 +231,7 @@ const ExploralPage = () => {
       rank: 19,
       title: "Rising Star",
       pointsRange: "7,500-9,999",
+      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -219,6 +241,7 @@ const ExploralPage = () => {
       rank: 20,
       title: "Fresh Mind",
       pointsRange: "0–1,499",
+      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
       monthlyPoints: "0 – 524",
       basic: "0 – 5.24",
       premium: "0 – 13.10",
@@ -369,55 +392,99 @@ const ExploralPage = () => {
         </div>
 
         {/* Leaderboard Table */}
-        <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 overflow-x-auto">
-          <h3 className="text-xl font-semibold mb-4 dark:text-white">
-            Leader board Ranks, Point Ranges & Rewards
-          </h3>
-          <table className="w-full text-left text-sm">
-            <thead className="border-b uppercase dark:border-gray-600">
-              <tr className="text-gray-700 dark:text-gray-300">
-                <th className="py-3 px-4">Rank</th>
-                <th className="py-3 px-4">Title</th>
-                <th className="py-3 px-4">Point Range</th>
-                <th className="py-3 px-4">Monthly Points</th>
-                <th className="py-3 px-4">Reward Basic</th>
-                <th className="py-3 px-4">Reward Premium</th>
-                <th className="py-3 px-4">Non Cash Rewards</th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-600 dark:text-gray-300">
-              {leaderboardRanks.map((item, index) => (
-                <tr
-                  key={index}
-                  onClick={() => {
-                    setrankData(item);
-                    setranktable(true);
-                    console.log(item);
-                  }}
-                  className="border-b cursor-pointer dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/40"
+        <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 ">
+          <div className=" flex justify-between items-center mb-4 w-full">
+            <h3 className="text-xl font-semibold mb-4 dark:text-white">
+              Leader board Ranks, Point Ranges & Rewards
+            </h3>
+            <div className=" flex gap-10">
+              <button
+                disabled={startIndex <= 0}
+                onClick={() => {
+                  if (startIndex > 0) setstartIndex(startIndex - 5);
+                }}
+              >
+                <span
+                  className={`text bold ${
+                    startIndex > 0 ? "text-blue-500" : "text-gray-400"
+                  } capitalize cursor-pointer`}
                 >
-                  <td className="py-3 px-4 font-medium">{item.rank}</td>
-                  <td className="py-3 px-4">{item.title}</td>
-                  <td className="py-3 px-4">{item.monthlyPoints}</td>
-                  <td className="py-3 px-4">{item.monthlyPoints}</td>
-                  <td className="py-3 px-4">{item.basic}</td>
-                  <td className="py-3 px-4">{item.premium}</td>
-                  <td className="py-3 px-4">{item.rewards}</td>
-                  {ranktable && (
-                    <RankTable
-                      handleClose={(e: any) => {
-                        e.stopPropagation();
-                        console.log("clicked", ranktable);
-                        setranktable(false);
-                      }}
-                      rank={`${toRoman(rankData.rank)} ${rankData.title}`}
-                      dtheme={() => {}}
-                    />
-                  )}
+                  prev
+                </span>
+              </button>
+              <button
+                disabled={startIndex >= leaderboardRanks.length - 5}
+                onClick={() => {
+                  if (startIndex < leaderboardRanks.length - 5)
+                    setstartIndex(startIndex + 5);
+                }}
+              >
+                <span
+                  className={`text bold ${
+                    startIndex < leaderboardRanks.length - 5
+                      ? "text-blue-500"
+                      : "text-gray-400"
+                  } capitalize cursor-pointer`}
+                >
+                  next
+                </span>
+              </button>
+            </div>
+          </div>
+          <div className="hori-scroll overflow-x-auto w-full">
+            <table className="w-full min-w-[1000px] text-left text-sm">
+              <thead className="border-b uppercase dark:border-gray-600">
+                <tr className="rank grid grid-cols-8 items-center text-gray-700 dark:text-gray-300">
+                  <th className="py-3 px-4">Rank</th>
+                  <th className="py-3 px-4">Title</th>
+                  <th className="py-3 px-4">Point Range</th>
+                  <th className="py-3 px-4">Monthly Points</th>
+                  <th className="py-3 px-4">Reward Basic</th>
+                  <th className="py-3 px-4">Reward Premium</th>
+                  <th className="py-3 px-4 col-span-2">Non Cash Rewards</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="text-gray-600 dark:text-gray-300">
+                {leaderboardRanks.map(
+                  (item, index) =>
+                    index < startIndex + 5 &&
+                    index >= startIndex && (
+                      <tr
+                        key={index}
+                        onClick={() => {
+                          setrankData(item);
+                          setranktable(true);
+                          console.log(item);
+                        }}
+                        className="rank border-b grid grid-cols-8 items-center cursor-pointer dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/40"
+                      >
+                        <td className="py-3 px-4 flex items-center gap-5 font-medium">
+                          {item.rank} {item.Icon}
+                        </td>
+                        <td className="py-3 px-4 font-bold">{item.title}</td>
+                        <td className="py-3 px-4">{item.monthlyPoints}</td>
+                        <td className="py-3 px-4">{item.monthlyPoints}</td>
+                        <td className="py-3 px-4">{item.basic}</td>
+                        <td className="py-3 px-4">{item.premium}</td>
+                        <td className="py-3 px-4 col-span-2">{item.rewards}</td>
+                        {ranktable && (
+                          <RankTable
+                            handleClose={(e: any) => {
+                              e.stopPropagation();
+                              console.log("clicked", ranktable);
+                              setranktable(false);
+                            }}
+                            rank={`${toRoman(rankData.rank)} ${rankData.title}`}
+                            rankIcon={rankData.Icon}
+                            dtheme={() => {}}
+                          />
+                        )}
+                      </tr>
+                    )
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
