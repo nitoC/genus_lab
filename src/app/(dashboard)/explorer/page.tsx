@@ -393,11 +393,11 @@ const ExploralPage = () => {
 
         {/* Leaderboard Table */}
         <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 ">
-          <div className=" flex justify-between items-center mb-4 w-full">
+          <div className=" flex justify-between flex-wrap items-center mb-4 w-full">
             <h3 className="text-xl font-semibold mb-4 dark:text-white">
               Leader board Ranks, Point Ranges & Rewards
             </h3>
-            <div className=" flex flex-wrap gap-10">
+            <div className=" flex  gap-10">
               <button
                 disabled={startIndex <= 0}
                 onClick={() => {
