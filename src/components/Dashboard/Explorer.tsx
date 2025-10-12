@@ -1,6 +1,6 @@
-
 import { JSX, SVGProps, useState } from "react";
 import RankTable from "../RankTable";
+import { FaUser } from "react-icons/fa6";
 
 function toRoman(num: number) {
   const romanMap = [
@@ -265,6 +265,7 @@ const ExploralPage = ({ theme }: { theme: string }) => {
                   <td className="py-3 px-4">{item.rewards}</td>
                   {ranktTable && (
                     <RankTable
+                      rankIcon={<FaUser />}
                       dtheme={isDark}
                       handleClose={() => setranktTable(false)}
                       rank={`${toRoman(item.rank)} ${item.title}`}
