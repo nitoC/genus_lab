@@ -1,22 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { Calendar, HStack, Panel } from "rsuite";
+import { Calendar, HStack } from "rsuite";
 import "rsuite/dist/rsuite.css";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaChevronDown } from "react-icons/fa";
 
-// Mock data for demonstration purposes
+// Mock data
 type QuizPerformance = { grade: string; ranking: string };
 const quizData: { [date: string]: QuizPerformance } = {
   "2025-10-05": { grade: "85%", ranking: "12th" },
   "2025-10-06": { grade: "92%", ranking: "8th" },
   "2025-10-07": { grade: "78%", ranking: "25th" },
-};
-
-const performanceSummary = {
-  daily: 150,
-  weekly: 850,
-  monthly: 3200,
-  yearly: 15000,
 };
 
 const userRankings = [
@@ -25,7 +18,6 @@ const userRankings = [
     username: "Udochukwu",
     state: "OYO",
     score: 140,
-
     time: "2m35s",
     accuracy: "100%",
     reward: "₦1,000",
@@ -89,12 +81,15 @@ const userRankings = [
   },
 ];
 
-// Main App component
 export default function App() {
   const [selectedDate, setSelectedDate] = useState(new Date("2025-10-05"));
+  const [rankingFilter, setRankingFilter] = useState("Weekly");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleSelect = (date: Date) => {
-    setSelectedDate(date);
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const selectFilter = (value: string) => {
+    setRankingFilter(value);
+    setDropdownOpen(false);
   };
 
   const getPerformanceForDate = (date: Date) => {
@@ -102,171 +97,139 @@ export default function App() {
     return quizData[dateStr] || { grade: "-", ranking: "-" };
   };
 
-  const selectedDayPerformance = getPerformanceForDate(selectedDate);
-
-  // Custom cell renderer for the calendar
-  const renderQuizDateCell = (date: Date) => {
-    const dateStr = date.toISOString().slice(0, 10);
-    const hasData = quizData[dateStr];
-    const isSelected =
-      date.getDate() === selectedDate.getDate() &&
-      date.getMonth() === selectedDate.getMonth() &&
-      date.getFullYear() === selectedDate.getFullYear();
-
-    if (hasData) {
-      return (
-        <div className="p-1 rounded-full dark:text-white bg-blue-500 flex items-center justify-center h-full w-full">
-          {date.getDate()}
-        </div>
-      );
-    }
-    if (isSelected) {
-      return (
-        <div className="p-1 rounded-full dark:text-white bg-blue-500 flex items-center justify-center h-full w-full">
-          {date.getDate()}
-        </div>
-      );
-    }
-    return <span>{date.getDate()}</span>;
-  };
-
-  // Custom header for the calendar
   const customHeader = (props: any) => {
-    const {
-      date,
-      onPrevMonth,
-      onNextMonth,
-      onPrevYear,
-      onNextYear,
-      onToggleMonthDropdown,
-      onToggleTimeDropdown,
-    } = props;
+    const { date, onPrevMonth, onNextMonth } = props;
     return (
       <div className="flex justify-between items-center py-2 px-4 dark:bg-gray-900 text-white">
         <FaChevronLeft onClick={onPrevMonth} className="cursor-pointer" />
-        <div className="flex flex-col items-center">
-          <span className="text-lg font-bold">
-            {date.toLocaleString("default", { month: "long", year: "numeric" })}
-          </span>
-        </div>
+        <span className="text-lg font-bold">
+          {date.toLocaleString("default", { month: "long", year: "numeric" })}
+        </span>
         <FaChevronRight onClick={onNextMonth} className="cursor-pointer" />
       </div>
     );
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-start min-h-screen dark:bg-black/40 dark:text-gray-200 p-8 font-sans">
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col items-center lg:items-start p-4 lg:p-8">
-        <div className="w-full max-w-4xl">
-          {/* User Rankings Section */}
-          <div className="mb-10 w-full">
-            <div className="flex flex-col gap-4 mb-[1rem]">
-              <h2 className="font-bold mb-2 text-black dark:text-white">
+    <div className="flex flex-col lg:flex-row items-start min-h-screen dark:bg-black/40 dark:text-gray-200 p-4 sm:p-6 lg:p-8 gap-6">
+      {/* Left/Main Section */}
+      <div className="w-full lg:flex-1 flex flex-col items-center lg:items-start">
+        {/* User Rankings Header */}
+        <div className="w-full mb-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
+            <div>
+              <h2 className="text-lg font-bold text-black dark:text-white">
                 User Rankings
               </h2>
-              <p className="text-gray-400 mb-6">
-                View the current standings of users based on their performance.
+              <p className="text-gray-400 text-sm">
+                View the current standings based on performance.
               </p>
             </div>
-            <div className="min-w-[400px] max-w-[500px] rounded-lg overflow-x-auto hori-scroll">
-              <table className="min-w-[600px] max-w-[1200px] dark:bg-gray-900 rounded-lg border-gray-800 border p-4 lg:p-6">
-                <thead className=" text-gray-400 w-full text-xs md:text-sm font-semibold border-b border-gray-700 pb-2 mb-2">
-                  <th className="p-5">Username</th>
-                  <th className="p-5">Rank</th>
-                  <th className="p-5">State</th>
-                  <th className="p-5">Tier</th>
-                  <th className="p-5">Score</th>
-                  <th className="p-5">Time</th>
-                  <th className="p-5">Accuracy</th>
-                  <th className="p-5">Reward</th>
-                  <th className="p-5">Total Earned</th>
-                </thead>
+
+            {/* Custom Dropdown */}
+            <div className="relative w-44">
+              <button
+                onClick={toggleDropdown}
+                className="w-full flex justify-between items-center px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-md text-gray-800 dark:text-gray-200"
+              >
+                {rankingFilter}
+                <FaChevronDown
+                  className={`ml-2 transition-transform ${
+                    dropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {dropdownOpen && (
+                <div className="absolute z-10 w-full mt-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg">
+                  {["Daily", "Weekly", "Monthly"].map((item) => (
+                    <div
+                      key={item}
+                      onClick={() => selectFilter(item)}
+                      className={`px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 ${
+                        rankingFilter === item
+                          ? "font-bold text-blue-500"
+                          : "text-gray-600 dark:text-gray-200"
+                      }`}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Rankings Table */}
+          <div className="overflow-x-auto hori-scroll border border-gray-300/50 rounded-lg">
+            <table className="min-w-[700px] w-full text-sm text-left dark:bg-gray-900">
+              <thead className="bg-gray-100 dark:bg-gray-800 text-gray-500 uppercase text-xs sm:text-sm">
+                <tr>
+                  <th className="p-3">Rank</th>
+                  <th className="p-3">Username</th>
+                  <th className="p-3">State</th>
+                  <th className="p-3">Tier</th>
+                  <th className="p-3">Score</th>
+                  <th className="p-3">Time</th>
+                  <th className="p-3">Accuracy</th>
+                  <th className="p-3">Reward</th>
+                  <th className="p-3">Total Earned</th>
+                </tr>
+              </thead>
+              <tbody>
                 {userRankings.map((user, index) => (
                   <tr
                     key={index}
-                    className="p-5   border-b border-gray-800 last:border-b-0"
+                    className="border-b border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition"
                   >
-                    <td className="p-5 font-bold flex justify-around text-lg dark:text-white">
+                    <td className="p-3 font-semibold text-center">
                       {user.rank}
+                    </td>
+                    <td className="p-3 flex items-center gap-2">
                       <img
                         src={`https://i.pravatar.cc/24?img=${index + 10}`}
                         alt={user.username}
-                        className="w-6 h-6 rounded-full mt-1 border-2 border-gray-400 dark:border-gray-600"
+                        className="w-6 h-6 rounded-full border border-gray-400 dark:border-gray-600"
                       />
-                    </td>
-                    <td className="p-5 dark:text-white font-medium">
                       {user.username}
                     </td>
-                    <td className="p-5 text-gray-400">{user.state}</td>
-                    <td className={`p-5 ${user.tier}`}>{user.tier}</td>
-                    <td className="p-5 text-gray-400">{user.score}</td>
-                    <td className="p-5  text-gray-400">{user.time}</td>
-                    <td className="p-5 text-gray-400">{user.accuracy}</td>
-                    <td className="p-5 text-blue-400 font-bold">
+                    <td className="p-3 text-gray-400">{user.state}</td>
+                    <td className="p-3 text-blue-400 font-bold">{user.tier}</td>
+                    <td className="p-3">{user.score}</td>
+                    <td className="p-3">{user.time}</td>
+                    <td className="p-3">{user.accuracy}</td>
+                    <td className="p-3 text-green-500 font-bold">
                       {user.reward}
                     </td>
-                    <td className="p-5 text-gray-400">{user.totalEarned}</td>
+                    <td className="p-3 text-gray-400">{user.totalEarned}</td>
                   </tr>
                 ))}
-              </table>
-            </div>
-            <div className="pagination">
-              <button className="p-2 m-2 text-blue">Previous</button>
-              <button className="p-2 m-2 text-blue">Next</button>
-            </div>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination */}
+          <div className="flex justify-end mt-4 gap-2">
+            <button className="px-4 py-2 border border-gray-400 rounded text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+              Previous
+            </button>
+            <button className="px-4 py-2 border border-gray-400 rounded text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+              Next
+            </button>
           </div>
         </div>
       </div>
 
       {/* Sidebar Section */}
-      <div className="w-full lg:w-96 flex flex-col space-y-6 mt-10 lg:mt-0 p-4 lg:p-0">
-        <div className="dark:dark:bg-gray-900 rounded-lg p-4 border border-gray-800">
-          <h5 className=" font-bold mb-4">Your Quiz Performance</h5>
-          <div className="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6 mb-10">
-            <div className="w-full">
-              <HStack
-                spacing={10}
-                style={{ height: "100%" }}
-                alignItems="flex-start"
-                wrap
-              >
-                <Calendar
-                  compact
-                  //   renderCell={renderQuizDateCell}
-                  onSelect={handleSelect}
-                  style={{ width: "100%" }}
-                  // disabledDate={(date) => {
-                  //   // Disable if earlier than today
-                  //   const today = new Date();
-                  //   const isPast =
-                  //     date.getFullYear() < today.getFullYear() ||
-                  //     (date.getFullYear() === today.getFullYear() &&
-                  //       date.getMonth() < today.getMonth()) ||
-                  //     (date.getFullYear() === today.getFullYear() &&
-                  //       date.getMonth() === today.getMonth() &&
-                  //       date.getDate() < today.getDate());
-
-                  //   // Disable weekends (optional)
-                  //   // const isWeekend =
-                  //   //   date.getDay() === 0 || date.getDay() === 6;
-
-                  //   // Disable custom dates
-                  //   const isCustomDisabled = unavalble.some(
-                  //     (disabledDate) => isSameDay(disabledDate, date)
-                  //   );
-
-                  //   return isPast || isCustomDisabled;
-                  // }}
-                />
-                {/* <TodoList date={selectedDate} /> */}
-              </HStack>
-            </div>
-            {/* The second calendar from the original design is now removed to fit the new layout */}
-          </div>
+      <div className="w-full lg:w-[380px] flex flex-col gap-6">
+        {/* Performance Calendar */}
+        <div className="dark:bg-gray-900 rounded-lg p-4 border border-gray-800">
+          <h5 className="font-bold mb-4">Your Quiz Performance</h5>
+          <HStack spacing={10} alignItems="flex-start">
+            <Calendar compact onSelect={(d: Date) => setSelectedDate(d)} />
+          </HStack>
         </div>
 
-        {/* Weekly Winner Section */}
+        {/* Weekly Winner */}
         <div className="dark:bg-gray-900 rounded-lg p-4 border border-gray-800">
           <h5 className="font-bold mb-4">Weekly Winner</h5>
           <div className="mb-4">

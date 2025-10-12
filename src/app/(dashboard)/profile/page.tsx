@@ -2,6 +2,7 @@
 import Funds from "@/components/Funds";
 import Link from "next/link";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 const CompassIcon = (props: any) => (
   <svg
     {...props}
@@ -91,7 +92,7 @@ const ProfilePage = () => {
       </svg>
     </div>
   );
-
+  const referralLink = "https//genuslab.com,2345";
   return (
     <div className="p-4 sm:p-6 lg:p-8 text-white min-h-full">
       {/* Profile Header */}
@@ -129,10 +130,16 @@ const ProfilePage = () => {
             <input
               type="text"
               readOnly
-              value="https://quizapp.com/referral/yourcode"
+              value="https//genuslab.com,2345"
               className="flex-1 p-3 rounded-lg dark:bg-gray-800 text-gray-800 dark:text-white border border-gray-700"
             />
-            <button className="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-600 transition-all">
+            <button
+              onClick={() => {
+                toast.success("link copied");
+                navigator.clipboard.writeText(referralLink);
+              }}
+              className="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-600 transition-all"
+            >
               Copy Link
             </button>
           </div>

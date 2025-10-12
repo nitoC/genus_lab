@@ -14,7 +14,7 @@ import {
  * Renders the top section with the referral link and navigation tabs.
  */
 const ReferralHeader = () => {
-  const referralLink = "https://geniuslab.com/2345";
+  const referralLink = "https://genuslab.com/2345";
   const tabs = ["Profile", "Account", "Referral", "Theme"];
 
   return (

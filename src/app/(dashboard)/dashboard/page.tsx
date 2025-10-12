@@ -1,10 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BalanceCard from "@/components/Cards/BalanceCard";
 import QuizCard from "@/components/Cards/QuizCard";
 import { JoinQuizModal } from "@/components/modals/Quiz";
-import { IoClose, IoNotificationsCircleSharp } from "react-icons/io5";
-import { FaUser, FaQuestionCircle, FaClock, FaListAlt } from "react-icons/fa";
+import { IoNotificationsCircleSharp } from "react-icons/io5";
 import QuizEnrollmentCard from "@/components/QuizEnrollment";
 import getSessionStorage from "@/utils/getSessionStorage";
 import Link from "next/link";
@@ -12,13 +11,14 @@ import Link from "next/link";
 let text =
   "You have successfully enrolled in the 'Global Trivia Challenge'. Here are your quiz details:";
 
-const dashboard = () => {
+const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
-  const [type, setType] = useState("dash"); // Change to "upcoming" to test the other view
+  const [type, setType] = useState("dash");
+  const [countdown, setCountdown] = useState("Next quiz in —");
   const user = getSessionStorage("user");
-  const [userData, setuserData] = useState(user ? JSON.parse(user) : null);
-  console.log(user, "user from session storage");
+  const [userData, setUserData] = useState(user ? JSON.parse(user) : null);
+
   if (!user) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -28,9 +28,86 @@ const dashboard = () => {
       </div>
     );
   }
-  const handleNoticeModal = () => {
-    setIsNoticeModalOpen(!isNoticeModalOpen);
+
+  // COUNTDOWN TIMER LOGIC
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const currentHour = now.getHours();
+
+      let nextQuizHour = null;
+      const quizHours = [7, 9, 11, 13, 15, 17, 19]; // Quiz start hours
+
+      if (currentHour >= 21) {
+        // After 9 PM → next quiz tomorrow at 7 AM (countdown till 7 AM)
+        const nextDay = new Date(now);
+        nextDay.setDate(now.getDate() + 1);
+        nextDay.setHours(7, 0, 0, 0);
+        updateCountdown(nextDay, now);
+        return;
+      }
+
+      if (currentHour < 5) {
+        // Before 5 AM → countdown till 5 AM idle period, then 2-hour till 7 AM
+        const nextTarget = new Date(now);
+        nextTarget.setHours(7, 0, 0, 0);
+        updateCountdown(nextTarget, now);
+        return;
+      }
+
+      if (currentHour >= 5 && currentHour < 7) {
+        // 5 AM → countdown till first quiz at 7 AM
+        const nextTarget = new Date(now);
+        nextTarget.setHours(7, 0, 0, 0);
+        updateCountdown(nextTarget, now);
+        return;
+      }
+
+      // Between 7 AM and 9 PM
+      for (let i = 0; i < quizHours.length; i++) {
+        const start = quizHours[i];
+        const end = start + 2;
+        if (currentHour >= start && currentHour < end) {
+          // Currently in a quiz (unavailable)
+          const nextTarget = new Date(now);
+          nextTarget.setHours(end, 0, 0, 0);
+          updateCountdown(nextTarget, now);
+          return;
+        }
+        if (currentHour < start) {
+          nextQuizHour = start;
+          break;
+        }
+      }
+
+      if (nextQuizHour === null) {
+        // After last quiz before 9 PM
+        const nextTarget = new Date(now);
+        nextTarget.setHours(21, 0, 0, 0);
+        updateCountdown(nextTarget, now);
+      } else {
+        const nextTarget = new Date(now);
+        nextTarget.setHours(nextQuizHour, 0, 0, 0);
+        updateCountdown(nextTarget, now);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const updateCountdown = (target: Date, now: Date) => {
+    const diff = target.getTime() - now.getTime();
+    const totalSeconds = Math.max(0, Math.floor(diff / 1000));
+
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    setCountdown(`Next quiz in ${hours}hours ${minutes}mins ${seconds}secs`);
   };
+
+  const handleNoticeModal = () => setIsNoticeModalOpen(!isNoticeModalOpen);
+
   return (
     <main className="p-6 space-y-6">
       <section>
@@ -43,6 +120,7 @@ const dashboard = () => {
       </section>
 
       <BalanceCard />
+
       {type === "enrolled" ? (
         <QuizEnrollmentCard
           text={text}
@@ -69,6 +147,7 @@ const dashboard = () => {
               <QuizCard title="Genus Quiz Challenge" time="5:00pm-7:00pm" />
               <QuizCard title="Genus Quiz Challenge" time="7:00pm-9:00pm" />
             </div>
+
             <div className="flex gap-4 mt-4">
               <button
                 onClick={() => {
@@ -87,25 +166,23 @@ const dashboard = () => {
               </Link>
             </div>
           </section>
+
+          {/* Countdown Display */}
           <section>
-            <div className="rounded-xl text-center p-4 text-white font-medium animate-bl flex justify-between items-center">
-              <div className="px-4">
-                Next quiz in{" "}
-                <span className="font-bold">5hours 43mins 20secs</span>
-              </div>
+            <div className="rounded-xl text-center p-4 text-white font-medium animate-bl flex justify-between items-center bg-blue-600">
+              <div className="px-4">{countdown}</div>
               <button className="relative" onClick={handleNoticeModal}>
                 <NotificationsDropdown
                   isOpen={isNoticeModalOpen}
                   onClose={handleNoticeModal}
                 />
-                <IoNotificationsCircleSharp className=" mt-2 h-6 w-6" />
+                <IoNotificationsCircleSharp className="mt-2 h-6 w-6" />
               </button>
             </div>
             <JoinQuizModal
               isOpen={isModalOpen}
               onClose={(type?: string) => {
-                type === "enrolled" && setType("enrolled");
-
+                if (type === "enrolled") setType("enrolled");
                 setIsModalOpen(false);
               }}
             />
@@ -116,6 +193,7 @@ const dashboard = () => {
   );
 };
 
+// ================== NotificationsDropdown =====================
 const NotificationsDropdown = ({
   isOpen,
   onClose,
@@ -123,48 +201,30 @@ const NotificationsDropdown = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  // Logic to be implemented by the user
   const notifications = [
     {
       id: 1,
-      text: "Account top up successfull",
+      text: "Account top up successful",
       date: "Jun 8th",
       isRead: false,
     },
     {
       id: 2,
-      text: "your account top up failed",
+      text: "Your account top up failed",
       date: "Feb 10th",
       isRead: true,
     },
     {
       id: 3,
-      text: "Youv been enrolled stay updated",
+      text: "You've been enrolled. Stay updated",
       date: "Jul 8th",
       isRead: false,
     },
-    {
-      id: 4,
-      text: "Upcoming quiz 12.10.12025",
-      date: "Jan 1st",
-      isRead: false,
-    },
+    { id: 4, text: "Upcoming quiz 12.10.2025", date: "Jan 1st", isRead: false },
     {
       id: 5,
-      text: "Account top up successfull",
-      date: "Jun 8th",
-      isRead: true,
-    },
-    {
-      id: 6,
       text: "Withdrawal attempt failed",
       date: "Aug 2nd",
-      isRead: false,
-    },
-    {
-      id: 7,
-      text: "Account top up successfull",
-      date: "Jun 8th",
       isRead: false,
     },
   ];
@@ -174,7 +234,7 @@ const NotificationsDropdown = ({
       className={`
         fixed inset-0 z-50 transform transition-transform duration-300
         md:absolute md:inset-auto md:w-80 md:h-96 md:top-[-375px]
-         md:right-0 md:mt-2 md:rounded-lg md:shadow-lg
+        md:right-0 md:mt-2 md:rounded-lg md:shadow-lg
         md:bg-white md:border md:border-gray-200
         ${
           isOpen
@@ -190,53 +250,29 @@ const NotificationsDropdown = ({
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            ✕
           </button>
         </div>
-        {/* Custom styles to hide scrollbar and show on hover */}
         <style>
           {`
           .custom-scrollbar::-webkit-scrollbar {
             width: 8px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
           }
           .custom-scrollbar::-webkit-scrollbar-thumb {
             background-color: transparent;
             border-radius: 20px;
           }
           .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-            background-color: #d1d5db; /* A light gray color */
-          }
-          .custom-scrollbar {
-            scrollbar-width: thin; /* For Firefox */
-            scrollbar-color: transparent transparent;
-          }
-          .custom-scrollbar:hover {
-            scrollbar-color: #d1d5db transparent;
+            background-color: #d1d5db;
           }
         `}
         </style>
         <div className="overflow-y-auto flex-1 p-4 custom-scrollbar">
-          {notifications.map((notification) => (
+          {notifications.map((n) => (
             <div
-              key={notification.id}
+              key={n.id}
               className={`flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0 cursor-pointer ${
-                notification.isRead ? "text-gray-500" : "text-gray-900"
+                n.isRead ? "text-gray-500" : "text-gray-900"
               }`}
             >
               <div className="flex items-center">
@@ -247,9 +283,9 @@ const NotificationsDropdown = ({
                     alt="User"
                   />
                 </div>
-                <p className="text-sm">{notification.text}</p>
+                <p className="text-sm">{n.text}</p>
               </div>
-              <p className="text-xs text-gray-400">{notification.date}</p>
+              <p className="text-xs text-gray-400">{n.date}</p>
             </div>
           ))}
         </div>
@@ -257,4 +293,5 @@ const NotificationsDropdown = ({
     </div>
   );
 };
-export default dashboard;
+
+export default Dashboard;
