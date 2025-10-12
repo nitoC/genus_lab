@@ -397,7 +397,7 @@ const ExploralPage = () => {
             <h3 className="text-xl font-semibold mb-4 dark:text-white">
               Leader board Ranks, Point Ranges & Rewards
             </h3>
-            <div className=" flex gap-10">
+            <div className=" flex flex-wrap gap-10">
               <button
                 disabled={startIndex <= 0}
                 onClick={() => {
