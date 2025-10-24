@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import ManageCardsPage from "@/components/pay/ManageCard";
 import AddFundsModal from "@/components/modals/Deposit";
+import Link from "next/link";
 
 const AddCardModal = ({
   cards,
@@ -299,7 +300,7 @@ const Pay = () => {
     <div className="dark:bg-gray-900 min-h-screen dark:text-white font-sans p-8">
       <header className="flex justify-between items-center mb-10">
         <nav className="text-gray-400 text-sm">
-          <span>Profile &gt; </span>
+          <Link href="/profile">Profile &gt; </Link>
           <span
             className="text-blue-500 cursor-pointer"
             onClick={() => setCurrentPage("addFunds")}

@@ -15,13 +15,13 @@ export default function Layout({ children }: { children: ReactNode }) {
   );
   console.log(path, "path");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
 
   // Load theme from localStorage after mount
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
-      setDark(savedTheme === "true");
+      setDark(savedTheme === "false" ? false : true);
     }
   }, []);
 

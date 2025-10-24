@@ -1,5 +1,6 @@
 import React from "react";
 import QuizCard from "@/components/Cards/AllQuizCard";
+import Back from "@/components/Buttons/Back";
 
 const QuizPerformanceList = () =>
   // { quizzes }: { quizzes: any }
@@ -26,9 +27,12 @@ const QuizPerformanceList = () =>
     ];
     return (
       <div className="p-6 bg-gray-100 min-h-screen">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">
-          Previous Quiz Performances
-        </h2>
+        <Back />
+        <div className="flex justify-between">
+          <h2 className="text-3xl font-bold mb-6 text-gray-800">
+            Previous Quiz Performances
+          </h2>
+        </div>
         <div className="space-y-4">
           {quizzes.map((quiz: any, index: number) => (
             <QuizCard

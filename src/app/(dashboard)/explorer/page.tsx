@@ -1,16 +1,24 @@
 "use client";
 import RankTable from "@/components/RankTable";
 import { JSX, SVGProps, useState } from "react";
-import { FaChessKnight, FaCrown } from "react-icons/fa6";
+import { FaChessKnight, FaCrown, FaPhabricator } from "react-icons/fa6";
 import { SiClevercloud, SiCoolermaster, SiPrometheus } from "react-icons/si";
 import { HiMiniCheckBadge } from "react-icons/hi2";
 import {
+  GiAllSeeingEye,
   GiBlackKnightHelm,
+  GiBoxingGlove,
   GiBrainstorm,
+  GiExplosionRays,
   GiGiftOfKnowledge,
+  GiMiddleArrow,
   GiPsychicWaves,
+  GiQuicksand,
+  GiSoulVessel,
+  GiSparkSpirit,
 } from "react-icons/gi";
 import { FaCentos } from "react-icons/fa";
+import { FcMindMap } from "react-icons/fc";
 
 function toRoman(num: number) {
   const romanMap = [
@@ -151,7 +159,7 @@ const ExploralPage = () => {
       rank: 11,
       title: "Bright Spark",
       pointsRange: "7,500-9,999",
-      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
+      Icon: <GiSparkSpirit size={20} color="#14213d" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -162,7 +170,7 @@ const ExploralPage = () => {
       title: "Quick Wits",
       pointsRange: "7,500-9,999",
       monthlyPoints: "300-399",
-      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
+      Icon: <GiQuicksand size={20} color="#14213d" />,
       basic: "1,151-1,750",
       premium: "15-17",
       rewards: "3 Extra Lives + Quick Wits Badge",
@@ -171,7 +179,7 @@ const ExploralPage = () => {
       rank: 13,
       title: "Keen Mind",
       pointsRange: "7,500-9,999",
-      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
+      Icon: <FcMindMap size={20} color="#b5e48c" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -181,7 +189,7 @@ const ExploralPage = () => {
       rank: 14,
       title: "Inquisitive Soul",
       pointsRange: "7,500-9,999",
-      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
+      Icon: <GiSoulVessel size={20} color="purple" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -191,7 +199,7 @@ const ExploralPage = () => {
       rank: 15,
       title: "Curious Cat",
       pointsRange: "7,500-9,999",
-      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
+      Icon: <FaPhabricator size={20} color="crimson" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -201,7 +209,7 @@ const ExploralPage = () => {
       rank: 16,
       title: "Eager Learner",
       pointsRange: "7,500-9,999",
-      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
+      Icon: <GiMiddleArrow size={20} color="orange" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -211,7 +219,7 @@ const ExploralPage = () => {
       rank: 17,
       title: "Knowledge Seeker",
       pointsRange: "7,500-9,999",
-      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
+      Icon: <GiAllSeeingEye size={20} color="brown" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -221,7 +229,7 @@ const ExploralPage = () => {
       rank: 18,
       title: "Aspiring Expert",
       pointsRange: "7,500-9,999",
-      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
+      Icon: <GiExplosionRays size={20} color="lilac" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",
@@ -231,7 +239,7 @@ const ExploralPage = () => {
       rank: 19,
       title: "Rising Star",
       pointsRange: "7,500-9,999",
-      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
+      Icon: <GiBoxingGlove size={20} color="teal" />,
       monthlyPoints: "300-399",
       basic: "1,151-1,750",
       premium: "15-17",

@@ -7,7 +7,7 @@ import React, { useState } from "react";
 
 const page = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activePage, setActivePage] = useState("");
+
   return (
     <div>
       <DashHeader setSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />

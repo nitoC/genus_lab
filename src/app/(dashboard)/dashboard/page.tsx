@@ -7,6 +7,7 @@ import { IoNotificationsCircleSharp } from "react-icons/io5";
 import QuizEnrollmentCard from "@/components/QuizEnrollment";
 import getSessionStorage from "@/utils/getSessionStorage";
 import Link from "next/link";
+import Image from "next/image";
 
 let text =
   "You have successfully enrolled in the 'Global Trivia Challenge'. Here are your quiz details:";
@@ -112,7 +113,11 @@ const Dashboard = () => {
     <main className="p-6 space-y-6">
       <section>
         <h2 className="text-2xl dark:text-blue font-semibold">
-          Welcome back, {userData && userData.fullname.split(" ")[1]}!
+          Welcome back,{" "}
+          {userData && userData.fullname.split(" ").length > 1
+            ? userData.fullname.split(" ")[1]
+            : userData.fullname.split(" ")[0]}
+          !
         </h2>
         <p className="text-gray-400">
           Here’s a quick overview of your account and active quizzes.
@@ -277,8 +282,10 @@ const NotificationsDropdown = ({
             >
               <div className="flex items-center">
                 <div className="w-8 h-8 mr-3">
-                  <img
-                    className="w-full h-full rounded-full"
+                  <Image
+                    className="rounded-full w-8 h-8"
+                    width={20}
+                    height={20}
                     src="/images/woman.png"
                     alt="User"
                   />

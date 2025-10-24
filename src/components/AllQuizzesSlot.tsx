@@ -1,4 +1,5 @@
 import React from "react";
+import Back from "./Buttons/Back";
 
 // This is a reusable component for each quiz performance card
 const QuizPerformanceCard = ({ quizData }: { quizData: any }) => {
@@ -69,9 +70,12 @@ const PreviousQuizPerformance = () => {
   return (
     <div className=" p-6 min-h-screen">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold dark:text-blue text-gray-800 mb-6">
-          Previous Quiz Performances
-        </h2>
+        <div className="flex justify-between">
+          <h2 className="text-3xl font-bold dark:text-blue text-gray-800 mb-6">
+            Previous Quiz Performances
+          </h2>
+          <Back />
+        </div>
         {quizzes.map((quiz) => (
           <QuizPerformanceCard key={quiz.id} quizData={quiz} />
         ))}

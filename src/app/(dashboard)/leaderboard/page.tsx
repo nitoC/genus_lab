@@ -11,8 +11,22 @@ const LeaderboardPage = () => {
     { name: "bobby", score: 92, color: "bg-yellow-400" },
     { name: "Emma", score: 88, color: "bg-purple-400" },
     { name: "Udred", score: 85, color: "bg-green-400" },
-    { name: "chibyk", score: 82, color: "bg-red-400" },
-    { name: "User 5", score: 79, color: "bg-indigo-400" },
+    { name: "chibyk", score: 62, color: "bg-red-400" },
+    { name: "User 5", score: 49, color: "bg-indigo-400" },
+  ];
+  const ReferralLeaderboardData = [
+    { name: "bobby", referrals: 92, color: "bg-yellow-400" },
+    { name: "Emma", referrals: 28, color: "bg-purple-400" },
+    { name: "Udred", referrals: 45, color: "bg-green-400" },
+    { name: "chibyk", referrals: 62, color: "bg-red-400" },
+    { name: "User 5", referrals: 49, color: "bg-indigo-400" },
+  ];
+  const GeneralLeaderboardData = [
+    { name: "bobby", referrals: 52, color: "bg-yellow-400" },
+    { name: "Emma", referrals: 78, color: "bg-purple-400" },
+    { name: "Udred", referrals: 85, color: "bg-green-400" },
+    { name: "chibyk", referrals: 62, color: "bg-red-400" },
+    { name: "User 5", referrals: 49, color: "bg-indigo-400" },
   ];
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -135,6 +149,74 @@ const LeaderboardPage = () => {
                 <div
                   className="w-full bg-blue-500 rounded-t-md"
                   style={{ height: `${user.score}%` }}
+                />
+                <span className="text-xs mt-2 text-gray-600 dark:text-gray-300">
+                  {user.name}
+                </span>
+                <img
+                  src={`https://i.pravatar.cc/24?img=${i + 10}`}
+                  alt={user.name}
+                  className="w-6 h-6 rounded-full mt-1 border-2 border-gray-400 dark:border-gray-600"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* Leaderboard */}
+        <div
+          onClick={() => router.push("/leaderboard/referral")}
+          className="bg-gray-100 dark:bg-gray-800 cursor-pointer p-6 rounded-2xl border border-gray-300 dark:border-gray-700"
+        >
+          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+            Referral Leaderboard
+          </h3>
+          <p className="text-4xl font-bold mt-2">Top Referral: 95</p>
+          <p className="text-sm text-green-600 dark:text-green-400">
+            All Time +8%
+          </p>
+          <div className="mt-6 h-48 flex items-end justify-around gap-2">
+            {ReferralLeaderboardData.map((user, i) => (
+              <div
+                key={i}
+                className="flex-1 flex flex-col items-center justify-end h-full"
+              >
+                <div
+                  className="w-full bg-green-700 rounded-t-md"
+                  style={{ height: `${user.referrals}%` }}
+                />
+                <span className="text-xs mt-2 text-gray-600 dark:text-gray-300">
+                  {user.name}
+                </span>
+                <img
+                  src={`https://i.pravatar.cc/24?img=${i + 10}`}
+                  alt={user.name}
+                  className="w-6 h-6 rounded-full mt-1 border-2 border-gray-400 dark:border-gray-600"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* Leaderboard */}
+        <div
+          onClick={() => router.push("/leaderboard/general")}
+          className="bg-gray-100 dark:bg-gray-800 cursor-pointer p-6 rounded-2xl border border-gray-300 dark:border-gray-700"
+        >
+          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+            General Leaderboard (Score + Referral)
+          </h3>
+          <p className="text-4xl font-bold mt-2">Top Earners: 5000</p>
+          <p className="text-sm text-green-600 dark:text-green-400">
+            All Time +8%
+          </p>
+          <div className="mt-6 h-48 flex items-end justify-around gap-2">
+            {GeneralLeaderboardData.map((user, i) => (
+              <div
+                key={i}
+                className="flex-1 flex flex-col items-center justify-end h-full"
+              >
+                <div
+                  className="w-full bg-amber-700 rounded-t-md"
+                  style={{ height: `${user.referrals}%` }}
                 />
                 <span className="text-xs mt-2 text-gray-600 dark:text-gray-300">
                   {user.name}

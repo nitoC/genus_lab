@@ -1,4 +1,5 @@
 "use client";
+import Back from "@/components/Buttons/Back";
 import React, { ChangeEvent, useState } from "react";
 
 const FloatingLabelInput = ({
@@ -32,7 +33,7 @@ const FloatingLabelInput = ({
       <input
         id={id}
         type={type}
-        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white focus:outline-none focus:border-blue-500 transition-all duration-300 shadow-sm"
+        className="w-full px-4 py-3 border-2 border-gray-200/10 rounded-xl bg-white dark:bg-gray-900 focus:outline-none focus:border-blue-500 transition-all duration-300 shadow-sm"
         value={value}
         onChange={onChange}
         onFocus={() => setIsFocused(true)}
@@ -68,7 +69,7 @@ const FloatingLabelTextarea = ({
       </label>
       <textarea
         id={id}
-        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white focus:outline-none focus:border-blue-500 transition-all duration-300 shadow-sm resize-none"
+        className="w-full px-4 py-3 border-2 border-gray-200/10 rounded-xl bg-white dark:bg-gray-900 focus:outline-none focus:border-blue-500 transition-all duration-300 shadow-sm resize-none"
         rows={5}
         value={value}
         onChange={onChange}
@@ -121,7 +122,7 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 font-sans">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 font-sans">
       <style>
         {`
         .floating-label-active {
@@ -156,7 +157,10 @@ const EditProfile = () => {
         }
         `}
       </style>
-      <div className="relative w-full max-w-lg bg-white p-8 rounded-3xl shadow-2xl overflow-hidden backdrop-filter backdrop-blur-lg">
+      <div className="w-full">
+        <Back />
+      </div>
+      <div className="relative w-full max-w-lg dark:text-white p-8 rounded-3xl shadow-2xl overflow-hidden backdrop-filter backdrop-blur-lg">
         {/* Background circuit pattern */}
         <div className="absolute inset-0 -z-10 opacity-10">
           <svg
@@ -198,7 +202,7 @@ const EditProfile = () => {
         </div>
 
         <div className="relative z-10 fade-in-slide-up">
-          <h2 className="text-3xl font-extrabold text-center mb-10 text-gray-800 bounce-in">
+          <h2 className="text-3xl font-extrabold text-center mb-10 dark:text-blue text-gray-800 bounce-in">
             Complete your profile
           </h2>
 
