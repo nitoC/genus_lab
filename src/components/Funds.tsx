@@ -22,7 +22,7 @@ const plans: Plan[] = [
     price: "Current",
     features: [
       { name: "Practice only", isAvailable: true },
-      { name: "Daily Quiz Access", isAvailable: true },
+      { name: "Daily Quiz Access", isAvailable: false },
       { name: "Voice Read (Text-to-Speech)", isAvailable: false },
       { name: "Leaderboard Participation", isAvailable: false },
       { name: "Studio Quiz Eligibility", isAvailable: false },
@@ -41,7 +41,7 @@ const plans: Plan[] = [
     features: [
       { name: "Full access (No tts)", isAvailable: true },
       { name: "Daily Quiz Access", isAvailable: true },
-      { name: "Voice Read (Text-to-Speech)", isAvailable: true },
+      { name: "Voice Read (Text-to-Speech)", isAvailable: false },
       { name: "Leaderboard Participation", isAvailable: true },
       { name: "Studio Quiz Eligibility", isAvailable: false },
       { name: "Hints & Explanations", isAvailable: false },

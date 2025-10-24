@@ -470,7 +470,7 @@ const ExploralPage = () => {
                           {item.rank} {item.Icon}
                         </td>
                         <td className="py-3 px-4 font-bold">{item.title}</td>
-                        <td className="py-3 px-4">{item.monthlyPoints}</td>
+                        <td className="py-3 px-4">{item.pointsRange}</td>
                         <td className="py-3 px-4">{item.monthlyPoints}</td>
                         <td className="py-3 px-4">{item.basic}</td>
                         <td className="py-3 px-4">{item.premium}</td>
