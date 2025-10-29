@@ -44,7 +44,7 @@ const plans: Plan[] = [
       { name: "Voice Read (Text-to-Speech)", isAvailable: false },
       { name: "Leaderboard Participation", isAvailable: true },
       { name: "Studio Quiz Eligibility", isAvailable: false },
-      { name: "Hints & Explanations", isAvailable: false },
+      { name: "Hints & Explanations", isAvailable: true },
       { name: "Performance Insights", isAvailable: false },
       { name: "Genus Lab Badge & Certificate", isAvailable: true },
       { name: "Ad-Free Experience", isAvailable: true },
