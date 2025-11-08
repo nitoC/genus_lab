@@ -176,16 +176,21 @@ const Dashboard = () => {
           <section>
             <div className="rounded-xl text-center p-4 text-white font-medium animate-bl flex justify-between items-center bg-blue-600">
               <div className="px-4">{countdown}</div>
-              <button className="relative" onClick={handleNoticeModal}>
+              <div
+                className="relative cursor-pointer"
+                onClick={handleNoticeModal}
+              >
                 <NotificationsDropdown
                   isOpen={isNoticeModalOpen}
                   onClose={handleNoticeModal}
                 />
                 <IoNotificationsCircleSharp className="mt-2 h-6 w-6" />
-              </button>
+              </div>
             </div>
             <JoinQuizModal
               isOpen={isModalOpen}
+              userPlan={{ plan: "free", planCost: 0 }}
+              balance={0}
               onClose={(type?: string) => {
                 if (type === "enrolled") setType("enrolled");
                 setIsModalOpen(false);

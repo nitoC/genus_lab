@@ -1,6 +1,7 @@
 "use client";
 import Funds from "@/components/Funds";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 const CompassIcon = (props: any) => (
@@ -42,8 +43,10 @@ const TrophyIcon = (props: any) => (
   </svg>
 );
 const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState("Profile");
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab");
   const tabs = ["Profile", "Account", "Referral", "Theme"];
+  const [activeTab, setActiveTab] = useState(tab ?? "Profile");
   const earningsData = [30, 45, 40, 60, 55, 80, 70, 75, 65, 90, 85, 95];
 
   type ChartProps = {

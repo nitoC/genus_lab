@@ -8,7 +8,7 @@ import {
   UserIcon,
 } from "@/assets/icons/DashIcons";
 
-import { MdModeNight } from "react-icons/md";
+import { MdContactSupport, MdModeNight } from "react-icons/md";
 import { IoSunnySharp } from "react-icons/io5";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -31,6 +31,7 @@ const Sidebar = ({
     { name: "Leaderboard", icon: TrophyIcon, page: "leaderboard" },
     { name: "Exploral", icon: CompassIcon, page: "explorer" },
     { name: "Profile", icon: UserIcon, page: "profile" },
+    { name: "Support", icon: MdContactSupport, page: "support" },
   ];
 
   return (
