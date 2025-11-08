@@ -59,13 +59,16 @@ export default function Layout({ children }: { children: ReactNode }) {
         className={`fixed inset-0 bg-black/40 z-40 transition-opacity lg:hidden ${
           isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
-        onClick={() => setIsSidebarOpen(false)}
+        onClick={() => {
+          // alert("clicked");
+          setIsSidebarOpen(false);
+        }}
       />
 
       {/* Mobile Sidebar */}
       <div
         className={`fixed top-0 left-0 h-full z-50 transition-transform lg:hidden ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          isSidebarOpen ? "translate-x-0" : "-translate-x-[5000px]"
         }`}
       >
         <Sidebar
