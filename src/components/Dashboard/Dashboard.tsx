@@ -53,7 +53,12 @@ const dashboard = () => {
       </div>
       <JoinQuizModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        userPlan={{ plan: "free", planCost: 0 }}
+        balance={0}
+        onClose={(type?: string) => {
+          //  if (type === "enrolled") setType("enrolled");
+          setIsModalOpen(false);
+        }}
       />
     </main>
   );
