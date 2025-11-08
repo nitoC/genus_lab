@@ -2,7 +2,7 @@
 import Funds from "@/components/Funds";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { toast } from "react-toastify";
 const CompassIcon = (props: any) => (
   <svg
@@ -42,7 +42,7 @@ const TrophyIcon = (props: any) => (
     <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
   </svg>
 );
-const ProfilePage = () => {
+const ProfileContent = () => {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
   const tabs = ["Profile", "Account", "Referral", "Theme"];
@@ -444,6 +444,16 @@ const BreakdownItem = ({ title, total, change, categories }: any) => {
         ))}
       </div>
     </div>
+  );
+};
+
+const ProfilePage = () => {
+  return (
+    <Suspense
+      fallback={<div className="text-center p-10">Loading profile...</div>}
+    >
+      <ProfileContent />
+    </Suspense>
   );
 };
 
