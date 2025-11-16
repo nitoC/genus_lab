@@ -9,6 +9,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { loginUser, tokenUser } from "@/lib/api/apis";
 import { toast } from "react-toastify";
+import { useUser } from "@/store/useUser";
 
 interface WrappedInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -72,6 +73,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
 const LoginPage = () => {
   const router = useRouter();
+  const user = useUser((state: any) => state.updateUser);
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [remember, setRemember] = useState(false);
@@ -127,6 +129,7 @@ const LoginPage = () => {
       }
       if (resp?.data.length && resp?.data.length > 0) {
         sessionStorage.setItem("user", JSON.stringify(resp?.data[0]));
+        user(resp?.data[0]);
         toast.success("Logged in successfully");
         router.push("/dashboard");
       } else {

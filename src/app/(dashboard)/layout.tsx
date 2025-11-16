@@ -3,8 +3,11 @@ import React, { useState, useEffect, ReactNode } from "react";
 import DashHeader from "@/components/DashHeader";
 import Sidebar from "@/components/Sidebar";
 import { usePathname } from "next/navigation";
+import { socket } from "@/lib/api/socket";
+import { useSocket } from "@/store/useSocket";
 
 export default function Layout({ children }: { children: ReactNode }) {
+  const updateSocketId = useSocket((state: any) => state.updateSocketId);
   const path = usePathname();
   const p = path.includes("?") ? path.indexOf("?") : path.length;
 
@@ -25,6 +28,19 @@ export default function Layout({ children }: { children: ReactNode }) {
   // --- Load theme preference from localStorage ---
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
+    socket.connect();
+    socket.on("connect", () => {
+      console.log("Connected to server. Your Socket ID:", socket.id);
+      updateSocketId(socket.id);
+      console.log("id added to state");
+      // Save this ID for future communication
+    });
+
+    socket.on("disconnect", () => {
+      console.log(
+        "Disconnected from server. Handle reconnect or cleanup here."
+      );
+    });
     if (savedTheme) {
       setDark(savedTheme === "true");
     }

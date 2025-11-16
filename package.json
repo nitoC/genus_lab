@@ -25,7 +25,8 @@
     "rsuite": "^5.83.3",
     "sass": "^1.89.2",
     "scss": "^0.2.4",
-    "zustand": "^5.0.6"
+    "socket.io-client": "^4.8.1",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

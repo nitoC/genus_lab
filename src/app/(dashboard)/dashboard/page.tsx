@@ -8,17 +8,25 @@ import QuizEnrollmentCard from "@/components/QuizEnrollment";
 import getSessionStorage from "@/utils/getSessionStorage";
 import Link from "next/link";
 import Image from "next/image";
+import { useUser } from "@/store/useUser";
+import useCountdown from "@/hooks/useCountdown";
+import { useTime } from "@/hooks/useTime";
 
 let text =
   "You have successfully enrolled in the 'Global Trivia Challenge'. Here are your quiz details:";
 
 const Dashboard = () => {
+  const loggedInUser = useUser((state: any) => state.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
   const [type, setType] = useState("dash");
   const [countdown, setCountdown] = useState("Next quiz in —");
   const user = getSessionStorage("user");
   const [userData, setUserData] = useState(user ? JSON.parse(user) : null);
+  const socketId = useUser((state: any) => state.socketId);
+  const [targetEpoch, setTargetEpoch] = useState<number | null>(null);
+
+  console.log("loggedin user", loggedInUser);
 
   if (!user) {
     return (
@@ -30,83 +38,91 @@ const Dashboard = () => {
     );
   }
 
-  // COUNTDOWN TIMER LOGIC
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const currentHour = now.getHours();
+  // // COUNTDOWN TIMER LOGIC
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const now = new Date();
+  //     const currentHour = now.getHours();
 
-      let nextQuizHour = null;
-      const quizHours = [7, 9, 11, 13, 15, 17, 19]; // Quiz start hours
+  //     let nextQuizHour = null;
+  //     const quizHours = [7, 9, 11, 13, 15, 17, 19]; // Quiz start hours
 
-      if (currentHour >= 21) {
-        // After 9 PM → next quiz tomorrow at 7 AM (countdown till 7 AM)
-        const nextDay = new Date(now);
-        nextDay.setDate(now.getDate() + 1);
-        nextDay.setHours(7, 0, 0, 0);
-        updateCountdown(nextDay, now);
-        return;
-      }
+  //     if (currentHour >= 21) {
+  //       // After 9 PM → next quiz tomorrow at 7 AM (countdown till 7 AM)
+  //       const nextDay = new Date(now);
+  //       nextDay.setDate(now.getDate() + 1);
+  //       nextDay.setHours(7, 0, 0, 0);
+  //       updateCountdown(nextDay, now);
+  //       return;
+  //     }
 
-      if (currentHour < 5) {
-        // Before 5 AM → countdown till 5 AM idle period, then 2-hour till 7 AM
-        const nextTarget = new Date(now);
-        nextTarget.setHours(7, 0, 0, 0);
-        updateCountdown(nextTarget, now);
-        return;
-      }
+  //     if (currentHour < 5) {
+  //       // Before 5 AM → countdown till 5 AM idle period, then 2-hour till 7 AM
+  //       const nextTarget = new Date(now);
+  //       nextTarget.setHours(7, 0, 0, 0);
+  //       updateCountdown(nextTarget, now);
+  //       return;
+  //     }
 
-      if (currentHour >= 5 && currentHour < 7) {
-        // 5 AM → countdown till first quiz at 7 AM
-        const nextTarget = new Date(now);
-        nextTarget.setHours(7, 0, 0, 0);
-        updateCountdown(nextTarget, now);
-        return;
-      }
+  //     if (currentHour >= 5 && currentHour < 7) {
+  //       // 5 AM → countdown till first quiz at 7 AM
+  //       const nextTarget = new Date(now);
+  //       nextTarget.setHours(7, 0, 0, 0);
+  //       updateCountdown(nextTarget, now);
+  //       return;
+  //     }
 
-      // Between 7 AM and 9 PM
-      for (let i = 0; i < quizHours.length; i++) {
-        const start = quizHours[i];
-        const end = start + 2;
-        if (currentHour >= start && currentHour < end) {
-          // Currently in a quiz (unavailable)
-          const nextTarget = new Date(now);
-          nextTarget.setHours(end, 0, 0, 0);
-          updateCountdown(nextTarget, now);
-          return;
-        }
-        if (currentHour < start) {
-          nextQuizHour = start;
-          break;
-        }
-      }
+  //     // Between 7 AM and 9 PM
+  //     for (let i = 0; i < quizHours.length; i++) {
+  //       const start = quizHours[i];
+  //       const end = start + 2;
+  //       if (currentHour >= start && currentHour < end) {
+  //         // Currently in a quiz (unavailable)
+  //         const nextTarget = new Date(now);
+  //         nextTarget.setHours(end, 0, 0, 0);
+  //         updateCountdown(nextTarget, now);
+  //         return;
+  //       }
+  //       if (currentHour < start) {
+  //         nextQuizHour = start;
+  //         break;
+  //       }
+  //     }
 
-      if (nextQuizHour === null) {
-        // After last quiz before 9 PM
-        const nextTarget = new Date(now);
-        nextTarget.setHours(21, 0, 0, 0);
-        updateCountdown(nextTarget, now);
-      } else {
-        const nextTarget = new Date(now);
-        nextTarget.setHours(nextQuizHour, 0, 0, 0);
-        updateCountdown(nextTarget, now);
-      }
-    }, 1000);
+  //     if (nextQuizHour === null) {
+  //       // After last quiz before 9 PM
+  //       const nextTarget = new Date(now);
+  //       nextTarget.setHours(21, 0, 0, 0);
+  //       updateCountdown(nextTarget, now);
+  //     } else {
+  //       const nextTarget = new Date(now);
+  //       nextTarget.setHours(nextQuizHour, 0, 0, 0);
+  //       updateCountdown(nextTarget, now);
+  //     }
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
-  const updateCountdown = (target: Date, now: Date) => {
-    const diff = target.getTime() - now.getTime();
-    const totalSeconds = Math.max(0, Math.floor(diff / 1000));
+  // const updateCountdown = (target: Date, now: Date) => {
+  //   const diff = target.getTime() - now.getTime();
+  //   const totalSeconds = Math.max(0, Math.floor(diff / 1000));
 
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+  //   const hours = Math.floor(totalSeconds / 3600);
+  //   const minutes = Math.floor((totalSeconds % 3600) / 60);
+  //   const seconds = totalSeconds % 60;
 
-    setCountdown(`Next quiz in ${hours}hours ${minutes}mins ${seconds}secs`);
+  //   setCountdown(`Next quiz in ${hours}hours ${minutes}mins ${seconds}secs`);
+  // };
+  const handleTimerUpdate = (data: number) => {
+    console.log("Timer update received in dashboard:", data);
+    setTargetEpoch(data);
+    // You can update state or perform other actions with the received timer data
   };
-
+  useTime(socketId, handleTimerUpdate);
+  useCountdown(targetEpoch, "dash", (val: any) => {
+    setCountdown(val);
+  });
   const handleNoticeModal = () => setIsNoticeModalOpen(!isNoticeModalOpen);
 
   return (
