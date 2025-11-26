@@ -1,10 +1,12 @@
 import React from "react";
 import QuizCard from "@/components/Cards/AllQuizCard";
 import Back from "@/components/Buttons/Back";
+import useQuestion from "@/hooks/useQuestion";
 
 const QuizPerformanceList = () =>
   // { quizzes }: { quizzes: any }
   {
+    // useQuestion();
     const quizzes = [
       {
         title: "Genus Quiz Challenge",

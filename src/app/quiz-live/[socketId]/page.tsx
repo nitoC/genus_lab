@@ -1,15 +1,35 @@
 "use client";
 
+import useQuestion from "@/hooks/useQuestion";
+import { useUser } from "@/store/useUser";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
 
-export default function QuizLivePage() {
+import { IoReturnDownBack } from "react-icons/io5";
+
+const QuizLivePage = () => {
+  // useQuestion();
+  const sid = useUser((state: any) => state.socketId);
+  const { socketId } = useParams();
+  const router = useRouter();
+  // console.log(param);
+  const quizHandler = useQuestion(socketId, sid);
+
   const [agree, setAgree] = useState(false);
   const [gender, setGender] = useState("");
   const [marketing, setMarketing] = useState("");
   const [dob, setDob] = useState<Date>();
-  const [loading, setLoading] = useState(false); // 🔹 new loading state
+  const [loading, setLoading] = useState(false); //
+
+  console.log(quizHandler.isId);
+  if (!quizHandler.isId)
+    return (
+      <p>
+        unauthorized page <Link href="/dashboard"> go back</Link>
+      </p>
+    );
 
   return (
     <main className="min-h-screen bg-gray-50 py-10">
@@ -61,7 +81,7 @@ export default function QuizLivePage() {
                 Proceed&nbsp;to&nbsp;start.
               </p>
               <Link
-                href={"/quiz-live/quiz"}
+                href={`/quiz-live/${socketId}/quiz`}
                 className="bg-blue w-full text-center text-white px-4 py-2 rounded-xl"
               >
                 Proceed
@@ -72,4 +92,14 @@ export default function QuizLivePage() {
       </div>
     </main>
   );
-}
+};
+
+const QuizLive = () => {
+  return (
+    <Suspense fallback={<p>...LOADING PAGE</p>}>
+      <QuizLivePage />
+    </Suspense>
+  );
+};
+
+export default QuizLive;

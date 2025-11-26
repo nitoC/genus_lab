@@ -64,8 +64,9 @@ export const JoinQuizModal = ({
         <div className="text-left bg-gray-100 p-4 rounded-lg border-l-4 border-blue-500 mb-6">
           {plan === "free" ? (
             <p className="text-sm text-gray-700">
-              This quiz is part of a monthly subscription. Subscribe to a plan
-              to unlock access and join.
+              This quiz is part of your monthly subscription service. To
+              maintain your access, a recurring fee will be automatically taken
+              from your balance on a monthly basis.
             </p>
           ) : (
             <>

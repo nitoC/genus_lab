@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useUser } from "@/store/useUser";
 import useCountdown from "@/hooks/useCountdown";
 import { useTime } from "@/hooks/useTime";
+import { useSocket } from "@/store/useSocket";
 
 let text =
   "You have successfully enrolled in the 'Global Trivia Challenge'. Here are your quiz details:";
@@ -21,22 +22,19 @@ const Dashboard = () => {
   const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
   const [type, setType] = useState("dash");
   const [countdown, setCountdown] = useState("Next quiz in —");
-  const user = getSessionStorage("user");
-  const [userData, setUserData] = useState(user ? JSON.parse(user) : null);
-  const socketId = useUser((state: any) => state.socketId);
+  const [userData, setUserData] = useState<any>();
+  const socketId = useSocket((state: any) => state.socketId);
+  const [Sid, setSid] = useState("");
   const [targetEpoch, setTargetEpoch] = useState<number | null>(null);
+  const loading = !userData && true;
+  console.log("loggedin user", loggedInUser, "\nsocket id ", socketId);
+  console.log("data user", userData, "\nsocket id ", socketId);
 
-  console.log("loggedin user", loggedInUser);
-
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-500">
-          No user data found. Please <Link href={"/login"}>login</Link>.
-        </p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const user = getSessionStorage("user");
+    console.log(user, "user");
+    setUserData(user ? JSON.parse(user) : null);
+  }, []);
 
   // // COUNTDOWN TIMER LOGIC
   // useEffect(() => {
@@ -123,16 +121,31 @@ const Dashboard = () => {
   useCountdown(targetEpoch, "dash", (val: any) => {
     setCountdown(val);
   });
+  useEffect(() => {
+    setSid(socketId);
+    console.log(socketId, "changed sokcet id");
+  }, [socketId]);
   const handleNoticeModal = () => setIsNoticeModalOpen(!isNoticeModalOpen);
+
+  if (loading) return <p className="text-gray-500">loading data.</p>;
+  if (!userData) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-gray-500">
+          No user data found. Please <Link href={"/login"}>login</Link>.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <main className="p-6 space-y-6">
       <section>
         <h2 className="text-2xl dark:text-blue font-semibold">
           Welcome back,{" "}
-          {userData && userData.fullname.split(" ").length > 1
-            ? userData.fullname.split(" ")[1]
-            : userData.fullname.split(" ")[0]}
+          {userData && userData?.fullname.split(" ").length > 1
+            ? userData?.fullname.split(" ")[1]
+            : userData?.fullname.split(" ")[0]}
           !
         </h2>
         <p className="text-gray-400">
@@ -168,7 +181,7 @@ const Dashboard = () => {
               <QuizCard title="Genus Quiz Challenge" time="5:00pm-7:00pm" />
               <QuizCard title="Genus Quiz Challenge" time="7:00pm-9:00pm" />
             </div>
-
+            {Sid && <Link href={`quiz-live/${Sid}`}>quiz</Link>}
             <div className="flex gap-4 mt-4">
               <button
                 onClick={() => {
