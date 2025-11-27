@@ -181,17 +181,18 @@ const Dashboard = () => {
               <QuizCard title="Genus Quiz Challenge" time="5:00pm-7:00pm" />
               <QuizCard title="Genus Quiz Challenge" time="7:00pm-9:00pm" />
             </div>
-            {Sid && <Link href={`quiz-live/${Sid}`}>quiz</Link>}
+            {/* {Sid && <Link href={`quiz-live/${Sid}`}>quiz</Link>} */}
             <div className="flex gap-4 mt-4">
-              <button
-                onClick={() => {
-                  console.log("log");
-                  setIsModalOpen(true);
-                }}
+              <Link
+                href={`/quiz-live/${Sid}`}
+                // onClick={() => {
+                //   console.log("log");
+                //   setIsModalOpen(true);
+                // }}
                 className="btn-rich btn-green"
               >
                 Join Quiz
-              </button>
+              </Link>
               <Link
                 href={"/quiz?page=all"}
                 className="btn-rich btn-outline dark:bg-transparent"

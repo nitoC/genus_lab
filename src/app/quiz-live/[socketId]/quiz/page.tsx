@@ -9,6 +9,7 @@ import AnimatedVoiceButton from "@/components/Buttons/Audio";
 import useQuestion from "@/hooks/useQuestion";
 import useScore from "@/hooks/useScore";
 import { useUser } from "@/store/useUser";
+import QuizReviewModal from "@/components/modals/ViewAnswers";
 
 type OptionTuple = [string, string];
 
@@ -142,32 +143,38 @@ const ProgressBar: React.FC<{ answered: number; total: number }> = ({
   );
 };
 
-const ScoreScreen: React.FC<{ score: number; onRetry: () => void }> = ({
-  score,
-  onRetry,
-}) => (
-  <div className="w-full text-center">
-    <div className="bg-yellow-200 text-black px-6 py-2 rounded-full font-bold mb-8 mx-auto w-40">
-      View answers
-    </div>
-    <h2 className="text-5xl font-bold mb-4">Your score</h2>
-    <p className="text-8xl font-bold text-blue-500 mb-8">{score}%</p>
-
-    <div className="flex justify-center gap-6">
+const ScoreScreen: React.FC<{
+  score: number;
+  onRetry: () => void;
+  handleReview: () => void;
+}> = ({ score, onRetry, handleReview }) => (
+  <>
+    <div className="w-full text-center">
       <button
-        onClick={onRetry}
-        className="px-8 py-3 bg-blue-500 text-white font-semibold rounded-full shadow-lg hover:bg-blue-600 transition"
+        onClick={handleReview}
+        className="bg-yellow-200 cursor-pointer text-black px-6 py-2 rounded-full font-bold mb-8 mx-auto w-40"
       >
-        Try Again
+        View answers
       </button>
-      <Link
-        href="/quiz"
-        className="px-8 py-3 bg-green-500 text-white font-semibold rounded-full shadow-lg hover:bg-green-600 transition"
-      >
-        Dashboard
-      </Link>
+      <h2 className="text-5xl font-bold mb-4">Your score</h2>
+      <p className="text-8xl font-bold text-blue-500 mb-8">{score}%</p>
+
+      <div className="flex justify-center gap-6">
+        <button
+          onClick={onRetry}
+          className="px-8 py-3 bg-blue-500 text-white font-semibold rounded-full shadow-lg hover:bg-blue-600 transition"
+        >
+          Try Again
+        </button>
+        <Link
+          href="/quiz"
+          className="px-8 py-3 bg-green-500 text-white font-semibold rounded-full shadow-lg hover:bg-green-600 transition"
+        >
+          Dashboard
+        </Link>
+      </div>
     </div>
-  </div>
+  </>
 );
 
 export default function LiveQuiz() {
@@ -184,6 +191,7 @@ export default function LiveQuiz() {
   const [timeLeft, setTimeLeft] = useState(300);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [review, setreview] = useState(false);
 
   // answers map: questionNumber -> optionKey (the first value from option tuple)
   const [answers, setAnswers] = useState<Map<number, string>>(new Map());
@@ -355,128 +363,142 @@ export default function LiveQuiz() {
   };
 
   return (
-    <div className="min-h-screen bg-[#14223d] text-white">
-      <QuizHeader />
+    <>
+      {review && (
+        <QuizReviewModal
+          reviewData={scoreData && scoreData.length && [...scoreData]}
+          // userAnswers={answers}
+          onClose={() => setreview(false)}
+        />
+      )}
+      <div className="min-h-screen bg-[#14223d] text-white">
+        <QuizHeader />
 
-      <main className="flex flex-col items-center justify-center p-4">
-        <div className="relative w-full max-w-4xl p-6 lg:bg-[url(/quiz_background.png)] bg-[url(/sm_quiz_background.png)] bg-cover lg:bg-contain aspect bg-no-repeat rounded-xl shadow-lg mt-8">
-          {/* celebration confetti when submitted */}
-          {isSubmitted && (
-            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <div key={i} className={`confetti-piece confetti-${i + 1}`} />
-              ))}
-            </div>
-          )}
-
-          <div className="relative z-10 mb-6 text-center">
-            <div className="bg-yellow-200 text-black px-6 max-w-2xs m-auto relative bottom-7.5 py-2 rounded-full font-bold mb-4 w-full text-center">
-              Question {currentQuestionIndex + 1}
-            </div>
-            <h2 className="text-3xl font-bold mb-6">
-              {currentQuestion ? (
-                currentQuestion.question
-              ) : (
-                <span className="text-gray-300">Waiting for question...</span>
-              )}
-            </h2>
-          </div>
-
-          <div className="relative z-10 flex flex-col-reverse p-4 md:p-12 md:flex-row items-center justify-between">
-            {!isSubmitted ? (
-              <>
-                <div className="w-full md:w-2/4">
-                  {!currentQuestion ? (
-                    <Loader text="Loading question..." />
-                  ) : (
-                    <>
-                      <OptionsList
-                        options={currentQuestion.options}
-                        selected={selectedForCurrentQuestion}
-                        onSelect={handleSelect}
-                        disabled={submitting}
-                        answeredForThisQuestion={
-                          answers.get(currentQuestion.number) ?? null
-                        }
-                      />
-
-                      <ProgressBar
-                        answered={answeredCount}
-                        total={totalQuestions}
-                      />
-
-                      <div className="flex justify-center items-center mt-6 space-x-4">
-                        <button className="w-[100px] overflow-hidden">
-                          <AnimatedVoiceButton />
-                        </button>
-
-                        {currentQuestionIndex > 0 && (
-                          <button
-                            onClick={goPrev}
-                            className="px-6 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition"
-                          >
-                            Prev
-                          </button>
-                        )}
-
-                        {currentQuestionIndex >= (quizData?.length ?? 1) - 1 ? (
-                          <button
-                            onClick={handleSubmit}
-                            disabled={submitting}
-                            className="px-6 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition disabled:opacity-60"
-                          >
-                            {submitting ? "Submitting..." : "Submit"}
-                          </button>
-                        ) : (
-                          <button
-                            onClick={goNext}
-                            className="px-6 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition"
-                          >
-                            Next
-                          </button>
-                        )}
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                <div className="flex md:flex-col justify-between w-full md:w-fit items-center mt-8 md:mt-0 md:ml-8">
-                  <div className="flex md:flex-col p-4 gap-2 items-center">
-                    <Image
-                      src="/images/woman.png"
-                      alt="User avatar"
-                      width={96}
-                      height={96}
-                      className="rounded-full border-4 border-yellow-300"
-                    />
-                    <div className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm">
-                      Burna
-                    </div>
-                  </div>
-
-                  <div className="flex items-center mt-4">
-                    <Timer seconds={timeLeft} />
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="w-full text-center">
-                <ScoreScreen
-                  score={
-                    scoreData && scoreData.length
-                      ? scoreData[scoreData.length - 1].your_score ?? 0
-                      : 0
-                  }
-                  onRetry={retry}
-                />
+        <main className="flex flex-col items-center justify-center p-4">
+          <div className="relative w-full max-w-4xl p-6 lg:bg-[url(/quiz_background.png)] bg-[url(/sm_quiz_background.png)] bg-cover lg:bg-contain aspect bg-no-repeat rounded-xl shadow-lg mt-8">
+            {/* celebration confetti when submitted */}
+            {isSubmitted && (
+              <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <div key={i} className={`confetti-piece confetti-${i + 1}`} />
+                ))}
               </div>
             )}
-          </div>
-        </div>
-      </main>
 
-      {/* inline styles for confetti (kept here for convenience) */}
-      <style>{`
+            <div className="relative z-10 mb-6 text-center">
+              <div className="bg-yellow-200 text-black px-6 max-w-2xs m-auto relative bottom-7.5 py-2 rounded-full font-bold mb-4 w-full text-center">
+                Question {currentQuestionIndex + 1}
+              </div>
+              <h2 className="text-3xl font-bold mb-6">
+                {currentQuestion ? (
+                  currentQuestion.question
+                ) : (
+                  <span className="text-gray-300">Waiting for question...</span>
+                )}
+              </h2>
+            </div>
+
+            <div className="relative z-10 flex flex-col-reverse p-4 md:p-12 md:flex-row items-center justify-between">
+              {!isSubmitted ? (
+                <>
+                  <div className="w-full md:w-2/4">
+                    {!currentQuestion ? (
+                      <Loader text="Loading question..." />
+                    ) : (
+                      <>
+                        <OptionsList
+                          options={currentQuestion.options}
+                          selected={selectedForCurrentQuestion}
+                          onSelect={handleSelect}
+                          disabled={submitting}
+                          answeredForThisQuestion={
+                            answers.get(currentQuestion.number) ?? null
+                          }
+                        />
+
+                        <ProgressBar
+                          answered={answeredCount}
+                          total={totalQuestions}
+                        />
+
+                        <div className="flex justify-center items-center mt-6 space-x-4">
+                          <button className="w-[100px] overflow-hidden">
+                            <AnimatedVoiceButton />
+                          </button>
+
+                          {currentQuestionIndex > 0 && (
+                            <button
+                              onClick={goPrev}
+                              className="px-6 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition"
+                            >
+                              Prev
+                            </button>
+                          )}
+
+                          {currentQuestionIndex >=
+                          (quizData?.length ?? 1) - 1 ? (
+                            <button
+                              onClick={handleSubmit}
+                              disabled={submitting}
+                              className="px-6 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition disabled:opacity-60"
+                            >
+                              {submitting ? "Submitting..." : "Submit"}
+                            </button>
+                          ) : (
+                            <button
+                              onClick={goNext}
+                              className="px-6 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition"
+                            >
+                              Next
+                            </button>
+                          )}
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  <div className="flex md:flex-col justify-between w-full md:w-fit items-center mt-8 md:mt-0 md:ml-8">
+                    <div className="flex md:flex-col p-4 gap-2 items-center">
+                      <Image
+                        src="/images/woman.png"
+                        alt="User avatar"
+                        width={96}
+                        height={96}
+                        className="rounded-full border-4 border-yellow-300"
+                      />
+                      <div className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm">
+                        Burna
+                      </div>
+                    </div>
+
+                    <div className="flex items-center mt-4">
+                      <Timer seconds={timeLeft} />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="w-full text-center">
+                  <ScoreScreen
+                    handleReview={() => {
+                      // console.log(scoreData, "review");
+                      // console.log([...scoreData], "score data review");
+                      setreview(true);
+                    }}
+                    score={
+                      scoreData && scoreData.length
+                        ? scoreData[scoreData.length - 1].your_score ?? 0
+                        : 0
+                    }
+                    onRetry={retry}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        </main>
+
+        {/* inline styles for confetti (kept here for convenience) */}
+        <style>{`
         @keyframes confetti-fall {0% { transform: translateY(-100vh) rotateZ(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotateZ(360deg); opacity: 0; }}
         .confetti-piece { position: absolute; width: 10px; height: 10px; animation: confetti-fall linear infinite; }
         .confetti-1 { left: 10%; background-color: #f6ad55; animation-duration: 5s; }
@@ -489,7 +511,8 @@ export default function LiveQuiz() {
         .confetti-8 { left: 80%; background-color: #f6ad55; animation-duration: 6.5s; }
         .confetti-9 { left: 90%; background-color: #48bb78; animation-duration: 3.5s; }
         .confetti-10 { left: 5%; background-color: #63b3ed; animation-duration: 4.8s; }
-      `}</style>
-    </div>
+        `}</style>
+      </div>
+    </>
   );
 }

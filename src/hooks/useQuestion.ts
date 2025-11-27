@@ -77,6 +77,7 @@ const useQuestion = (socketId: ParamValue, sid: string) => {
 
   return {
     handleConnection,
+    handleDisconnect,
     handleEvent,
     // handleScore,
     isId,
