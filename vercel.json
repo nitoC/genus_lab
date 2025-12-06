@@ -1,8 +1,8 @@
-{
-  "rewrites": [
-    {
-      "source": "/:match*",
-      "destination": "172.105.42.17*"
-    }
-  ]
-}
+// {
+//   "rewrites": [
+//     {
+//       "source": "/:match*",
+//       "destination": "172.105.42.17*"
+//     }
+//   ]
+// }

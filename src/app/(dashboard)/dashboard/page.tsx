@@ -123,6 +123,7 @@ const Dashboard = () => {
   });
   useEffect(() => {
     setSid(socketId);
+  
     console.log(socketId, "changed sokcet id");
   }, [socketId]);
   const handleNoticeModal = () => setIsNoticeModalOpen(!isNoticeModalOpen);

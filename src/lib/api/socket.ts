@@ -1,20 +1,16 @@
 import { io } from "socket.io-client";
 
-// Change the domain to a relative path that points to your Vercel deployment root.
-// The "vercel.json" rewrite configuration handles redirecting this securely.
-const domain = "/";
+// const config = {
+//   "user-agent": "Custom Ws Client",
+// };
+
+const domain = "https://gslb.site/";
 
 export const socket = io(domain, {
-  auth: {
-    userAgent: "Custom Ws Client",
-  },
-  // If your server requires explicit transport settings, you might need these,
-  // but usually Vercel handles this automatically:
-  // transports: ['websocket', 'polling'],
-});
-
-socket.on("connect", () => {
-  console.log("Connected to server via Vercel Proxy.");
+  transports: ["websocket", "polling"],
+  reconnection: true,
+  reconnectionAttempts: 10,
+  reconnectionDelay: 1000,
 });
 
 socket.on("disconnect", () => {
