@@ -117,13 +117,14 @@ const Dashboard = () => {
     setTargetEpoch(data);
     // You can update state or perform other actions with the received timer data
   };
+
   useTime(socketId, handleTimerUpdate);
   useCountdown(targetEpoch, "dash", (val: any) => {
     setCountdown(val);
   });
   useEffect(() => {
     setSid(socketId);
-  
+
     console.log(socketId, "changed sokcet id");
   }, [socketId]);
   const handleNoticeModal = () => setIsNoticeModalOpen(!isNoticeModalOpen);
@@ -185,7 +186,7 @@ const Dashboard = () => {
             {/* {Sid && <Link href={`quiz-live/${Sid}`}>quiz</Link>} */}
             <div className="flex gap-4 mt-4">
               <Link
-                href={`/quiz-live/${Sid}`}
+                href={`/quiz-online/${Sid}`}
                 // onClick={() => {
                 //   console.log("log");
                 //   setIsModalOpen(true);

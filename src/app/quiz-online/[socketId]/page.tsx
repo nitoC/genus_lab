@@ -76,7 +76,7 @@ const QuizLivePage = () => {
             </div>
             <div className="flex flex-col gap-6 w-full max-w-md">
               <p className="text-center">
-                Your live quiz starts now and runs for just 10 minutes. Stay
+                Your live quiz starts now and runs for just 5 minutes. Stay
                 sharp and move fast — every second counts! Tap
                 Proceed&nbsp;to&nbsp;start.
               </p>
