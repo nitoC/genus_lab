@@ -159,16 +159,16 @@ const ScoreScreen: React.FC<{
       <h2 className="text-5xl font-bold mb-4">Your score</h2>
       <p className="text-8xl font-bold text-blue-500 mb-8">{score}%</p>
 
-      <div className="flex justify-center gap-6">
+      <div className="flex justify-center items-center gap-6 flex-col md:flex-row">
         <button
           onClick={onRetry}
-          className="px-8 py-3 bg-blue-500 text-white font-semibold rounded-full shadow-lg hover:bg-blue-600 transition"
+          className="px-8 py-3 text-xs md:text-[1rem] bg-blue-500 text-white font-semibold rounded-full shadow-lg hover:bg-blue-600 transition"
         >
           Try Again
         </button>
         <Link
           href="/quiz"
-          className="px-8 py-3 bg-green-500 text-white font-semibold rounded-full shadow-lg hover:bg-green-600 transition"
+          className="px-8 py-3 text-xs  md:text-[1rem] bg-green-500 text-white font-semibold rounded-full shadow-lg hover:bg-green-600 transition"
         >
           Dashboard
         </Link>
@@ -375,7 +375,7 @@ export default function LiveQuiz() {
         <QuizHeader />
 
         <main className="flex flex-col items-center justify-center p-4">
-          <div className="relative w-full max-w-4xl p-6 lg:bg-[url(/quiz_background.png)] bg-[url(/sm_quiz_background.png)] bg-cover lg:bg-contain aspect bg-no-repeat rounded-xl shadow-lg mt-8">
+          <div className="relative w-full max-w-4xl p-6 lg:bg-[url(/quiz_background.png)] bg-[url(/sm_quiz_background.png)] bg-cover lg:bg-contain aspect bg-no-repeat rounded-xl shadow-lg mt-8 bg-center">
             {/* celebration confetti when submitted */}
             {isSubmitted && (
               <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -389,7 +389,7 @@ export default function LiveQuiz() {
               <div className="bg-yellow-200 text-black px-6 max-w-2xs m-auto relative bottom-7.5 py-2 rounded-full font-bold mb-4 w-full text-center">
                 Question {currentQuestionIndex + 1}
               </div>
-              <h2 className="text-3xl font-bold mb-6">
+              <h2 className="md:text-3xl text-xl  font-bold mb-6">
                 {currentQuestion ? (
                   currentQuestion.question
                 ) : (
@@ -457,8 +457,8 @@ export default function LiveQuiz() {
                     )}
                   </div>
 
-                  <div className="flex md:flex-col justify-between w-full md:w-fit items-center mt-8 md:mt-0 md:ml-8">
-                    <div className="flex md:flex-col p-4 gap-2 items-center">
+                  <div className="flex md:flex-row flex-col-reverse gap-4 md:gap-0 justify-between w-full md:w-fit items-center mb-8 md:mt-0 md:ml-8">
+                    <div className="flex flex-col text-xm md:text-base p-4 gap-2 items-center">
                       <Image
                         src="/images/woman.png"
                         alt="User avatar"
