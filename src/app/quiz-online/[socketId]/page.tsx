@@ -81,7 +81,7 @@ const QuizLivePage = () => {
                 Proceed&nbsp;to&nbsp;start.
               </p>
               <Link
-                href={`/quiz-live/${socketId}/quiz`}
+                href={`/quiz-online/${socketId}/quiz`}
                 className="bg-blue w-full text-center text-white px-4 py-2 rounded-xl"
               >
                 Proceed
