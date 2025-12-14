@@ -1,8 +1,16 @@
 "use client";
-import RankTable from "@/components/RankTable";
-import { JSX, SVGProps, useState } from "react";
-import { FaChessKnight, FaCrown, FaPhabricator } from "react-icons/fa6";
-import { SiClevercloud, SiCoolermaster, SiPrometheus } from "react-icons/si";
+import React, { useState, useMemo, JSX, SVGProps } from "react";
+// Load Tailwind CSS for styling and responsiveness
+// import "tailwindcss/tailwind.css";
+
+// --- START REACT ICON IMPORTS ---
+import { FaChessKnight, FaCrown } from "react-icons/fa6";
+import {
+  SiClevercloud,
+  SiCoolermaster,
+  SiFusionauth,
+  SiPrometheus,
+} from "react-icons/si";
 import { HiMiniCheckBadge } from "react-icons/hi2";
 import {
   GiAllSeeingEye,
@@ -17,10 +25,23 @@ import {
   GiSoulVessel,
   GiSparkSpirit,
 } from "react-icons/gi";
-import { FaCentos } from "react-icons/fa";
+import { FaCentos, FaFacebookSquare, FaStar, FaTrophy } from "react-icons/fa";
 import { FcMindMap } from "react-icons/fc";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // For pagination controls
+import { IoMdClose } from "react-icons/io";
+import { FaUsers } from "react-icons/fa";
+import RankTable from "@/components/RankTable";
+import Link from "next/link";
+// --- END REACT ICON IMPORTS ---
 
-function toRoman(num: number) {
+// --- HELPER FUNCTIONS ---
+
+/**
+ * Converts a number to Roman numerals.
+ * @param {number} num The number to convert.
+ * @returns {string} The Roman numeral representation.
+ */
+const toRoman = (num: number) => {
   const romanMap = [
     { value: 1000, symbol: "M" },
     { value: 900, symbol: "CM" },
@@ -38,225 +59,203 @@ function toRoman(num: number) {
   ];
 
   let result = "";
-
   for (const { value, symbol } of romanMap) {
     while (num >= value) {
       result += symbol;
       num -= value;
     }
   }
-
   return result;
-}
+};
 
-const ExploralPage = () => {
-  const [ranktable, setranktable] = useState(false);
-  const [rankData, setrankData] = useState<any>({});
-  const [startIndex, setstartIndex] = useState(0);
-  const leaderboardRanks = [
-    {
-      rank: 1,
-      title: "Quiz overloard",
-      Icon: <FaCrown size={20} color="gold" />,
-      pointsRange: "2,000,000+",
-      monthlyPoints: "700,000+",
-      basic: "7000+",
-      premium: "17500+",
-      rewards: "GenusLab Trophy + Exclusive Crown Badge + VIP Access",
-    },
-    {
-      rank: 2,
-      title: "Mastermind",
-      Icon: <SiCoolermaster size={20} color="purple" />,
-      pointsRange: "1,000,000-1,999,999",
-      monthlyPoints: "350,000-699,999",
-      basic: "3,500-6,999",
-      premium: "8750-17,499",
-      rewards: "Exclusive Hoodie + Mastermind Badge + Early Quiz Access",
-    },
-    {
-      rank: 3,
-      title: "Brainiac",
-      pointsRange: "500,000–999,999",
-      Icon: <GiBrainstorm size={20} color="crimson" />,
-      monthlyPoints: "175,000 – 349,999",
-      basic: "1,750 – 3,499",
-      premium: "4,375 – 8,749",
-      rewards: "Premium Badge + Access to Bonus Quiz Packs",
-    },
-    {
-      rank: 4,
-      title: "Quiz Pro",
-      pointsRange: "200,000–499,999",
-      Icon: <SiPrometheus size={20} color="blue" />,
-      monthlyPoints: "70,000 – 174,999",
-      basic: "700 – 1,749",
-      premium: "1,750 – 4,375",
-      rewards: "Quiz Boost Pack + Certificate of Excellence",
-    },
-    {
-      rank: 5,
-      title: "Trivia titan",
-      pointsRange: "100,000–199,999",
-      Icon: <GiPsychicWaves size={20} color="green" />,
-      monthlyPoints: "35,000 – 69,999",
-      basic: "350 – 699",
-      premium: "875 – 1,749",
-      rewards: "1 Month Free Premium + Trivia Titan Badge",
-    },
+// --- DATA STRUCTURE (REUSING ORIGINAL WITH REACT ICONS) ---
 
-    {
-      rank: 6,
-      title: "Quiz Ace",
-      pointsRange: "50,000-99,999",
-      Icon: <FaCentos size={20} color="brown" />,
-      monthlyPoints: "17,500-34,999",
-      basic: "175-349",
-      premium: "438-875",
-      rewards: "Achievement Badge + XP Booster",
-    },
-    {
-      rank: 7,
-      title: "Knowledge Knight",
-      pointsRange: "20,000-49,999",
-      Icon: <FaChessKnight size={20} color="orange" />,
-      monthlyPoints: "7,000-17,499",
-      basic: "70-349",
-      premium: "175-875",
-      rewards: "Exclusive Notebook + Knowledge Knight Badge",
-    },
-    {
-      rank: 8,
-      title: "Smart Cookie",
-      pointsRange: "10,000-19,999",
-      Icon: <GiBlackKnightHelm size={20} color="#14213d" />,
-      monthlyPoints: "3,500-6,999",
-      basic: "35-70",
-      premium: "88-175",
-      rewards: "5XP Booster + Smart Cookie Badge",
-    },
-    {
-      rank: 9,
-      title: "Sharp Thinker",
-      pointsRange: "8,000-9,999",
-      Icon: <GiGiftOfKnowledge size={20} color="#ae2012" />,
-      monthlyPoints: "2,800-3,499",
-      basic: "28-35",
-      premium: "70-88",
-      rewards: "Free Merchandise (Sticker Pack or T-Shirt)",
-    },
-    {
-      rank: 10,
-      title: "Clever Clog",
-      pointsRange: "7,000-7,999",
-      Icon: <SiClevercloud size={20} color="#76c893" />,
-      monthlyPoints: "2,450-2,799",
-      basic: "25-28",
-      premium: "62-70",
-      rewards: "7 Days Free Premium Subscription",
-    },
-    {
-      rank: 11,
-      title: "Bright Spark",
-      pointsRange: "6,000-9,999",
-      Icon: <GiSparkSpirit size={20} color="#14213d" />,
-      monthlyPoints: "2,100-2,449",
-      basic: "21-25",
-      premium: "52-62",
-      rewards: "5,000 Bonus Points + Bright Spark Bad",
-    },
-    {
-      rank: 12,
-      title: "Quick Wits",
-      pointsRange: "5,000-5,999",
-      monthlyPoints: "1,750-2,099",
-      Icon: <GiQuicksand size={20} color="#14213d" />,
-      basic: "17-21",
-      premium: "44-52",
-      rewards: "3 Extra Lives + Quick Wits Badge",
-    },
-    {
-      rank: 13,
-      title: "Keen Mind",
-      pointsRange: "4,000-4,999",
-      Icon: <FcMindMap size={20} color="#b5e48c" />,
-      monthlyPoints: "1,400-1,749",
-      basic: "14-17",
-      premium: "35-44",
-      rewards: "Special Badge + Quiz Booster",
-    },
-    {
-      rank: 14,
-      title: "Inquisitive Soul",
-      pointsRange: "3,600-3,999",
-      Icon: <GiSoulVessel size={20} color="purple" />,
-      monthlyPoints: "1,260-1,399",
-      basic: "13-14",
-      premium: "32-35",
-      rewards: "3 Quiz Boosters + Inquisitive Soul Badge",
-    },
-    {
-      rank: 15,
-      title: "Curious Cat",
-      pointsRange: "3,200-3,599",
-      Icon: <FaPhabricator size={20} color="crimson" />,
-      monthlyPoints: "1,120-1,259",
-      basic: "11-13",
-      premium: "28-32",
-      rewards: "2 Power-Ups + Curious Cat Badge",
-    },
-    {
-      rank: 16,
-      title: "Eager Learner",
-      pointsRange: "3000-3,199",
-      Icon: <GiMiddleArrow size={20} color="orange" />,
-      monthlyPoints: "1,050-1,119",
-      basic: "10-11",
-      premium: "26-28",
-      rewards: "Double Points Weekend Access + Eager Learner Badge",
-    },
-    {
-      rank: 17,
-      title: "Knowledge Seeker",
-      pointsRange: "2800-2,999",
-      Icon: <GiAllSeeingEye size={20} color="brown" />,
-      monthlyPoints: "980-1,049",
-      basic: "9.80-10.49",
-      premium: "24.50-26.23",
-      rewards: "Free Entry to Next Quiz Contest + Knowledge Seeker Badge",
-    },
-    {
-      rank: 18,
-      title: "Aspiring Expert",
-      pointsRange: "2,000-2,799",
-      Icon: <GiExplosionRays size={20} color="lilac" />,
-      monthlyPoints: "700-979",
-      basic: "7-9.80",
-      premium: "17.50-24.50",
-      rewards: "50% Discount on Next Quiz + Aspiring Expert Badge",
-    },
-    {
-      rank: 19,
-      title: "Rising Star",
-      pointsRange: "1,500-1,999",
-      Icon: <GiBoxingGlove size={20} color="teal" />,
-      monthlyPoints: "525-699",
-      basic: "5.25-7",
-      premium: "13.13-17.50",
-      rewards: "Welcome Gift (Badge + Booster) + Rising Star Badge",
-    },
-    {
-      rank: 20,
-      title: "Fresh Mind",
-      pointsRange: "0–1,499",
-      Icon: <HiMiniCheckBadge size={20} color="#b5e48c" />,
-      monthlyPoints: "0 – 524",
-      basic: "0 – 5.24",
-      premium: "0 – 13.10",
-      rewards: "Encouragement Badge + Keep Learning Message",
-    },
-  ];
+const leaderboardRanks = [
+  {
+    rank: 1,
+    title: "Quiz Overlord",
+    Icon: <FaCrown size={20} className="text-green-500" />,
+    pointsRange: "2,000,000+",
+  },
+  {
+    rank: 2,
+    title: "Mastermind",
+    Icon: <SiCoolermaster size={20} className="text-purple-600" />,
+    pointsRange: "1,000,000 - 1,999,999",
+  },
+  {
+    rank: 3,
+    title: "Brainiac",
+    Icon: <GiBrainstorm size={20} className="text-red-600" />,
+    pointsRange: "500,000 – 999,999",
+  },
+  {
+    rank: 4,
+    title: "Quiz Pro",
+    Icon: <SiPrometheus size={20} className="text-blue-500" />,
+    pointsRange: "200,000 – 499,999",
+  },
+  {
+    rank: 5,
+    title: "Trivia Titan",
+    Icon: <GiPsychicWaves size={20} className="text-green-500" />,
+    pointsRange: "100,000 – 199,999",
+  },
+  {
+    rank: 6,
+    title: "Quiz Ace",
+    Icon: <FaCentos size={20} className="text-green-700" />,
+    pointsRange: "50,000 - 99,999",
+  },
+  {
+    rank: 7,
+    title: "Knowledge Knight",
+    Icon: <FaChessKnight size={20} className="text-orange-500" />,
+    pointsRange: "20,000 - 49,999",
+  },
+  {
+    rank: 8,
+    title: "Smart Cookie",
+    Icon: (
+      <GiBlackKnightHelm
+        size={20}
+        className="text-gray-900 dark:text-gray-300"
+      />
+    ),
+    pointsRange: "10,000 - 19,999",
+  },
+  {
+    rank: 9,
+    title: "Sharp Thinker",
+    Icon: <GiGiftOfKnowledge size={20} className="text-red-700" />,
+    pointsRange: "8,000 - 9,999",
+  },
+  {
+    rank: 10,
+    title: "Clever Clog",
+    Icon: <SiClevercloud size={20} className="text-green-400" />,
+    pointsRange: "7,000 - 7,999",
+  },
+  {
+    rank: 11,
+    title: "Bright Spark",
+    Icon: <GiSparkSpirit size={20} className="text-indigo-500" />,
+    pointsRange: "6,000 - 9,999",
+  },
+  {
+    rank: 12,
+    title: "Quick Wits",
+    Icon: <GiQuicksand size={20} className="text-blue-700" />,
+    pointsRange: "5,000 - 5,999",
+  },
+  {
+    rank: 13,
+    title: "Keen Mind",
+    Icon: <FcMindMap size={20} />,
+    pointsRange: "4,000 - 4,999",
+  },
+  {
+    rank: 14,
+    title: "Inquisitive Soul",
+    Icon: <GiSoulVessel size={20} className="text-purple-500" />,
+    pointsRange: "3,600 - 3,999",
+  },
+  {
+    rank: 15,
+    title: "Curious Cat",
+    Icon: <FaUsers size={20} className="text-pink-600" />,
+    pointsRange: "3,200 - 3,599",
+  },
+  {
+    rank: 16,
+    title: "Eager Learner",
+    Icon: <GiMiddleArrow size={20} className="text-green-600" />,
+    pointsRange: "3,000 - 3,199",
+  },
+  {
+    rank: 17,
+    title: "Knowledge Seeker",
+    Icon: <GiAllSeeingEye size={20} className="text-brown-700" />,
+    pointsRange: "2,800 - 2,999",
+  },
+  {
+    rank: 18,
+    title: "Aspiring Expert",
+    Icon: <GiExplosionRays size={20} className="text-teal-500" />,
+    pointsRange: "2,000 - 2,799",
+  },
+  {
+    rank: 19,
+    title: "Rising Star",
+    Icon: <GiBoxingGlove size={20} className="text-orange-400" />,
+    pointsRange: "1,500 - 1,999",
+  },
+  {
+    rank: 20,
+    title: "Fresh Mind",
+    Icon: <HiMiniCheckBadge size={20} className="text-green-300" />,
+    pointsRange: "0 – 1,499",
+  },
+];
 
+const ITEMS_PER_PAGE = 5;
+
+// --- TABLE ROW COMPONENT ---
+
+const RankTableRow = ({ item, onClick }: any) => {
+  const isTopTier = item.rank <= 3;
+  const isRankOne = item.rank === 1;
+
+  // Row styling
+  const rowClasses = isTopTier
+    ? "bg-green-50/70 dark:bg-green-900/40 border-l-0 border-green-500"
+    : "bg-white dark:bg-gray-800 border-l-0 border-transparent";
+
+  const rankTextClass = isRankOne
+    ? "text-2xl font-extrabold text-green-500"
+    : "text-xl font-bold text-gray-600 dark:text-gray-300";
+
+  return (
+    <tr
+      onClick={() => onClick(item)}
+      className={`group ${rowClasses} transition-all duration-200 ease-in-out cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-indigo-900/30 rounded-lg`}
+    >
+      <td className="py-4 px-6 text-center w-1/5">
+        <div className="flex flex-col items-center">
+          <span className={rankTextClass}>{toRoman(item.rank)}</span>
+          <span className="text-xs text-gray-400">#{item.rank}</span>
+        </div>
+      </td>
+      <td className="py-4 px-4 text-left w-2/5">
+        <div className="flex items-center gap-3">
+          {item.Icon}
+          <span className="font-semibold text-gray-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+            {item.title}
+          </span>
+        </div>
+      </td>
+      <td className="py-4 px-4 text-right font-medium text-gray-600 dark:text-gray-300 w-2/5">
+        {item.pointsRange}
+      </td>
+    </tr>
+  );
+};
+
+// --- MAIN APP COMPONENT (ExploralPage equivalent) ---
+
+const exploral = () => {
+  // State for the modal
+  const [showRankModal, setShowRankModal] = useState(false);
+  const [selectedRankData, setSelectedRankData] = useState<{
+    rank: number;
+    Icon: any;
+    title: string;
+  } | null>(null);
+
+  // State for pagination (using the requested startIndex equivalent)
+  const [startIndex, setStartIndex] = useState(0);
+
+  // Custom SVG Icons from the original code (retained for dashboard sections)
   const FacebookIcon = (
     props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
   ) => (
@@ -287,82 +286,150 @@ const ExploralPage = () => {
     </svg>
   );
 
+  // Pagination Logic
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentRanks = useMemo(() => {
+    return leaderboardRanks.slice(startIndex, endIndex);
+  }, [startIndex]);
+
+  const totalItems = leaderboardRanks.length;
+
+  const handleRankClick = (item: any) => {
+    setSelectedRankData(item);
+    setShowRankModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowRankModal(false);
+    setSelectedRankData(null);
+  };
+
+  const handleNextPage = () => {
+    if (startIndex < totalItems - ITEMS_PER_PAGE) {
+      setStartIndex((prev) => prev + ITEMS_PER_PAGE);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (startIndex > 0) {
+      setStartIndex((prev) => prev - ITEMS_PER_PAGE);
+    }
+  };
+
+  // Helper classes for pagination buttons
+  const baseButtonClasses =
+    "p-2 rounded-full transition-all duration-300 flex items-center justify-center";
+  const activeClasses =
+    "bg-indigo-600 text-white shadow-md hover:bg-indigo-700";
+  const disabledClasses = "bg-gray-200 text-gray-400 cursor-not-allowed";
+
   return (
-    <div className="p-4 sm:p-6 lg:p-8 min-h-screen">
+    <div className="p-4 sm:p-6 lg:p-8 min-h-screen bg-gray-100 dark:bg-gray-900 font-sans">
       <div className="max-w-7xl mx-auto text-gray-800 dark:text-gray-200">
+        {/* Top Dashboard Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* Upcoming Quizzes */}
-          <div className="lg:col-span-2 p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-            <h3 className="text-lg font-semibold mb-4 dark:text-white">
+          <div className="lg:col-span-2 p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 shadow-xl">
+            <h3 className="text-xl font-bold mb-4 text-indigo-600 dark:text-indigo-400">
               Upcoming Quizzes
             </h3>
             <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1 bg-yellow-400/20 p-4 rounded-lg flex items-center justify-center text-yellow-800 dark:text-yellow-300">
-                <span className="text-5xl font-bold">“?”</span>
+              <div className="flex-1 bg-green-400/20 p-6 rounded-lg flex flex-col items-center justify-center text-green-800 dark:text-green-300">
+                <span className="text-6xl font-black mb-2">?</span>
+                <p className="text-sm font-semibold">History Buffs Challenge</p>
               </div>
-              <div className="flex-1 bg-blue-400/20 p-4 rounded-lg flex items-center justify-center text-blue-800 dark:text-blue-300 gap-2">
-                <span className="text-4xl font-bold bg-white/50 dark:bg-black/30 p-2 rounded">
-                  Q
-                </span>
-                <span className="text-4xl font-bold bg-white/50 dark:bg-black/30 p-2 rounded">
-                  A
-                </span>
+              <div className="flex-1 bg-blue-400/20 p-6 rounded-lg flex flex-col items-center justify-center text-blue-800 dark:text-blue-300">
+                <div className="text-6xl font-black flex gap-2">
+                  <span className="bg-white/50 dark:bg-black/30 p-2 rounded-lg">
+                    Q
+                  </span>
+                  <span className="bg-white/50 dark:bg-black/30 p-2 rounded-lg">
+                    A
+                  </span>
+                </div>
+                <p className="text-sm font-semibold mt-2">
+                  Science Whiz Showdown
+                </p>
               </div>
             </div>
-            <p className="mt-4 text-sm font-semibold dark:text-gray-300">
-              History Buffs Challenge & Science Whiz Showdown
-            </p>
-            <p className="text-xs dark:text-gray-400">
+            <p className="mt-4 text-sm dark:text-gray-400">
               Engage in thrilling quizzes and expand your knowledge.
             </p>
           </div>
 
           {/* Project Updates */}
-          <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex flex-col">
-            <h3 className="text-lg font-semibold mb-2 dark:text-white">
+          <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex flex-col shadow-xl">
+            <h3 className="text-xl font-bold mb-2 text-pink-600 dark:text-pink-400">
               Project Updates
             </h3>
             <p className="text-sm mb-4 dark:text-gray-400">
               New Features and Improvements
             </p>
-            <div className="mt-auto">
+            <div className="mt-auto overflow-hidden">
               <img
-                src="https://placehold.co/400x200/3b82f6/ffffff?text=New+UI"
-                className="rounded-lg object-cover w-full h-24"
+                src="https://placehold.co/400x200/3b82f6/ffffff?text=New+UI+Design"
+                className="rounded-lg object-cover w-full h-24 transition-transform duration-500 hover:scale-105"
                 alt="Project Update"
               />
             </div>
           </div>
 
+          {/* Previous quizzes */}
+          <Link
+            href="/quiz/previous"
+            className="lg:col-span-2 p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 shadow-xl"
+          >
+            <h3 className="text-xl font-bold mb-4 text-indigo-600 dark:text-indigo-400">
+              Previous Quizzes
+            </h3>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1 bg-green-400/20 p-6 rounded-lg flex flex-col items-center justify-center text-green-800 dark:text-green-300">
+                <span className="text-6xl font-black mb-2">
+                  <FaTrophy size={20} />
+                </span>
+                <p className="text-sm font-semibold">Math Olympiad Results</p>
+              </div>
+              <div className="flex-1 bg-red-400/20 p-6 rounded-lg flex flex-col items-center justify-center text-red-800 dark:text-red-300">
+                <span className="text-6xl font-black mb-2">
+                  <SiFusionauth size={20} />
+                </span>
+                <p className="text-sm font-semibold">Chemistry Championship</p>
+              </div>
+            </div>
+            <p className="mt-4 text-sm dark:text-gray-400">
+              Review past performance and learn from top players.
+            </p>
+          </Link>
+
           {/* Tech News */}
-          <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex flex-col">
-            <h3 className="text-lg font-semibold mb-2 dark:text-white">
+          <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex flex-col shadow-xl">
+            <h3 className="text-xl font-bold mb-2 text-teal-600 dark:text-teal-400">
               Tech News
             </h3>
             <p className="text-sm mb-4 dark:text-gray-400">
               Latest Tech Trends
             </p>
-            <div className="mt-auto">
+            <div className="mt-auto overflow-hidden">
               <img
-                src="https://placehold.co/400x200/1e40af/ffffff?text=Tech"
-                className="rounded-lg object-cover w-full h-24"
+                src="https://placehold.co/400x200/1e40af/ffffff?text=AI+Developments"
+                className="rounded-lg object-cover w-full h-24 transition-transform duration-500 hover:scale-105"
                 alt="Tech News"
               />
             </div>
           </div>
 
           {/* Studio Quiz Winner */}
-          <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex flex-col">
-            <h3 className="text-lg font-semibold mb-2 dark:text-white">
+          <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex flex-col shadow-xl">
+            <h3 className="text-xl font-bold mb-2 text-green-600 dark:text-green-400">
               Studio Quiz Winner
             </h3>
             <p className="text-sm mb-4 dark:text-gray-400">
               Congratulations to Evelyn S.
             </p>
-            <div className="mt-auto">
+            <div className="mt-auto overflow-hidden">
               <img
-                src="https://placehold.co/400x200/ca8a04/ffffff?text=Winner"
-                className="rounded-lg object-cover w-full h-24"
+                src="https://placehold.co/400x200/ca8a04/ffffff?text=Winner+Announced"
+                className="rounded-lg object-cover w-full h-24 transition-transform duration-500 hover:scale-105"
                 alt="Winner"
               />
             </div>
@@ -370,19 +437,19 @@ const ExploralPage = () => {
 
           {/* Social Media & Announcements */}
           <div className="grid grid-rows-2 gap-6">
-            <div className="p-4 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <div className="p-4 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-center shadow-xl">
               <h3 className="text-md font-semibold mb-2 dark:text-white">
                 Social Media
               </h3>
               <div className="flex gap-4 text-gray-500 dark:text-gray-400">
-                <FacebookIcon className="h-8 w-8 hover:text-blue-600 cursor-pointer" />
-                <StarIcon className="h-8 w-8 hover:text-yellow-500 cursor-pointer" />
-                <StarIcon className="h-8 w-8 hover:text-yellow-500 cursor-pointer" />
-                <StarIcon className="h-8 w-8 hover:text-yellow-500 cursor-pointer" />
+                <FaFacebookSquare className="h-8 w-8 hover:text-blue-600 cursor-pointer transition-colors" />
+                <FaStar className="h-8 w-8 hover:text-green-500 cursor-pointer transition-colors" />
+                <FaStar className="h-8 w-8 hover:text-green-500 cursor-pointer transition-colors" />
+                <FaStar className="h-8 w-8 hover:text-green-500 cursor-pointer transition-colors" />
               </div>
             </div>
-            <div className="p-4 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex items-center gap-4">
-              <div>
+            <div className="p-4 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex items-center gap-4 shadow-xl">
+              <div className="flex-grow">
                 <h3 className="text-md font-semibold dark:text-white">
                   Latest Announcements
                 </h3>
@@ -399,104 +466,89 @@ const ExploralPage = () => {
           </div>
         </div>
 
-        {/* Leaderboard Table */}
-        <div className="p-6 rounded-2xl bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 ">
-          <div className=" flex justify-between flex-wrap items-center mb-4 w-full">
-            <h3 className="text-xl font-semibold mb-4 dark:text-white">
-              Leader board Ranks, Point Ranges & Rewards
+        {/* --- Leaderboard Rank Table (The Replaced Section) --- */}
+        <div className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-2xl">
+          {/* Header and Pagination */}
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 w-full gap-4">
+            <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white">
+              Leaderboard Ranks & Points
             </h3>
-            <div className=" flex  gap-10">
+
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium text-gray-500 dark:text-gray-400 hidden sm:inline">
+                Showing {startIndex + 1} - {Math.min(endIndex, totalItems)} of{" "}
+                {totalItems}
+              </span>
+
               <button
-                disabled={startIndex <= 0}
-                onClick={() => {
-                  if (startIndex > 0) setstartIndex(startIndex - 5);
-                }}
+                disabled={startIndex === 0}
+                onClick={handlePrevPage}
+                className={`${baseButtonClasses} ${
+                  startIndex === 0 ? disabledClasses : activeClasses
+                }`}
+                aria-label="Previous Page"
               >
-                <span
-                  className={`text bold ${
-                    startIndex > 0 ? "text-blue-500" : "text-gray-400"
-                  } capitalize cursor-pointer`}
-                >
-                  prev
-                </span>
+                <FaArrowLeft size={14} />
               </button>
+
               <button
-                disabled={startIndex >= leaderboardRanks.length - 5}
-                onClick={() => {
-                  if (startIndex < leaderboardRanks.length - 5)
-                    setstartIndex(startIndex + 5);
-                }}
+                disabled={startIndex >= totalItems - ITEMS_PER_PAGE}
+                onClick={handleNextPage}
+                className={`${baseButtonClasses} ${
+                  startIndex >= totalItems - ITEMS_PER_PAGE
+                    ? disabledClasses
+                    : activeClasses
+                }`}
+                aria-label="Next Page"
               >
-                <span
-                  className={`text bold ${
-                    startIndex < leaderboardRanks.length - 5
-                      ? "text-blue-500"
-                      : "text-gray-400"
-                  } capitalize cursor-pointer`}
-                >
-                  next
-                </span>
+                <FaArrowRight size={14} />
               </button>
             </div>
           </div>
-          <div className="hori-scroll overflow-x-auto w-full">
-            <table className="w-full min-w-[1000px] text-left text-sm">
-              <thead className="border-b uppercase dark:border-gray-600">
-                <tr className="rank grid grid-cols-8 items-center text-gray-700 dark:text-gray-300">
-                  <th className="py-3 px-4">Rank</th>
-                  <th className="py-3 px-4">Title</th>
-                  <th className="py-3 px-4">Point Range</th>
-                  <th className="py-3 px-4">Monthly Points</th>
-                  <th className="py-3 px-4">Reward Basic</th>
-                  <th className="py-3 px-4">Reward Premium</th>
-                  <th className="py-3 px-4 col-span-2">Non Cash Rewards</th>
+
+          {/* Rank Table Structure */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm table-fixed border-collapse">
+              <thead className="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-400 rounded-t-xl">
+                <tr>
+                  <th className="py-3 px-6 w-1/5 text-center">Rank</th>
+                  <th className="py-3 px-4 w-2/5 text-left">Title & Icon</th>
+                  <th className="py-3 px-4 w-2/5 text-right">Points Range</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-600 dark:text-gray-300">
-                {leaderboardRanks.map(
-                  (item, index) =>
-                    index < startIndex + 5 &&
-                    index >= startIndex && (
-                      <tr
-                        key={index}
-                        onClick={() => {
-                          setrankData(item);
-                          setranktable(true);
-                          console.log(item);
-                        }}
-                        className="rank border-b grid grid-cols-8 items-center cursor-pointer dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/40"
-                      >
-                        <td className="py-3 px-4 flex items-center gap-5 font-medium">
-                          {item.rank} {item.Icon}
-                        </td>
-                        <td className="py-3 px-4 font-bold">{item.title}</td>
-                        <td className="py-3 px-4">{item.pointsRange}</td>
-                        <td className="py-3 px-4">{item.monthlyPoints}</td>
-                        <td className="py-3 px-4">{item.basic}</td>
-                        <td className="py-3 px-4">{item.premium}</td>
-                        <td className="py-3 px-4 col-span-2">{item.rewards}</td>
-                        {ranktable && (
-                          <RankTable
-                            handleClose={(e: any) => {
-                              e.stopPropagation();
-                              console.log("clicked", ranktable);
-                              setranktable(false);
-                            }}
-                            rank={`${toRoman(rankData.rank)} ${rankData.title}`}
-                            rankIcon={rankData.Icon}
-                            dtheme={() => {}}
-                          />
-                        )}
-                      </tr>
-                    )
-                )}
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                {currentRanks.map((item) => (
+                  <RankTableRow
+                    key={item.rank}
+                    item={item}
+                    onClick={handleRankClick} // Implements rankItem click logic
+                  />
+                ))}
               </tbody>
             </table>
+            {currentRanks.length === 0 && (
+              <p className="text-center py-8 text-gray-500 dark:text-gray-400">
+                No ranks available to display on this page.
+              </p>
+            )}
           </div>
         </div>
+
+        {/* Render the Rank Detail Modal */}
+        {showRankModal && selectedRankData && (
+          <RankTable
+            rank={`${toRoman(selectedRankData?.rank)} ${
+              selectedRankData?.title
+            }`}
+            rankIcon={selectedRankData?.Icon}
+            dtheme={() => {}}
+            // rankData={selectedRankData}
+            handleClose={handleCloseModal}
+          />
+        )}
       </div>
     </div>
   );
 };
 
-export default ExploralPage;
+export default exploral;

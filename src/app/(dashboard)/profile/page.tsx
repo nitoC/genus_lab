@@ -1,8 +1,9 @@
 "use client";
 import Funds from "@/components/Funds";
+import getSessionStorage from "@/utils/getSessionStorage";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import React, { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { Suspense, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 const CompassIcon = (props: any) => (
   <svg
@@ -48,11 +49,24 @@ const ProfileContent = () => {
   const tabs = ["Profile", "Account", "Referral", "Theme"];
   const [activeTab, setActiveTab] = useState(tab ?? "Profile");
   const earningsData = [30, 45, 40, 60, 55, 80, 70, 75, 65, 90, 85, 95];
+  const [userData, setuserData] = useState<UserData | undefined>();
+  const router = useRouter();
 
   type ChartProps = {
     data: number[];
     color: string;
   };
+
+  type UserData = {
+    fullname: string;
+    [key: string]: any;
+  };
+
+  useEffect(() => {
+    const user = getSessionStorage("user");
+    console.log(user, "user");
+    user ? setuserData(JSON.parse(user)) : router.push("/login");
+  }, []);
 
   const Chart: React.FC<ChartProps> = ({ data, color }) => (
     <div className="h-64">
@@ -107,8 +121,10 @@ const ProfileContent = () => {
             className="w-24 h-24 rounded-full border-4 border-blue-500"
           />
           <div>
-            <h2 className="text-3xl font-bold">Chibuike Nwokolo</h2>
-            <p className="text-gray-400">@email.com</p>
+            <h2 className="text-3xl font-bold text-black dark:text-amber-50">
+              {userData?.fullname}
+            </h2>
+            <p className="text-gray-400">{userData?.email}</p>
             <div className="title-container">
               <h3 className="dark:text-white text-gray-900">Rank: 435</h3>
               <p className="text-gray-400">Dev master</p>

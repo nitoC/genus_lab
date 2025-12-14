@@ -4,13 +4,12 @@ import { io } from "socket.io-client";
 //   "user-agent": "Custom Ws Client",
 // };
 
-const domain = "https://gslb.site/";
+const domain = "https://gslb.site";
 
 export const socket = io(domain, {
-  transports: ["websocket", "polling"],
-  reconnection: true,
-  reconnectionAttempts: 10,
-  reconnectionDelay: 1000,
+  auth: {
+    userAgent: "Custom Ws Client",
+  },
 });
 
 socket.on("disconnect", () => {

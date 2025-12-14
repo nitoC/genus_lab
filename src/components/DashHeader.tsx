@@ -5,6 +5,7 @@ import Image from "next/image";
 import Sidebar from "./Sidebar";
 import dashPageContext from "@/app/context/dashPageContext";
 import getSessionStorage from "@/utils/getSessionStorage";
+import Link from "next/link";
 
 const Header = ({ setSidebar }: { setSidebar: () => void }) => {
   // const [first, setfirst] = useState(false);
@@ -39,12 +40,12 @@ const Header = ({ setSidebar }: { setSidebar: () => void }) => {
           <button className="bg-gray-200 px-3 py-1 rounded-lg text-sm">
             LEARN
           </button>
-          <div className="flex items-center gap-2">
+          <Link href={"/profile"} className="flex items-center gap-2">
             <img src="/images/woman.png" className="w-8 h-8 rounded-full" />
             <span className="dark:text-mygrey">
               {userData && userData.fullname}
             </span>
-          </div>
+          </Link>
         </div>
         <button
           onClick={setSidebar}

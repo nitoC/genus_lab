@@ -24,13 +24,13 @@ const dashboard = () => {
           Upcoming Quizzes
         </h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-          <QuizCard title="General Knowledge Quiz" time="7:00am-9:00am" />
+          {/* <QuizCard title="General Knowledge Quiz" time="7:00am-9:00am" />
           <QuizCard title="General Knowledge Quiz" time="9:00am-11:00am" />
           <QuizCard title="Genus Quiz Challenge" time="11:00am-1:00pm" />
           <QuizCard title="Genus Quiz Challenge" time="1:00pm-3:00pm" />
           <QuizCard title="Genus Quiz Challenge" time="3:00pm-5:00pm" />
           <QuizCard title="Genus Quiz Challenge" time="5:00pm-7:00pm" />
-          <QuizCard title="Genus Quiz Challenge" time="7:00pm-9:00pm" />
+          <QuizCard title="Genus Quiz Challenge" time="7:00pm-9:00pm" /> */}
         </div>
         <div className="flex gap-4 mt-4">
           <button

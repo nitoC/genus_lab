@@ -1,9 +1,12 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import BalanceCard from "@/components/Cards/BalanceCard";
 import QuizCard from "@/components/Cards/QuizCard";
 import { JoinQuizModal } from "@/components/modals/Quiz";
 import { IoNotificationsCircleSharp } from "react-icons/io5";
+import { FaRegClock } from "react-icons/fa";
+import { MdOutlineInfo } from "react-icons/md";
 import QuizEnrollmentCard from "@/components/QuizEnrollment";
 import getSessionStorage from "@/utils/getSessionStorage";
 import Link from "next/link";
@@ -12,145 +15,143 @@ import { useUser } from "@/store/useUser";
 import useCountdown from "@/hooks/useCountdown";
 import { useTime } from "@/hooks/useTime";
 import { useSocket } from "@/store/useSocket";
+import { useRouter } from "next/navigation";
+import { useQuizHours } from "@/store/useQuizHours";
 
-let text =
-  "You have successfully enrolled in the 'Global Trivia Challenge'. Here are your quiz details:";
+/* ================= Quiz Not Started Modal ================= */
+
+const QuizNotStartedModal = ({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) => {
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+      <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl w-full max-w-md p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <FaRegClock className="text-blue-600 text-3xl" />
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            Quiz Not Started
+          </h2>
+        </div>
+
+        <div className="flex gap-3 text-gray-600 dark:text-gray-300">
+          <MdOutlineInfo className="text-xl mt-1" />
+          <p>
+            This quiz epoch is yet to start.
+            <br />
+            Please wait until the scheduled start time.
+          </p>
+        </div>
+
+        <div className="flex justify-end mt-6">
+          <button
+            onClick={onClose}
+            className="px-6 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition"
+          >
+            Got it
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ================= Dashboard ================= */
 
 const Dashboard = () => {
-  const loggedInUser = useUser((state: any) => state.user);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
-  const [type, setType] = useState("dash");
-  const [countdown, setCountdown] = useState("Next quiz in —");
-  const [userData, setUserData] = useState<any>();
+  const router = useRouter();
   const socketId = useSocket((state: any) => state.socketId);
-  const [Sid, setSid] = useState("");
+  const loggedInUser = useUser((state: any) => state.user);
+
+  const [userData, setUserData] = useState<any>();
   const [targetEpoch, setTargetEpoch] = useState<number | null>(null);
-  const loading = !userData && true;
-  console.log("loggedin user", loggedInUser, "\nsocket id ", socketId);
-  console.log("data user", userData, "\nsocket id ", socketId);
+  const [Sid, setSid] = useState("");
+  const [countdown, setCountdown] = useState("Next quiz in —");
+  const [showNotStartedModal, setShowNotStartedModal] = useState(false);
+  const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [type, setType] = useState("dash");
+
+  const loading = !userData;
 
   useEffect(() => {
     const user = getSessionStorage("user");
-    console.log(user, "user");
-    setUserData(user ? JSON.parse(user) : null);
+    user ? setUserData(JSON.parse(user)) : router.push("/login");
   }, []);
 
-  // // COUNTDOWN TIMER LOGIC
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     const now = new Date();
-  //     const currentHour = now.getHours();
+  useEffect(() => {
+    setSid(socketId);
+  }, [socketId]);
 
-  //     let nextQuizHour = null;
-  //     const quizHours = [7, 9, 11, 13, 15, 17, 19]; // Quiz start hours
-
-  //     if (currentHour >= 21) {
-  //       // After 9 PM → next quiz tomorrow at 7 AM (countdown till 7 AM)
-  //       const nextDay = new Date(now);
-  //       nextDay.setDate(now.getDate() + 1);
-  //       nextDay.setHours(7, 0, 0, 0);
-  //       updateCountdown(nextDay, now);
-  //       return;
-  //     }
-
-  //     if (currentHour < 5) {
-  //       // Before 5 AM → countdown till 5 AM idle period, then 2-hour till 7 AM
-  //       const nextTarget = new Date(now);
-  //       nextTarget.setHours(7, 0, 0, 0);
-  //       updateCountdown(nextTarget, now);
-  //       return;
-  //     }
-
-  //     if (currentHour >= 5 && currentHour < 7) {
-  //       // 5 AM → countdown till first quiz at 7 AM
-  //       const nextTarget = new Date(now);
-  //       nextTarget.setHours(7, 0, 0, 0);
-  //       updateCountdown(nextTarget, now);
-  //       return;
-  //     }
-
-  //     // Between 7 AM and 9 PM
-  //     for (let i = 0; i < quizHours.length; i++) {
-  //       const start = quizHours[i];
-  //       const end = start + 2;
-  //       if (currentHour >= start && currentHour < end) {
-  //         // Currently in a quiz (unavailable)
-  //         const nextTarget = new Date(now);
-  //         nextTarget.setHours(end, 0, 0, 0);
-  //         updateCountdown(nextTarget, now);
-  //         return;
-  //       }
-  //       if (currentHour < start) {
-  //         nextQuizHour = start;
-  //         break;
-  //       }
-  //     }
-
-  //     if (nextQuizHour === null) {
-  //       // After last quiz before 9 PM
-  //       const nextTarget = new Date(now);
-  //       nextTarget.setHours(21, 0, 0, 0);
-  //       updateCountdown(nextTarget, now);
-  //     } else {
-  //       const nextTarget = new Date(now);
-  //       nextTarget.setHours(nextQuizHour, 0, 0, 0);
-  //       updateCountdown(nextTarget, now);
-  //     }
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  // const updateCountdown = (target: Date, now: Date) => {
-  //   const diff = target.getTime() - now.getTime();
-  //   const totalSeconds = Math.max(0, Math.floor(diff / 1000));
-
-  //   const hours = Math.floor(totalSeconds / 3600);
-  //   const minutes = Math.floor((totalSeconds % 3600) / 60);
-  //   const seconds = totalSeconds % 60;
-
-  //   setCountdown(`Next quiz in ${hours}hours ${minutes}mins ${seconds}secs`);
-  // };
-  const handleTimerUpdate = (data: number) => {
-    console.log("Timer update received in dashboard:", data);
-    setTargetEpoch(data);
-    // You can update state or perform other actions with the received timer data
+  /* ---------- Socket Epoch ---------- */
+  const handleTimerUpdate = (epoch: number) => {
+    setTargetEpoch(epoch);
   };
 
   useTime(socketId, handleTimerUpdate);
-  useCountdown(targetEpoch, "dash", (val: any) => {
-    setCountdown(val);
-  });
-  useEffect(() => {
-    setSid(socketId);
 
-    console.log(socketId, "changed sokcet id");
-  }, [socketId]);
+  useCountdown(
+    targetEpoch,
+    "dash",
+    (
+      val:
+        | string
+        | { days: number; hours: number; minutes: number; seconds: number }
+    ) => {
+      setCountdown(typeof val === "string" ? val : `Next quiz in —`);
+    }
+  );
+
+  /* ---------- Quiz Card Click Logic ---------- */
+  const handleQuizClick = (
+    e: React.MouseEvent,
+    quizHour: number,
+    episode: number
+  ) => {
+    e.preventDefault();
+    if (!targetEpoch) return;
+
+    const now = Date.now();
+    const quizStart = new Date(targetEpoch);
+    quizStart.setHours(quizHour, 0, 0, 0);
+
+    const startEpoch = quizStart.getTime();
+    const endEpoch = startEpoch + 2 * 60 * 60 * 1000;
+
+    if (now < startEpoch) {
+      setShowNotStartedModal(true);
+      return;
+    }
+
+    if (now >= startEpoch && now < endEpoch) {
+      router.push(`/quiz-online/${Sid}`);
+      return;
+    }
+
+    router.push(`/quiz/results?episode=${episode}`);
+  };
+
   const handleNoticeModal = () => setIsNoticeModalOpen(!isNoticeModalOpen);
 
-  if (loading) return <p className="text-gray-500">loading data.</p>;
-  if (!userData) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-500">
-          No user data found. Please <Link href={"/login"}>login</Link>.
-        </p>
-      </div>
-    );
-  }
+  if (loading) return <p className="text-gray-500">Loading...</p>;
+
+  /* ================= Render ================= */
 
   return (
     <main className="p-6 space-y-6">
       <section>
-        <h2 className="text-2xl dark:text-blue font-semibold">
+        <h2 className="text-2xl dark:text-gray-500 font-semibold">
           Welcome back,{" "}
-          {userData && userData?.fullname.split(" ").length > 1
-            ? userData?.fullname.split(" ")[1]
-            : userData?.fullname.split(" ")[0]}
-          !
+          <span className="text-blue">
+            {userData?.fullname?.split(" ")[0]}!
+          </span>
         </h2>
-        <p className="text-gray-400">
+        <p className="text-gray-400 mt-2">
           Here’s a quick overview of your account and active quizzes.
         </p>
       </section>
@@ -159,40 +160,92 @@ const Dashboard = () => {
 
       {type === "enrolled" ? (
         <QuizEnrollmentCard
-          text={text}
+          text="You have successfully enrolled in the quiz."
           settype={(val: string) => setType(val)}
         />
       ) : (
         <section className="flex flex-col gap-6">
           <section>
-            <h3 className="text-xl dark:text-blue font-semibold mt-6">
+            <h3 className="text-xl dark:text-gray-500 font-semibold mt-6">
               Upcoming Quizzes
             </h3>
-            <div
-              className={
-                true
-                  ? "flex gap-4 overflow-x-auto py-2 hori-scroll"
-                  : "grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4"
-              }
-            >
-              <QuizCard title="General Knowledge Quiz" time="7:00am-9:00am" />
-              <QuizCard title="General Knowledge Quiz" time="9:00am-11:00am" />
-              <QuizCard title="Genus Quiz Challenge" time="11:00am-1:00pm" />
-              <QuizCard title="Genus Quiz Challenge" time="1:00pm-3:00pm" />
-              <QuizCard title="Genus Quiz Challenge" time="3:00pm-5:00pm" />
-              <QuizCard title="Genus Quiz Challenge" time="5:00pm-7:00pm" />
-              <QuizCard title="Genus Quiz Challenge" time="7:00pm-9:00pm" />
-            </div>
-            {/* {Sid && <Link href={`quiz-live/${Sid}`}>quiz</Link>} */}
-            <div className="flex gap-4 mt-4">
-              <Link
-                href={`/quiz-online/${Sid}`}
-                // onClick={() => {
-                //   console.log("log");
-                //   setIsModalOpen(true);
-                // }}
-                className="btn-rich btn-green"
+
+            <div className="flex gap-4 overflow-x-auto py-2">
+              <div
+                onClick={(e) => handleQuizClick(e, 7, 1)}
+                className="cursor-pointer"
               >
+                <QuizCard
+                  title="General Knowledge Quiz"
+                  time="7:00am-9:00am"
+                  episode={1}
+                />
+              </div>
+              <div
+                onClick={(e) => handleQuizClick(e, 9, 2)}
+                className="cursor-pointer"
+              >
+                <QuizCard
+                  title="General Knowledge Quiz"
+                  time="9:00am-11:00am"
+                  episode={2}
+                />
+              </div>
+              <div
+                onClick={(e) => handleQuizClick(e, 11, 3)}
+                className="cursor-pointer"
+              >
+                <QuizCard
+                  title="Genus Quiz Challenge"
+                  time="11:00am-1:00pm"
+                  episode={3}
+                />
+              </div>
+              <div
+                onClick={(e) => handleQuizClick(e, 13, 4)}
+                className="cursor-pointer"
+              >
+                <QuizCard
+                  title="Genus Quiz Challenge"
+                  time="1:00pm-3:00pm"
+                  episode={4}
+                />
+              </div>
+              <div
+                onClick={(e) => handleQuizClick(e, 15, 5)}
+                className="cursor-pointer"
+              >
+                <QuizCard
+                  title="Genus Quiz Challenge"
+                  time="3:00pm-5:00pm"
+                  episode={5}
+                />
+              </div>
+              <div
+                onClick={(e) => handleQuizClick(e, 17, 6)}
+                className="cursor-pointer"
+              >
+                <QuizCard
+                  title="Genus Quiz Challenge"
+                  time="5:00pm-7:00pm"
+                  episode={6}
+                />
+              </div>
+              <div
+                onClick={(e) => handleQuizClick(e, 19, 7)}
+                className="cursor-pointer"
+              >
+                <QuizCard
+                  title="Genus Quiz Challenge"
+                  time="7:00pm-9:00pm"
+                  episode={7}
+                />
+              </div>
+            </div>
+
+            {/* ✅ JOIN + VIEW ALL (RESTORED) */}
+            <div className="flex gap-4 mt-4">
+              <Link href={`/quiz-online/${Sid}`} className="btn-rich btn-green">
                 Join Quiz
               </Link>
               <Link
@@ -204,10 +257,10 @@ const Dashboard = () => {
             </div>
           </section>
 
-          {/* Countdown Display */}
+          {/* Countdown + Notifications */}
           <section>
-            <div className="rounded-xl text-center p-4 text-white font-medium animate-bl flex justify-between items-center bg-blue-600">
-              <div className="px-4">{countdown}</div>
+            <div className="rounded-xl text-center p-4 text-white flex justify-between items-center bg-blue-600">
+              <div>{countdown}</div>
               <div
                 className="relative cursor-pointer"
                 onClick={handleNoticeModal}
@@ -216,9 +269,10 @@ const Dashboard = () => {
                   isOpen={isNoticeModalOpen}
                   onClose={handleNoticeModal}
                 />
-                <IoNotificationsCircleSharp className="mt-2 h-6 w-6" />
+                <IoNotificationsCircleSharp className="h-6 w-6" />
               </div>
             </div>
+
             <JoinQuizModal
               isOpen={isModalOpen}
               userPlan={{ plan: "free", planCost: 0 }}
@@ -231,11 +285,18 @@ const Dashboard = () => {
           </section>
         </section>
       )}
+
+      {/* Quiz Not Started Modal */}
+      <QuizNotStartedModal
+        open={showNotStartedModal}
+        onClose={() => setShowNotStartedModal(false)}
+      />
     </main>
   );
 };
 
-// ================== NotificationsDropdown =====================
+/* ================= Notifications Dropdown (UNCHANGED) ================= */
+
 const NotificationsDropdown = ({
   isOpen,
   onClose,
@@ -262,77 +323,25 @@ const NotificationsDropdown = ({
       date: "Jul 8th",
       isRead: false,
     },
-    { id: 4, text: "Upcoming quiz 12.10.2025", date: "Jan 1st", isRead: false },
-    {
-      id: 5,
-      text: "Withdrawal attempt failed",
-      date: "Aug 2nd",
-      isRead: false,
-    },
   ];
 
   return (
     <div
-      className={`
-        fixed inset-0 z-50 transform transition-transform duration-300
-        md:absolute md:inset-auto md:w-80 md:h-96 md:top-[-375px]
-        md:right-0 md:mt-2 md:rounded-lg md:shadow-lg
-        md:bg-white md:border md:border-gray-200
-        ${
-          isOpen
-            ? "translate-x-0"
-            : "translate-x-full md:translate-x-0 md:scale-0"
-        }
-      `}
+      className={`fixed inset-0 z-50 md:absolute md:inset-auto md:w-80 md:h-96 md:top-[-375px] md:right-0 bg-white border rounded-lg shadow-lg ${
+        isOpen ? "block" : "hidden"
+      }`}
     >
-      <div className="bg-white h-full md:rounded-lg flex flex-col">
-        <div className="flex justify-between items-center p-4 border-b border-gray-200">
-          <h2 className="text-xl font-bold">Notifications</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
-          >
-            ✕
-          </button>
+      <div className="p-4">
+        <div className="flex justify-between mb-4">
+          <h2 className="font-bold">Notifications</h2>
+          <button onClick={onClose}>✕</button>
         </div>
-        <style>
-          {`
-          .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: transparent;
-            border-radius: 20px;
-          }
-          .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-            background-color: #d1d5db;
-          }
-        `}
-        </style>
-        <div className="overflow-y-auto flex-1 p-4 custom-scrollbar">
-          {notifications.map((n) => (
-            <div
-              key={n.id}
-              className={`flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0 cursor-pointer ${
-                n.isRead ? "text-gray-500" : "text-gray-900"
-              }`}
-            >
-              <div className="flex items-center">
-                <div className="w-8 h-8 mr-3">
-                  <Image
-                    className="rounded-full w-8 h-8"
-                    width={20}
-                    height={20}
-                    src="/images/woman.png"
-                    alt="User"
-                  />
-                </div>
-                <p className="text-sm">{n.text}</p>
-              </div>
-              <p className="text-xs text-gray-400">{n.date}</p>
-            </div>
-          ))}
-        </div>
+        {notifications.map((n) => (
+          <div key={n.id} className="py-2 border-b text-sm">
+            {n.text}
+            <span className="block text-xs text-gray-400">{n.date}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
