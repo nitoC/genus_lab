@@ -28,7 +28,7 @@ import {
 import { FaCentos, FaFacebookSquare, FaStar, FaTrophy } from "react-icons/fa";
 import { FcMindMap } from "react-icons/fc";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // For pagination controls
-import { IoMdClose } from "react-icons/io";
+import { IoMdClose, IoMdLock } from "react-icons/io"; // Added IoMdLock
 import { FaUsers } from "react-icons/fa";
 import RankTable from "@/components/RankTable";
 import Link from "next/link";
@@ -74,43 +74,43 @@ const leaderboardRanks = [
   {
     rank: 1,
     title: "Quiz Overlord",
-    Icon: <FaCrown size={20} className="text-green-500" />,
+    Icon: <FaCrown size={23} className="text-green-500" />,
     pointsRange: "2,000,000+",
   },
   {
     rank: 2,
     title: "Mastermind",
-    Icon: <SiCoolermaster size={20} className="text-purple-600" />,
+    Icon: <SiCoolermaster size={23} className="text-purple-600" />,
     pointsRange: "1,000,000 - 1,999,999",
   },
   {
     rank: 3,
     title: "Brainiac",
-    Icon: <GiBrainstorm size={20} className="text-red-600" />,
+    Icon: <GiBrainstorm size={23} className="text-red-600" />,
     pointsRange: "500,000 – 999,999",
   },
   {
     rank: 4,
     title: "Quiz Pro",
-    Icon: <SiPrometheus size={20} className="text-blue-500" />,
+    Icon: <SiPrometheus size={23} className="text-blue-500" />,
     pointsRange: "200,000 – 499,999",
   },
   {
     rank: 5,
     title: "Trivia Titan",
-    Icon: <GiPsychicWaves size={20} className="text-green-500" />,
+    Icon: <GiPsychicWaves size={23} className="text-green-500" />,
     pointsRange: "100,000 – 199,999",
   },
   {
     rank: 6,
     title: "Quiz Ace",
-    Icon: <FaCentos size={20} className="text-green-700" />,
+    Icon: <FaCentos size={23} className="text-green-700" />,
     pointsRange: "50,000 - 99,999",
   },
   {
     rank: 7,
     title: "Knowledge Knight",
-    Icon: <FaChessKnight size={20} className="text-orange-500" />,
+    Icon: <FaChessKnight size={23} className="text-orange-500" />,
     pointsRange: "20,000 - 49,999",
   },
   {
@@ -118,7 +118,7 @@ const leaderboardRanks = [
     title: "Smart Cookie",
     Icon: (
       <GiBlackKnightHelm
-        size={20}
+        size={23}
         className="text-gray-900 dark:text-gray-300"
       />
     ),
@@ -127,89 +127,185 @@ const leaderboardRanks = [
   {
     rank: 9,
     title: "Sharp Thinker",
-    Icon: <GiGiftOfKnowledge size={20} className="text-red-700" />,
+    Icon: <GiGiftOfKnowledge size={23} className="text-red-700" />,
     pointsRange: "8,000 - 9,999",
   },
   {
     rank: 10,
     title: "Clever Clog",
-    Icon: <SiClevercloud size={20} className="text-green-400" />,
+    Icon: <SiClevercloud size={23} className="text-green-400" />,
     pointsRange: "7,000 - 7,999",
   },
   {
     rank: 11,
     title: "Bright Spark",
-    Icon: <GiSparkSpirit size={20} className="text-indigo-500" />,
+    Icon: <GiSparkSpirit size={23} className="text-indigo-500" />,
     pointsRange: "6,000 - 9,999",
   },
   {
     rank: 12,
     title: "Quick Wits",
-    Icon: <GiQuicksand size={20} className="text-blue-700" />,
+    Icon: <GiQuicksand size={23} className="text-blue-700" />,
     pointsRange: "5,000 - 5,999",
   },
   {
     rank: 13,
     title: "Keen Mind",
-    Icon: <FcMindMap size={20} />,
+    Icon: <FcMindMap size={23} />,
     pointsRange: "4,000 - 4,999",
   },
   {
     rank: 14,
     title: "Inquisitive Soul",
-    Icon: <GiSoulVessel size={20} className="text-purple-500" />,
+    Icon: <GiSoulVessel size={23} className="text-purple-500" />,
     pointsRange: "3,600 - 3,999",
   },
   {
     rank: 15,
     title: "Curious Cat",
-    Icon: <FaUsers size={20} className="text-pink-600" />,
+    Icon: <FaUsers size={23} className="text-pink-600" />,
     pointsRange: "3,200 - 3,599",
   },
   {
     rank: 16,
     title: "Eager Learner",
-    Icon: <GiMiddleArrow size={20} className="text-green-600" />,
+    Icon: <GiMiddleArrow size={23} className="text-green-600" />,
     pointsRange: "3,000 - 3,199",
   },
   {
     rank: 17,
     title: "Knowledge Seeker",
-    Icon: <GiAllSeeingEye size={20} className="text-brown-700" />,
+    Icon: <GiAllSeeingEye size={23} className="text-brown-700" />,
     pointsRange: "2,800 - 2,999",
   },
   {
     rank: 18,
     title: "Aspiring Expert",
-    Icon: <GiExplosionRays size={20} className="text-teal-500" />,
+    Icon: <GiExplosionRays size={23} className="text-teal-500" />,
     pointsRange: "2,000 - 2,799",
   },
   {
     rank: 19,
     title: "Rising Star",
-    Icon: <GiBoxingGlove size={20} className="text-orange-400" />,
+    Icon: <GiBoxingGlove size={23} className="text-orange-400" />,
     pointsRange: "1,500 - 1,999",
   },
   {
     rank: 20,
     title: "Fresh Mind",
-    Icon: <HiMiniCheckBadge size={20} className="text-green-300" />,
+    Icon: <HiMiniCheckBadge size={23} className="text-green-300" />,
     pointsRange: "0 – 1,499",
   },
 ];
 
 const ITEMS_PER_PAGE = 5;
 
-// --- TABLE ROW COMPONENT ---
+// --- LOCKED RANK MODAL COMPONENT (NEW) ---
+
+const LockedRankModal = ({ rankData, handleClose }: any) => {
+  const { rank, title, pointsRange, Icon } = rankData;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 bg-opacity-70 backdrop-blur-sm transition-opacity duration-300">
+      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden transform scale-100 opacity-100 transition-all duration-300 border-4 border-indigo-500/50">
+        {/* Modal Header */}
+        <div className="bg-indigo-600 dark:bg-indigo-700 p-5 flex items-center justify-between text-white">
+          <div className="flex items-center gap-3">
+            <IoMdLock size={28} className="text-yellow-300" />
+            <h3 className="text-2xl font-extrabold tracking-tight">
+              Rank {toRoman(rank)}: {title}
+            </h3>
+          </div>
+          <button
+            onClick={handleClose}
+            className="text-white hover:text-indigo-200 transition-colors p-1 rounded-full bg-indigo-700 dark:bg-indigo-800"
+          >
+            <IoMdClose size={24} />
+          </button>
+        </div>
+
+        {/* Modal Body: Interactive Notice */}
+        <div className="p-8 text-center">
+          {/* Rank Visual */}
+          <div className="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-6 border-4 border-dashed border-indigo-300 dark:border-indigo-500">
+            {Icon ? (
+              React.cloneElement(Icon, {
+                size: 48,
+                className: Icon.props.className + " opacity-50",
+              })
+            ) : (
+              <FaStar size={48} className="text-gray-400" />
+            )}
+          </div>
+
+          <p className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            <IoMdLock className="inline-block text-red-500 mr-2" size={24} />
+            LEVEL LOCKED: Awaiting Pioneers
+          </p>
+
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 border-b pb-4 border-gray-200 dark:border-gray-700">
+            This prestigious rank (<strong>{title}</strong>) has yet to be
+            achieved by any user on our platform. It represents the pinnacle of
+            knowledge!
+          </p>
+
+          <div className="space-y-4 text-left">
+            <div className="flex items-center gap-3">
+              <FaTrophy className="text-yellow-500 flex-shrink-0" size={20} />
+              <p className="text-gray-700 dark:text-gray-200">
+                <strong>Target:</strong> Reach <strong>{pointsRange}</strong>{" "}
+                points to unlock this level.
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <FaUsers className="text-blue-500 flex-shrink-0" size={20} />
+              <p className="text-gray-700 dark:text-gray-200">
+                <strong>Status:</strong> Currently, <strong>0</strong> users
+                hold this rank. Be the first to claim this title!
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <GiExplosionRays
+                className="text-pink-500 flex-shrink-0"
+                size={20}
+              />
+              <p className="text-gray-700 dark:text-gray-200">
+                <strong>Challenge:</strong> Test your limits in the next grand
+                quiz challenge!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- TABLE ROW COMPONENT (MODIFIED) ---
 
 const RankTableRow = ({ item, onClick }: any) => {
   const isTopTier = item.rank <= 3;
   const isRankOne = item.rank === 1;
+  const isLocked = item.rank !== 20; // Ranks 1 to 19 are locked. Rank 20 is the base rank.
 
   // Row styling
-  const rowClasses = isTopTier
-    ? "bg-green-50/70 dark:bg-green-900/40 border-l-0 border-green-500"
-    : "bg-white dark:bg-gray-800 border-l-0 border-transparent";
+  let rowClasses =
+    "border-l-0 border-transparent transition-all duration-200 ease-in-out";
+
+  if (isLocked) {
+    // Disabled/Locked state styling
+    rowClasses +=
+      " opacity-50 cursor-not-allowed hover:bg-red-50/50 dark:hover:bg-red-900/30";
+  } else {
+    // Unlocked state styling
+    rowClasses += " cursor-pointer";
+    if (isTopTier) {
+      rowClasses +=
+        " bg-green-50/70 dark:bg-green-900/40 border-green-500 hover:bg-green-100/70 dark:hover:bg-green-800/40";
+    } else {
+      rowClasses +=
+        " bg-white dark:bg-gray-800 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/30";
+    }
+  }
 
   const rankTextClass = isRankOne
     ? "text-2xl font-extrabold text-green-500"
@@ -218,7 +314,7 @@ const RankTableRow = ({ item, onClick }: any) => {
   return (
     <tr
       onClick={() => onClick(item)}
-      className={`group ${rowClasses} transition-all duration-200 ease-in-out cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-indigo-900/30 rounded-lg`}
+      className={`group ${rowClasses} rounded-lg`}
     >
       <td className="py-4 px-6 text-center w-1/5">
         <div className="flex flex-col items-center">
@@ -229,12 +325,20 @@ const RankTableRow = ({ item, onClick }: any) => {
       <td className="py-4 px-4 text-left w-2/5">
         <div className="flex items-center gap-3">
           {item.Icon}
-          <span className="font-semibold text-gray-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+          <span className="font-semibold text-lg text-gray-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
             {item.title}
           </span>
+          {/* Small Lock Icon for Locked Ranks */}
+          {isLocked && (
+            <IoMdLock
+              size={16}
+              className="text-red-500 dark:text-red-400 flex-shrink-0"
+              title="This rank is currently locked"
+            />
+          )}
         </div>
       </td>
-      <td className="py-4 px-4 text-right font-medium text-gray-600 dark:text-gray-300 w-2/5">
+      <td className="py-4 px-4 text-right font-bold text-[1rem] text-gray-600 dark:text-gray-300 w-2/5">
         {item.pointsRange}
       </td>
     </tr>
@@ -246,10 +350,12 @@ const RankTableRow = ({ item, onClick }: any) => {
 const exploral = () => {
   // State for the modal
   const [showRankModal, setShowRankModal] = useState(false);
+  const [showLockedModal, setShowLockedModal] = useState(false); // New state for locked modal
   const [selectedRankData, setSelectedRankData] = useState<{
     rank: number;
     Icon: any;
     title: string;
+    pointsRange: string; // Added pointsRange for use in the new modal
   } | null>(null);
 
   // State for pagination (using the requested startIndex equivalent)
@@ -296,11 +402,18 @@ const exploral = () => {
 
   const handleRankClick = (item: any) => {
     setSelectedRankData(item);
-    setShowRankModal(true);
+    const isLocked = item.rank !== 20;
+
+    if (isLocked) {
+      setShowLockedModal(true); // Show the new locked modal
+    } else {
+      setShowRankModal(true); // Show the original (placeholder) RankTable modal
+    }
   };
 
   const handleCloseModal = () => {
     setShowRankModal(false);
+    setShowLockedModal(false);
     setSelectedRankData(null);
   };
 
@@ -336,7 +449,7 @@ const exploral = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 bg-green-400/20 p-6 rounded-lg flex flex-col items-center justify-center text-green-800 dark:text-green-300">
                 <span className="text-6xl font-black mb-2">?</span>
-                <p className="text-sm font-semibold">History Buffs Challenge</p>
+                <p className="text-sm font-semibold">Genuslab quiz Challenge</p>
               </div>
               <div className="flex-1 bg-blue-400/20 p-6 rounded-lg flex flex-col items-center justify-center text-blue-800 dark:text-blue-300">
                 <div className="text-6xl font-black flex gap-2">
@@ -348,7 +461,7 @@ const exploral = () => {
                   </span>
                 </div>
                 <p className="text-sm font-semibold mt-2">
-                  Science Whiz Showdown
+                  Genuslab Whiz Showdown
                 </p>
               </div>
             </div>
@@ -387,13 +500,15 @@ const exploral = () => {
                 <span className="text-6xl font-black mb-2">
                   <FaTrophy size={20} />
                 </span>
-                <p className="text-sm font-semibold">Math Olympiad Results</p>
+                <p className="text-sm font-semibold">All Episode Results</p>
               </div>
               <div className="flex-1 bg-red-400/20 p-6 rounded-lg flex flex-col items-center justify-center text-red-800 dark:text-red-300">
                 <span className="text-6xl font-black mb-2">
                   <SiFusionauth size={20} />
                 </span>
-                <p className="text-sm font-semibold">Chemistry Championship</p>
+                <p className="text-sm font-semibold">
+                  Genuslab Tech Championship
+                </p>
               </div>
             </div>
             <p className="mt-4 text-sm dark:text-gray-400">
@@ -413,7 +528,7 @@ const exploral = () => {
               <img
                 src="https://placehold.co/400x200/1e40af/ffffff?text=AI+Developments"
                 className="rounded-lg object-cover w-full h-24 transition-transform duration-500 hover:scale-105"
-                alt="Tech News"
+                alt="AI Developments"
               />
             </div>
           </div>
@@ -534,7 +649,7 @@ const exploral = () => {
           </div>
         </div>
 
-        {/* Render the Rank Detail Modal */}
+        {/* Render the Rank Detail Modal (Original for Rank 20) */}
         {showRankModal && selectedRankData && (
           <RankTable
             rank={`${toRoman(selectedRankData?.rank)} ${
@@ -543,6 +658,14 @@ const exploral = () => {
             rankIcon={selectedRankData?.Icon}
             dtheme={() => {}}
             // rankData={selectedRankData}
+            handleClose={handleCloseModal}
+          />
+        )}
+
+        {/* Render the NEW Locked Rank Modal (for Ranks 1-19) */}
+        {showLockedModal && selectedRankData && (
+          <LockedRankModal
+            rankData={selectedRankData}
             handleClose={handleCloseModal}
           />
         )}

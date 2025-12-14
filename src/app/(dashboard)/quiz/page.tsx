@@ -184,7 +184,7 @@ const QuizzesPage = () => {
               href="/quiz?page=all"
               className="font-semibold text-blue-500 hover:underline flex items-center gap-2"
             >
-              View all Quizzes
+              View past Quizzes
               <span className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></span>
             </Link>
           </div>

@@ -47,7 +47,7 @@ const userRankings = [
   },
   {
     rank: 4,
-    username: "pixelPilot",
+    username: "encodedMax",
     state: "Oyo",
     score: 80,
     time: "4m00s",
@@ -58,7 +58,7 @@ const userRankings = [
   },
   {
     rank: 5,
-    username: "pixelPilot",
+    username: "codegenius",
     state: "Abuja",
     score: 75,
     time: "2m35s",
@@ -71,11 +71,57 @@ const userRankings = [
     rank: 6,
     username: "pixelPilot",
     state: "Abuja",
-    score: 75,
+    score: 70,
     time: "2m35s",
     accuracy: "100%",
     reward: "₦500",
     totalEarned: "₦150,500",
+    tier: "gold",
+  },
+
+  {
+    rank: 7,
+    username: "tarrantaula",
+    state: "Abuja",
+    score: 65,
+    time: "2m35s",
+    accuracy: "100%",
+    reward: "₦500",
+    totalEarned: "₦120,500",
+    tier: "gold",
+  },
+  {
+    rank: 8,
+    username: "uranium",
+    state: "Edo",
+    score: 60,
+    time: "1m35s",
+    accuracy: "60%",
+    reward: "₦500",
+    totalEarned: "₦150,500",
+    tier: "gold",
+  },
+  {
+    rank: 9,
+    username: "sagatius",
+    state: "Akure",
+    score: 55,
+    time: "2m35s",
+    accuracy: "100%",
+    reward: "₦500",
+    totalEarned: "₦150,500",
+    tier: "gold",
+  },
+
+  {
+    rank: 5,
+    username: "Geny",
+    state: "Makurdi",
+    score: 50,
+    time: "2m35s",
+    accuracy: "40%",
+    reward: "₦500",
+    totalEarned: "₦80,500",
     tier: "gold",
   },
 ];
@@ -114,7 +160,7 @@ const Results = () => {
             </div>
 
             {/* Rankings Table */}
-            <LeaderboardTable />
+            <LeaderboardTable max={10} />
           </div>
         </div>
       </div>

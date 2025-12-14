@@ -25,7 +25,7 @@ const performanceSummary = {
 };
 
 // Main App component
-export default function App() {
+export default function Leaderboard() {
   const [selectedDate, setSelectedDate] = useState(new Date("2025-10-05"));
   const getPerformanceForDate = (date: Date) => {
     const dateStr = date.toISOString().slice(0, 10);
