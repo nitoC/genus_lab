@@ -231,7 +231,7 @@ export default function ProfilePage() {
 
             {/* STUDIO */}
             <div className="bg-white dark:bg-gray-800/70 backdrop-blur rounded-3xl p-8 shadow-xl border border-gray-200 dark:border-white/10">
-              <h2 className="text-2xl font-extrabold mb-6 flex items-center gap-3 text-gray-900 dark:text-white">
+              <h2 className="text-xl font-extrabold mb-6 flex items-center gap-3 text-gray-600 dark:text-white">
                 <FaVideo className="text-indigo-500" />
                 Studio Appearance
               </h2>
