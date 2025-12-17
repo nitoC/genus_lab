@@ -114,7 +114,7 @@ export default function QuizPerformanceList() {
       </div>
 
       {/* Animation */}
-      <style jsx>{`
+      {/* <style jsx>{`
         @keyframes fadeIn {
           from {
             opacity: 0;
@@ -128,7 +128,7 @@ export default function QuizPerformanceList() {
         .animate-fadeIn {
           animation: fadeIn 0.35s ease-out;
         }
-      `}</style>
+      `}</style> */}
     </main>
   );
 }

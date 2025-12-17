@@ -215,21 +215,9 @@ const studioQuizzes = [
 
 const QuizPerformanceCard = ({ quiz }: { quiz: any }) => {
   return (
-    <div
-      className="group bg-white dark:bg-slate-800 rounded-xl
-                 border border-blue-100/50 dark:border-blue-900/20
-                 p-6 flex flex-col md:flex-row gap-6
-                 hover:border-blue-400/60 dark:hover:border-blue-600/40 
-                 hover:bg-blue-50/30 dark:hover:bg-slate-700/50
-                 transition-all duration-300"
-    >
+    <div className="group bg-white dark:bg-slate-800 rounded-xl border border-blue-100/50 dark:border-blue-900/20 p-6 flex flex-col md:flex-row gap-6 hover:border-blue-400/60 dark:hover:border-blue-600/40 hover:bg-blue-50/30 dark:hover:bg-slate-700/50 transition-all duration-300">
       {/* Image */}
-      <div
-        className="relative w-full md:w-52 h-32 rounded-lg overflow-hidden 
-                      border border-slate-200 dark:border-slate-600
-                      bg-gradient-to-br from-slate-100 to-blue-50 
-                      dark:from-slate-700 dark:to-slate-600"
-      >
+      <div className="relative w-full md:w-52 h-32 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-600 bg-gradient-to-br from-slate-100 to-blue-50 dark:from-slate-700 dark:to-slate-600">
         <img
           src={quiz.image}
           alt={quiz.quizName}
@@ -240,20 +228,12 @@ const QuizPerformanceCard = ({ quiz }: { quiz: any }) => {
       {/* Content */}
       <div className="flex-1 space-y-3">
         <div className="flex items-center gap-2">
-          <span
-            className="inline-block px-3 py-1 text-xs font-medium 
-                         bg-blue-100 dark:bg-blue-900/30 
-                         text-blue-800 dark:text-blue-300 
-                         rounded-full border border-blue-200 dark:border-blue-800"
-          >
+          <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full border border-blue-200 dark:border-blue-800">
             {quiz.episode}
           </span>
         </div>
 
-        <h3
-          className="text-xl font-semibold text-slate-800 dark:text-slate-100 
-                       tracking-tight leading-tight"
-        >
+        <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100 tracking-tight leading-tight">
           {quiz.quizName}
         </h3>
 
@@ -276,11 +256,7 @@ const QuizPerformanceCard = ({ quiz }: { quiz: any }) => {
 
         <div className="flex items-center gap-4 pt-2">
           <div className="flex items-baseline gap-2">
-            <span
-              className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 
-                           dark:from-blue-400 dark:to-indigo-400 
-                           bg-clip-text text-transparent"
-            >
+            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
               {quiz.score}%
             </span>
             <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
@@ -289,13 +265,7 @@ const QuizPerformanceCard = ({ quiz }: { quiz: any }) => {
           </div>
 
           {quiz.score >= 90 && (
-            <span
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium
-                           rounded-full border border-blue-400/40 dark:border-blue-600/40
-                           bg-gradient-to-r from-blue-50 to-indigo-50 
-                           dark:from-blue-900/20 dark:to-indigo-900/20
-                           text-blue-700 dark:text-blue-400"
-            >
+            <span className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border border-blue-400/40 dark:border-blue-600/40 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 text-blue-700 dark:text-blue-400">
               <FaTrophy className="text-blue-500 dark:text-blue-400" />
               Top Performer
             </span>
@@ -336,20 +306,13 @@ export default function QuizPerformancePage() {
   };
 
   return (
-    <main
-      className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20 
-                     dark:from-slate-950 dark:via-slate-900 dark:to-slate-900 
-                     px-6 py-10"
-    >
+    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900 px-6 py-10">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex flex-col gap-6">
           <Back />
           <div className="flex-1">
-            <h1
-              className="text-4xl font-bold text-slate-800 dark:text-slate-100 
-                         tracking-tight mb-2"
-            >
+            <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-100 tracking-tight mb-2">
               Previous Quiz Performance
             </h1>
             <p className="text-slate-600 dark:text-slate-400 text-sm">
@@ -359,15 +322,10 @@ export default function QuizPerformancePage() {
         </div>
 
         {/* Tabs */}
-        <div
-          className="inline-flex gap-2 bg-white/80 dark:bg-slate-800/80 
-                       backdrop-blur-sm p-1.5 rounded-xl 
-                       border border-slate-200 dark:border-slate-700"
-        >
+        <div className="inline-flex gap-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
           <button
             onClick={() => handleTabChange("online")}
-            className={`flex items-center gap-2.5 px-6 py-3 rounded-lg font-medium 
-                       transition-all duration-300
+            className={`flex items-center gap-2.5 px-6 py-3 rounded-lg font-medium transition-all duration-300
               ${
                 activeTab === "online"
                   ? "bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg shadow-blue-500/30"
@@ -380,8 +338,7 @@ export default function QuizPerformancePage() {
 
           <button
             onClick={() => handleTabChange("studio")}
-            className={`flex items-center gap-2.5 px-6 py-3 rounded-lg font-medium 
-                       transition-all duration-300
+            className={`flex items-center gap-2.5 px-6 py-3 rounded-lg font-medium transition-all duration-300
               ${
                 activeTab === "studio"
                   ? "bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg shadow-blue-500/30"
@@ -395,10 +352,7 @@ export default function QuizPerformancePage() {
 
         {/* Stats Summary */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div
-            className="bg-white dark:bg-slate-800 rounded-lg p-5 
-                         border border-slate-200 dark:border-slate-700"
-          >
+          <div className="bg-white dark:bg-slate-800 rounded-lg p-5 border border-slate-200 dark:border-slate-700">
             <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Total Quizzes
             </p>
@@ -407,18 +361,11 @@ export default function QuizPerformancePage() {
             </p>
           </div>
 
-          <div
-            className="bg-white dark:bg-slate-800 rounded-lg p-5 
-                         border border-slate-200 dark:border-slate-700"
-          >
+          <div className="bg-white dark:bg-slate-800 rounded-lg p-5 border border-slate-200 dark:border-slate-700">
             <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Average Score
             </p>
-            <p
-              className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 
-                         dark:from-blue-400 dark:to-indigo-400 
-                         bg-clip-text text-transparent"
-            >
+            <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
               {Math.round(
                 allQuizzes.reduce((acc, q) => acc + q.score, 0) /
                   allQuizzes.length
@@ -427,10 +374,7 @@ export default function QuizPerformancePage() {
             </p>
           </div>
 
-          <div
-            className="bg-white dark:bg-slate-800 rounded-lg p-5 
-                         border border-slate-200 dark:border-slate-700"
-          >
+          <div className="bg-white dark:bg-slate-800 rounded-lg p-5 border border-slate-200 dark:border-slate-700">
             <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Top Performances
             </p>
@@ -443,11 +387,7 @@ export default function QuizPerformancePage() {
         {/* Content */}
         <section className="space-y-4">
           {quizzes.length === 0 ? (
-            <div
-              className="text-center py-16 text-slate-500 dark:text-slate-400 
-                           bg-white dark:bg-slate-800 rounded-xl 
-                           border border-slate-200 dark:border-slate-700"
-            >
+            <div className="text-center py-16 text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
               <p className="text-lg font-medium">No quiz records found</p>
               <p className="text-sm mt-2">
                 Start taking quizzes to see your performance here
@@ -462,15 +402,11 @@ export default function QuizPerformancePage() {
 
         {/* Pagination */}
         {allQuizzes.length > itemsPerPage && (
-          <div
-            className="flex items-center justify-between pt-6 
-                         border-t border-slate-200 dark:border-slate-700"
-          >
+          <div className="flex items-center justify-between pt-6 border-t border-slate-200 dark:border-slate-700">
             <button
               onClick={goToPrevPage}
               disabled={currentPage === 1}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium
-                         border transition-all duration-300
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium border transition-all duration-300
                 ${
                   currentPage === 1
                     ? "border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-600 cursor-not-allowed opacity-60"
@@ -505,8 +441,7 @@ export default function QuizPerformancePage() {
             <button
               onClick={goToNextPage}
               disabled={currentPage === totalPages}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium
-                         border transition-all duration-300
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium border transition-all duration-300
                 ${
                   currentPage === totalPages
                     ? "border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-600 cursor-not-allowed opacity-60"
