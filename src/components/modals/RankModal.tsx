@@ -10,25 +10,39 @@ export const LockedRankModal = ({ rankData, handleClose }: any) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden transform animate-scaleIn border border-indigo-500/40">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-5 flex items-center justify-between text-white">
+      {/* MODAL CONTAINER */}
+      <div
+        className="
+          bg-white dark:bg-gray-800
+          rounded-3xl shadow-2xl
+          w-full max-w-lg
+          max-h-[90vh]           /* ✅ cap height */
+          flex flex-col          /* ✅ allow header/body layout */
+          overflow-hidden
+          transform animate-scaleIn
+          border border-indigo-500/40
+        "
+      >
+        {/* Header (fixed height) */}
+        <div className="shrink-0 bg-gradient-to-r from-indigo-600 to-purple-600 p-5 flex items-center justify-between text-white">
           <div className="flex items-center gap-3">
             <IoMdLock size={28} className="text-yellow-300 animate-pulse" />
             <h3 className="text-2xl font-extrabold tracking-tight">
               Rank {toRoman(rank)}: {title}
             </h3>
           </div>
+
           <button
             onClick={handleClose}
             className="hover:rotate-90 transition-transform duration-300 p-1 rounded-full bg-white/10"
+            aria-label="Close modal"
           >
             <IoMdClose size={24} />
           </button>
         </div>
 
-        {/* Body */}
-        <div className="p-8 text-center">
+        {/* Body (scrollable when needed) */}
+        <div className="flex-1 overflow-y-auto p-8 text-center hori-scroll">
           {/* Icon */}
           <div className="relative mx-auto w-28 h-28 rounded-full flex items-center justify-center mb-6 bg-indigo-50 dark:bg-gray-700 border-4 border-indigo-400/50 animate-pulseSlow">
             {Icon ? (
