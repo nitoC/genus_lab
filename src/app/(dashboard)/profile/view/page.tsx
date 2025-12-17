@@ -17,7 +17,7 @@ const userData = {
   name: "John Doe",
   avatarUrl: "/avatar.png",
   generalRanking: 341,
-  rankTitle: "Elite Challenger",
+  rankTitle: "Quiz Overlord",
   totalReferrals: 18,
   referralEarnings: 7200,
   totalQuizzesCompleted: 42,
