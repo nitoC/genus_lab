@@ -287,7 +287,7 @@ const exploral = () => {
               <h3 className="text-xl font-bold text-indigo-600 mb-4">
                 Upcoming Quizzes
               </h3>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 <div className="flex-1 bg-green-400/20 p-6 rounded-lg text-center">
                   <span className="text-6xl font-black">?</span>
                   <p className="text-sm font-semibold mt-2">
@@ -329,15 +329,21 @@ const exploral = () => {
               <h3 className="text-xl font-bold text-indigo-600 mb-4">
                 Previous Quizzes
               </h3>
-              <div className="flex gap-4">
-                <div className="flex-1 bg-green-400/20 p-6 rounded-lg text-center">
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href={"/quiz?page=all"}
+                  className="flex-1 bg-green-400/20 p-6 rounded-lg text-center"
+                >
                   <FaTrophy className="mx-auto mb-2" />
                   <p className="text-sm font-semibold">All Episode Results</p>
-                </div>
-                <div className="flex-1 bg-red-400/20 p-6 rounded-lg text-center">
+                </Link>
+                <Link
+                  href={"/quiz/retake"}
+                  className="flex-1 bg-red-400/20 p-6 rounded-lg text-center"
+                >
                   <SiFusionauth className="mx-auto mb-2" />
                   <p className="text-sm font-semibold">Cycle Championship</p>
-                </div>
+                </Link>
               </div>
               <p className="mt-4 text-sm text-gray-500">
                 Cyclic grouping of users who achieved the same outcome.
@@ -352,7 +358,7 @@ const exploral = () => {
               <h3 className="text-xl font-bold text-emerald-700 mb-4">
                 Studio Quiz Winner
               </h3>
-              <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center flex-col xmd:flex-row gap-4 mb-4">
                 <div className="relative">
                   <img
                     src="/avatar.png"
@@ -364,12 +370,16 @@ const exploral = () => {
                   </span>
                 </div>
                 <div>
-                  <p className="font-semibold text-lg">Evelyn S.</p>
-                  <p className="text-sm text-gray-500">Studio Championship</p>
+                  <p className="font-semibold text-center xmd:text-start text-lg">
+                    Evelyn S.
+                  </p>
+                  <p className="text-sm text-center xmd:text-start text-gray-500">
+                    Studio Championship
+                  </p>
                 </div>
               </div>
               <div className="h-px bg-emerald-100 mb-4" />
-              <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-wrap justify-center xmd:justify-start gap-4">
                 <div>
                   <p className="text-xs uppercase text-gray-500">
                     Winning Points
@@ -402,10 +412,8 @@ const exploral = () => {
         <div className="max-w-7xl mx-auto text-gray-800 dark:text-gray-200">
           {/* ================= LEADERBOARD ================= */}
           <div className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-2xl">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-extrabold">
-                Leaderboard Ranks & Points
-              </h3>
+            <div className="flex flex-wrap gap-6 justify-between items-center mb-6">
+              <h3 className="text-2xl font-extrabold">Leaderboard Ranks</h3>
 
               <div className="flex items-center gap-4">
                 <button
@@ -431,42 +439,43 @@ const exploral = () => {
                 </button>
               </div>
             </div>
+            <div className="hori-scroll overflow-x-auto">
+              <table className="w-full min-w-[600px] text-sm">
+                <thead className="bg-gray-50 dark:bg-gray-700 text-xs uppercase">
+                  <tr>
+                    <th className="py-3 px-6 text-center">Rank</th>
+                    <th className="py-3 px-4 text-left">Title</th>
+                    <th className="py-3 px-4 text-right">Unlock Points</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {currentRanks.map((item) => (
+                    <RankTableRow
+                      key={item.rank}
+                      item={item}
+                      onClick={handleRankClick}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-            <table className="w-full min-w-[600px] text-sm">
-              <thead className="bg-gray-50 dark:bg-gray-700 text-xs uppercase">
-                <tr>
-                  <th className="py-3 px-6 text-center">Rank</th>
-                  <th className="py-3 px-4 text-left">Title</th>
-                  <th className="py-3 px-4 text-right">Unlock Points</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {currentRanks.map((item) => (
-                  <RankTableRow
-                    key={item.rank}
-                    item={item}
-                    onClick={handleRankClick}
-                  />
-                ))}
-              </tbody>
-            </table>
+            {showRank && selectedRank && (
+              <RankTable
+                rank={`${toRoman(selectedRank.rank)} ${selectedRank.title}`}
+                rankIcon={selectedRank.Icon}
+                dtheme={() => {}}
+                handleClose={() => setShowRank(false)}
+              />
+            )}
+
+            {showLocked && selectedRank && (
+              <LockedRankModal
+                rankData={selectedRank}
+                handleClose={() => setShowLocked(false)}
+              />
+            )}
           </div>
-
-          {showRank && selectedRank && (
-            <RankTable
-              rank={`${toRoman(selectedRank.rank)} ${selectedRank.title}`}
-              rankIcon={selectedRank.Icon}
-              dtheme={() => {}}
-              handleClose={() => setShowRank(false)}
-            />
-          )}
-
-          {showLocked && selectedRank && (
-            <LockedRankModal
-              rankData={selectedRank}
-              handleClose={() => setShowLocked(false)}
-            />
-          )}
         </div>
       </div>
     </>

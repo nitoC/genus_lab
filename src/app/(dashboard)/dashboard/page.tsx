@@ -223,13 +223,16 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="flex gap-4 mt-4">
-              <Link href={`/quiz-online/${Sid}`} className="btn-rich btn-green">
+            <div className=" flex-col flex md:flex-row gap-4 mt-4">
+              <Link
+                href={`/quiz-online/${Sid}`}
+                className="btn-rich text-center btn-green"
+              >
                 Join Quiz
               </Link>
               <Link
                 href={"/quiz?page=all"}
-                className="btn-rich btn-outline dark:bg-transparent"
+                className="btn-rich btn-outline text-center dark:bg-transparent"
               >
                 View All Quizzes
               </Link>

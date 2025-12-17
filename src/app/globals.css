@@ -26,6 +26,7 @@
   --text-clamp2: clamp(20px, 5vw, 40px);
   --text-clamp-sm: clamp(16px, 5vw, 33px);
   --animate-bl: bl 1s ease-in-out infinite;
+  --breakpoint-xmd: 370px;
 }
 @keyframes bl {
   0% {
