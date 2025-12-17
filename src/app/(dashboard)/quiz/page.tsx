@@ -140,7 +140,7 @@ const QuizzesPage = () => {
         <section>
           <div className="mb-8">
             <h3 className="text-2xl font-semibold text-gray-800 mb-4 dark:text-blue">
-              Upcoming Quizzes
+              Upcoming Quiz
             </h3>
             {timeLeft ? (
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">

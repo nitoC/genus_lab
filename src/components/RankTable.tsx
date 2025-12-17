@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React, { useState, useEffect, ReactNode } from "react";
 import { IoCloseCircle } from "react-icons/io5";
 
@@ -261,14 +262,16 @@ const RankTable = ({
             </h2>
             <div className="flex flex-col gap-1.5">
               {mockRankings.map((player) => (
-                <RankItem
-                  key={player.rank}
-                  rank={player.rank}
-                  name={player.name}
-                  score={player.score}
-                  avatarColor={player.avatarColor}
-                  avatarInitials={player.avatarInitials}
-                />
+                <Link href={"/profile/view"}>
+                  <RankItem
+                    key={player.rank}
+                    rank={player.rank}
+                    name={player.name}
+                    score={player.score}
+                    avatarColor={player.avatarColor}
+                    avatarInitials={player.avatarInitials}
+                  />
+                </Link>
               ))}
             </div>
           </main>

@@ -170,23 +170,19 @@ const Dashboard = () => {
               Upcoming Quizzes
             </h3>
 
-            <div className="flex gap-4 overflow-x-auto py-2">
+            <div className="flex gap-4 overflow-x-auto py-2 hori-scroll">
               <div
                 onClick={(e) => handleQuizClick(e, 7, 1)}
                 className="cursor-pointer"
               >
-                <QuizCard
-                  title="General Knowledge Quiz"
-                  time="7:00am-9:00am"
-                  episode={1}
-                />
+                <QuizCard title="Genus Quiz" time="7:00am-9:00am" episode={1} />
               </div>
               <div
                 onClick={(e) => handleQuizClick(e, 9, 2)}
                 className="cursor-pointer"
               >
                 <QuizCard
-                  title="General Knowledge Quiz"
+                  title="Genus Quiz"
                   time="9:00am-11:00am"
                   episode={2}
                 />
@@ -196,7 +192,7 @@ const Dashboard = () => {
                 className="cursor-pointer"
               >
                 <QuizCard
-                  title="Genus Quiz Challenge"
+                  title="Genus Quiz"
                   time="11:00am-1:00pm"
                   episode={3}
                 />
@@ -205,45 +201,28 @@ const Dashboard = () => {
                 onClick={(e) => handleQuizClick(e, 13, 4)}
                 className="cursor-pointer"
               >
-                <QuizCard
-                  title="Genus Quiz Challenge"
-                  time="1:00pm-3:00pm"
-                  episode={4}
-                />
+                <QuizCard title="Genus Quiz" time="1:00pm-3:00pm" episode={4} />
               </div>
               <div
                 onClick={(e) => handleQuizClick(e, 15, 5)}
                 className="cursor-pointer"
               >
-                <QuizCard
-                  title="Genus Quiz Challenge"
-                  time="3:00pm-5:00pm"
-                  episode={5}
-                />
+                <QuizCard title="Genus Quiz" time="3:00pm-5:00pm" episode={5} />
               </div>
               <div
                 onClick={(e) => handleQuizClick(e, 17, 6)}
                 className="cursor-pointer"
               >
-                <QuizCard
-                  title="Genus Quiz Challenge"
-                  time="5:00pm-7:00pm"
-                  episode={6}
-                />
+                <QuizCard title="Genus Quiz" time="5:00pm-7:00pm" episode={6} />
               </div>
               <div
                 onClick={(e) => handleQuizClick(e, 19, 7)}
                 className="cursor-pointer"
               >
-                <QuizCard
-                  title="Genus Quiz Challenge"
-                  time="7:00pm-9:00pm"
-                  episode={7}
-                />
+                <QuizCard title="Genus Quiz" time="7:00pm-9:00pm" episode={7} />
               </div>
             </div>
 
-            {/* ✅ JOIN + VIEW ALL (RESTORED) */}
             <div className="flex gap-4 mt-4">
               <Link href={`/quiz-online/${Sid}`} className="btn-rich btn-green">
                 Join Quiz
@@ -295,8 +274,6 @@ const Dashboard = () => {
   );
 };
 
-/* ================= Notifications Dropdown (UNCHANGED) ================= */
-
 const NotificationsDropdown = ({
   isOpen,
   onClose,
@@ -327,7 +304,7 @@ const NotificationsDropdown = ({
 
   return (
     <div
-      className={`fixed inset-0 z-50 md:absolute md:inset-auto md:w-80 md:h-96 md:top-[-375px] md:right-0 bg-white border rounded-lg shadow-lg ${
+      className={`fixed text-gray-600 inset-0 z-50 md:absolute md:inset-auto md:w-80 md:h-96 md:top-[-375px] md:right-0 bg-white border rounded-lg shadow-lg ${
         isOpen ? "block" : "hidden"
       }`}
     >

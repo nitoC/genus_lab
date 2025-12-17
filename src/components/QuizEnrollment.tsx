@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaListAlt, FaQuestionCircle } from "react-icons/fa";
 import { FaClock } from "react-icons/fa6";
 
@@ -73,15 +74,18 @@ const QuizEnrollmentCard = ({
       </div>
 
       <div className="flex space-x-4 mt-6">
-        <button className="bg-green-500 text-white font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-green-600 transition-colors">
-          Upcoming
-        </button>
         <button
           onClick={() => settype("dash")}
+          className="bg-green-500 text-white font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-green-600 transition-colors"
+        >
+          Upcoming
+        </button>
+        <Link
+          href={"/dashboard"}
           className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-blue-600 transition-colors"
         >
           Dashboard
-        </button>
+        </Link>
       </div>
     </div>
   );
