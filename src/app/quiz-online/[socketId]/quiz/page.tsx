@@ -223,16 +223,14 @@ export default function LiveQuiz() {
         answer: key,
       }));
       const userData = getSessionStorage("user");
-      if (userData) {
-        const user = JSON.parse(userData);
-        console.log("Submitting answers for user:", user);
-      }
       if (!userData) {
         toast.error("You must be logged in to submit answers");
         return setTimeout(() => router.push("/login"), 2000);
       }
+      const user = JSON.parse(userData);
+      console.log("Submitting answers for user:", user);
       // call handler (assumed to be sync or promise)
-      await scoreHandler.handleScore(payload, userData);
+      await scoreHandler.handleScore(payload, user?.email);
       // try to set score from scoreData if available
       const latest =
         scoreData && scoreData.length ? scoreData[scoreData.length - 1] : null;
