@@ -1,7 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Back from "@/components/Buttons/Back";
 import { FaLaptop, FaVideo, FaTrophy } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { getScoreHistory } from "@/lib/api/apis";
+import { useRouter } from "next/navigation";
+import { get } from "http";
+import getSessionStorage from "@/utils/getSessionStorage";
 
 /* ===================== DATA ===================== */
 
@@ -214,6 +220,9 @@ const studioQuizzes = [
 /* ===================== CARD ===================== */
 
 const QuizPerformanceCard = ({ quiz }: { quiz: any }) => {
+  // const [onlineQuizzes, setonlineQuizzes] = useState([]);
+  // const [studioQuizzes, setstudioQuizzes] = useState([]);
+
   return (
     <div className="group bg-white dark:bg-slate-800 rounded-xl border border-blue-100/50 dark:border-blue-900/20 p-6 flex flex-col md:flex-row gap-6 hover:border-blue-400/60 dark:hover:border-blue-600/40 hover:bg-blue-50/30 dark:hover:bg-slate-700/50 transition-all duration-300">
       {/* Image */}
@@ -282,6 +291,27 @@ export default function QuizPerformancePage() {
   const [activeTab, setActiveTab] = useState<"online" | "studio">("online");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+
+  const router = useRouter();
+  // const { data, isLoading, error } = useQuery({
+  //   queryKey: ["scoreHistory"],
+  //   queryFn: async () => {
+  //     try {
+  //       const user = getSessionStorage("user") as string;
+
+  //       console.log(user);
+  //       console.log(JSON.parse(user).email);
+  //       // if (!email) throw new Error("user not logged in");
+  //       const email = JSON.parse(user).email;
+  //       const response = await getScoreHistory(email);
+  //       console.log(response.data, "score history data");
+  //       return response.data;
+  //     } catch (err) {
+  //       toast.error("user not logged in");
+  //       router.push("/login");
+  //     }
+  //   },
+  // });
 
   const allQuizzes = activeTab === "online" ? onlineQuizzes : studioQuizzes;
 

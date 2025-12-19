@@ -29,6 +29,8 @@ interface QuestionItem {
 const useScore = (socketId: ParamValue) => {
   let currentSetter: ((data: any) => void) | null = null;
   const scoreEvent = socketId + "answer";
+  const api_key = process.env.NEXT_PUBLIC_API_KEY;
+  const email = localStorage.getItem("email");
 
   const onScore = (data: any) => {
     // questions = data;
@@ -62,8 +64,16 @@ const useScore = (socketId: ParamValue) => {
   //   // }, 5000);
   // };
 
-  const handleScore = (questions: { number: number; answer: string }[]) => {
-    socket.emit("score", [...questions, { id: socketId }]);
+  const handleScore = (
+    questions: { number: number; answer: string }[],
+    email: string
+  ) => {
+    socket.emit("score", [
+      ...questions,
+      { id: socketId },
+      { email },
+      { api_key },
+    ]);
   };
   return {
     handleConnection,

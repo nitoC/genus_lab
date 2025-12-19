@@ -12,7 +12,7 @@ const useCountdown = (
   const quizHours = [7, 9, 11, 13, 15, 17, 19];
 
   useEffect(() => {
-    // 🛑 Stop countdown when no target OR socket disconnected
+    // Stop countdown when no target OR socket disconnected
     if (!targetEpoch) {
       setCountdown(
         type === "dash"
@@ -23,12 +23,12 @@ const useCountdown = (
     }
 
     const interval = setInterval(() => {
-      const now = new Date(); // ✔ real current time
+      const now = new Date(); // real current time
       const currentHour = now.getHours();
 
       let nextQuizHour: number | null = null;
 
-      // After 9 PM → count to tomorrow 7 AM
+      // After 9 PM - count to tomorrow 7 AM
       if (currentHour >= 21) {
         const target = new Date();
         target.setDate(now.getDate() + 1);
@@ -37,7 +37,7 @@ const useCountdown = (
         return;
       }
 
-      // Before 5 AM → next quiz 7 AM
+      // Before 5 AM - next quiz 7 AM
       if (currentHour < 5) {
         const target = new Date();
         target.setHours(7, 0, 0, 0);
@@ -45,7 +45,7 @@ const useCountdown = (
         return;
       }
 
-      // Between 5 AM and 7 AM → count to 7 AM
+      // Between 5 AM and 7 AM - count to 7 AM
       if (currentHour >= 5 && currentHour < 7) {
         const target = new Date();
         target.setHours(7, 0, 0, 0);
@@ -72,7 +72,7 @@ const useCountdown = (
         }
       }
 
-      // After last quiz → count to 9 PM
+      // After last quiz - count to 9 PM
       if (nextQuizHour === null) {
         const target = new Date();
         target.setHours(21, 0, 0, 0);

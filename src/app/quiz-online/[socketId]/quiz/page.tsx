@@ -10,6 +10,8 @@ import useQuestion from "@/hooks/useQuestion";
 import useScore from "@/hooks/useScore";
 import { useUser } from "@/store/useUser";
 import QuizReviewModal from "@/components/modals/ViewAnswers";
+import getSessionStorage from "@/utils/getSessionStorage";
+import { toast } from "react-toastify";
 
 type OptionTuple = [string, string];
 
@@ -186,6 +188,7 @@ export default function LiveQuiz() {
   const [scoreHandler, setScoreHandler] = useState<any | null>(null);
   const [quizData, setQuizData] = useState<any[] | null>(null);
   const [scoreData, setScoreData] = useState<any[] | null>(null);
+  const [userData, setUserData] = useState<any | null>(null);
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(300);
@@ -219,8 +222,17 @@ export default function LiveQuiz() {
         number,
         answer: key,
       }));
+      const userData = getSessionStorage("user");
+      if (userData) {
+        const user = JSON.parse(userData);
+        console.log("Submitting answers for user:", user);
+      }
+      if (!userData) {
+        toast.error("You must be logged in to submit answers");
+        return setTimeout(() => router.push("/login"), 2000);
+      }
       // call handler (assumed to be sync or promise)
-      await scoreHandler.handleScore(payload);
+      await scoreHandler.handleScore(payload, userData);
       // try to set score from scoreData if available
       const latest =
         scoreData && scoreData.length ? scoreData[scoreData.length - 1] : null;
@@ -259,6 +271,12 @@ export default function LiveQuiz() {
 
     return () => clearInterval(timer);
   }, [isSubmitted, handleSubmit]);
+
+  // get logged in user data
+  useEffect(() => {
+    const user = getSessionStorage("user");
+    user ? setUserData(JSON.parse(user)) : router.push("/login");
+  }, []);
 
   // setup handlers
   useEffect(() => {
@@ -496,22 +514,6 @@ export default function LiveQuiz() {
             </div>
           </div>
         </main>
-
-        {/* inline styles for confetti (kept here for convenience) */}
-        <style>{`
-        @keyframes confetti-fall {0% { transform: translateY(-100vh) rotateZ(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotateZ(360deg); opacity: 0; }}
-        .confetti-piece { position: absolute; width: 10px; height: 10px; animation: confetti-fall linear infinite; }
-        .confetti-1 { left: 10%; background-color: #f6ad55; animation-duration: 5s; }
-        .confetti-2 { left: 20%; background-color: #63b3ed; animation-duration: 4s; }
-        .confetti-3 { left: 30%; background-color: #a0aec0; animation-duration: 6s; }
-        .confetti-4 { left: 40%; background-color: #e53e3e; animation-duration: 3s; }
-        .confetti-5 { left: 50%; background-color: #48bb78; animation-duration: 7s; }
-        .confetti-6 { left: 60%; background-color: #667eea; animation-duration: 5.5s; }
-        .confetti-7 { left: 70%; background-color: #e53e3e; animation-duration: 4.5s; }
-        .confetti-8 { left: 80%; background-color: #f6ad55; animation-duration: 6.5s; }
-        .confetti-9 { left: 90%; background-color: #48bb78; animation-duration: 3.5s; }
-        .confetti-10 { left: 5%; background-color: #63b3ed; animation-duration: 4.8s; }
-        `}</style>
       </div>
     </>
   );

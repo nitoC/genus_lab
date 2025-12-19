@@ -28,6 +28,73 @@
   --animate-bl: bl 1s ease-in-out infinite;
   --breakpoint-xmd: 370px;
 }
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100vh) rotateZ(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  animation: confetti-fall linear infinite;
+}
+.confetti-1 {
+  left: 10%;
+  background-color: #f6ad55;
+  animation-duration: 5s;
+}
+.confetti-2 {
+  left: 20%;
+  background-color: #63b3ed;
+  animation-duration: 4s;
+}
+.confetti-3 {
+  left: 30%;
+  background-color: #a0aec0;
+  animation-duration: 6s;
+}
+.confetti-4 {
+  left: 40%;
+  background-color: #e53e3e;
+  animation-duration: 3s;
+}
+.confetti-5 {
+  left: 50%;
+  background-color: #48bb78;
+  animation-duration: 7s;
+}
+.confetti-6 {
+  left: 60%;
+  background-color: #667eea;
+  animation-duration: 5.5s;
+}
+.confetti-7 {
+  left: 70%;
+  background-color: #e53e3e;
+  animation-duration: 4.5s;
+}
+.confetti-8 {
+  left: 80%;
+  background-color: #f6ad55;
+  animation-duration: 6.5s;
+}
+.confetti-9 {
+  left: 90%;
+  background-color: #48bb78;
+  animation-duration: 3.5s;
+}
+.confetti-10 {
+  left: 5%;
+  background-color: #63b3ed;
+  animation-duration: 4.8s;
+}
 @keyframes bl {
   0% {
     background-color: rgb(0, 0, 255, 1);

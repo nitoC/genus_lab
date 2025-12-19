@@ -2,19 +2,27 @@ import axiosUser from "./axiosConfig";
 
 export const registerUser = async (payload: any) => {
   console.log(payload, "created user payload");
-  const res = await axiosUser.post("/create_account", payload);
+  const res = await axiosUser.post("user/gl_api/v2/create_account", payload);
   console.log(res, "created user payload");
   return res;
 };
 export const tokenUser = async (payload: any) => {
   console.log(payload, "token user payload");
-  const res = await axiosUser.post("oauth/token", payload);
+  const res = await axiosUser.post("user/gl_api/v2/oauth/token", payload);
   console.log(res, "token user payload");
   return res;
 };
 export const loginUser = async (payload: any) => {
   console.log(payload, "login user payload");
-  const res = await axiosUser.post("oauth/login", payload);
+  const res = await axiosUser.post("user/gl_api/v2/oauth/login", payload);
   console.log(res, "login user payload");
+  return res;
+};
+export const getScoreHistory = async (email: string) => {
+  // console.log(payload, "login user payload");
+  const res = await axiosUser.post("scorehistory/gl_api/v2/history", {
+    email,
+  });
+  console.log(res, "score history");
   return res;
 };
