@@ -20,7 +20,7 @@ export const socket = io(domain, {
 socket.on("disconnect", (reason) => {
   console.warn("⚠️ Disconnected:", reason);
 
-  // server forced disconnect → must reconnect manually
+  // server forced disconnect - must reconnect manually
   socket.connect();
 
   console.log("Disconnected from server. Handle reconnect or cleanup here.");

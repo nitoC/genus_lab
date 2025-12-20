@@ -31,11 +31,11 @@ const useScore = (socketId: ParamValue) => {
   const scoreEvent = socketId + "answer";
   const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
-  const onScore = (data: any) => {
-    // questions = data;
-    if (currentSetter) currentSetter(data);
-    console.log("Received questions:", data);
-  };
+  // const onScore = (data: any) => {
+  //   // questions = data;
+  //   if (currentSetter) currentSetter(data);
+  //   console.log("Received questions:", data);
+  // };
 
   const handleConnection = (setData: (data: any) => void) => {
     currentSetter = setData;
@@ -69,6 +69,7 @@ const useScore = (socketId: ParamValue) => {
       questions,
       email
     );
+    // console.log("api_key:", api_key);
     socket.emit("score", [
       ...questions,
       { id: socketId },
