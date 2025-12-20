@@ -418,7 +418,7 @@ export default function QuizPerformancePage() {
               Top Performances
             </p>
             <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-              {allQuizzes.filter((q) => q.score >= 90).length}
+              {allQuizzes.filter((q: any) => q.score >= 90).length}
             </p>
           </div>
         </div>
@@ -433,7 +433,7 @@ export default function QuizPerformancePage() {
               </p>
             </div>
           ) : (
-            quizzes.map((quiz) => (
+            quizzes.map((quiz: any) => (
               <QuizPerformanceCard key={quiz.id} quiz={quiz} />
             ))
           )}
