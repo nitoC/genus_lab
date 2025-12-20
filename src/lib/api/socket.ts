@@ -8,10 +8,13 @@ const domain = "https://gslb.site";
 
 export const socket = io(domain, {
   transports: ["websocket"],
+  withCredentials: true,
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000,
   auth: {
     userAgent: "Custom Ws Client",
   },
-  reconnectionAttempts: 5,
 });
 
 socket.on("disconnect", () => {
