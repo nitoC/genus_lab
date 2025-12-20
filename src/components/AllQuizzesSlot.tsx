@@ -8,214 +8,215 @@ import { getScoreHistory } from "@/lib/api/apis";
 import { useRouter } from "next/navigation";
 import { get } from "http";
 import getSessionStorage from "@/utils/getSessionStorage";
+import { is } from "date-fns/locale";
 
 /* ===================== DATA ===================== */
 
-const onlineQuizzes = [
-  {
-    id: 1,
-    quizName: "Genus Quiz",
-    episode: "Episode 20",
-    score: 95,
-    time: "Dec 15, 2024 • 7:00 PM",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 2,
-    quizName: "Genus Quiz",
-    episode: "Episode 19",
-    score: 88,
-    time: "Dec 10, 2024 • 7:00 PM",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 3,
-    quizName: "Genus Quiz",
-    episode: "Episode 18",
-    score: 92,
-    time: "Dec 5, 2024 • 7:00 PM",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 4,
-    quizName: "Genus Quiz",
-    episode: "Episode 17",
-    score: 76,
-    time: "Nov 28, 2024 • 7:00 PM",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 5,
-    quizName: "Genus Quiz",
-    episode: "Episode 16",
-    score: 85,
-    time: "Nov 20, 2024 • 7:00 PM",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 6,
-    quizName: "Genus Quiz",
-    episode: "Episode 15",
-    score: 90,
-    time: "Nov 15, 2024 • 7:00 PM",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 7,
-    quizName: "Genus Quiz",
-    episode: "Episode 14",
-    score: 82,
-    time: "Nov 8, 2024 • 7:00 PM",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 8,
-    quizName: "Genus Quiz",
-    episode: "Episode 13",
-    score: 78,
-    time: "Nov 1, 2024 • 7:00 PM",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 9,
-    quizName: "Genus Quiz",
-    episode: "Episode 12",
-    score: 90,
-    time: "Aug 12, 2024 • 7:00 PM",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 10,
-    quizName: "Genus Quiz",
-    episode: "Episode 11",
-    score: 94,
-    time: "Aug 8, 2024 • 7:00 PM",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 11,
-    quizName: "Genus Quiz",
-    episode: "Episode 10",
-    score: 87,
-    time: "Aug 6, 2024 • 7:00 PM",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 12,
-    quizName: "Genus Quiz",
-    episode: "Episode 9",
-    score: 70,
-    time: "Aug 5, 2024 • 6:00 PM",
-    image: "/images/quiz-img.png",
-  },
-];
+// const onlineQuizzes = [
+//   {
+//     id: 1,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 20",
+//     score: 95,
+//     time: "Dec 15, 2024 • 7:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 2,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 19",
+//     score: 88,
+//     time: "Dec 10, 2024 • 7:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 3,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 18",
+//     score: 92,
+//     time: "Dec 5, 2024 • 7:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 4,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 17",
+//     score: 76,
+//     time: "Nov 28, 2024 • 7:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 5,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 16",
+//     score: 85,
+//     time: "Nov 20, 2024 • 7:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 6,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 15",
+//     score: 90,
+//     time: "Nov 15, 2024 • 7:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 7,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 14",
+//     score: 82,
+//     time: "Nov 8, 2024 • 7:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 8,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 13",
+//     score: 78,
+//     time: "Nov 1, 2024 • 7:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 9,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 12",
+//     score: 90,
+//     time: "Aug 12, 2024 • 7:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 10,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 11",
+//     score: 94,
+//     time: "Aug 8, 2024 • 7:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 11,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 10",
+//     score: 87,
+//     time: "Aug 6, 2024 • 7:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 12,
+//     quizName: "Genus Quiz",
+//     episode: "Episode 9",
+//     score: 70,
+//     time: "Aug 5, 2024 • 6:00 PM",
+//     image: "/images/quiz-img.png",
+//   },
+// ];
 
-const studioQuizzes = [
-  {
-    id: 13,
-    quizName: "Studio Quiz",
-    episode: "Episode 15",
-    score: 96,
-    time: "Dec 12, 2024 • Live Studio",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 14,
-    quizName: "Studio Quiz",
-    episode: "Episode 14",
-    score: 89,
-    time: "Dec 8, 2024 • Live Studio",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 15,
-    quizName: "Studio Quiz",
-    episode: "Episode 13",
-    score: 93,
-    time: "Dec 1, 2024 • Live Studio",
-    image: "/images/quiz-book.png",
-  },
-  {
-    id: 16,
-    quizName: "Studio Quiz",
-    episode: "Episode 12",
-    score: 81,
-    time: "Nov 25, 2024 • Live Studio",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 17,
-    quizName: "Studio Quiz",
-    episode: "Episode 11",
-    score: 90,
-    time: "Nov 18, 2024 • Live Studio",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 18,
-    quizName: "Studio Quiz",
-    episode: "Episode 10",
-    score: 88,
-    time: "Aug 15, 2024 • Live Studio",
-    image: "/images/quiz-book.png",
-  },
-  {
-    id: 19,
-    quizName: "Studio Quiz",
-    episode: "Episode 9",
-    score: 75,
-    time: "Aug 12, 2024 • Live Studio",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 20,
-    quizName: "Studio Quiz",
-    episode: "Episode 8",
-    score: 94,
-    time: "Aug 10, 2024 • Live Studio",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 21,
-    quizName: "Studio Quiz",
-    episode: "Episode 7",
-    score: 92,
-    time: "Aug 2, 2024 • Live Studio",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 22,
-    quizName: "Studio Quiz",
-    episode: "Episode 6",
-    score: 95,
-    time: "Aug 21, 2024 • Live Studio",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 23,
-    quizName: "Studio Quiz",
-    episode: "Episode 5",
-    score: 86,
-    time: "Jul 31, 2024 • Live Studio",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 24,
-    quizName: "Studio Quiz",
-    episode: "Episode 4",
-    score: 85,
-    time: "Jul 29, 2024 • Live Studio",
-    image: "/images/quiz-img.png",
-  },
-  {
-    id: 25,
-    quizName: "Studio Quiz",
-    episode: "Episode 3",
-    score: 78,
-    time: "Aug 8, 2024 • Live Studio",
-    image: "/images/quiz-img.png",
-  },
-];
+// const studioQuizzes = [
+//   {
+//     id: 13,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 15",
+//     score: 96,
+//     time: "Dec 12, 2024 • Live Studio",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 14,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 14",
+//     score: 89,
+//     time: "Dec 8, 2024 • Live Studio",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 15,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 13",
+//     score: 93,
+//     time: "Dec 1, 2024 • Live Studio",
+//     image: "/images/quiz-book.png",
+//   },
+//   {
+//     id: 16,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 12",
+//     score: 81,
+//     time: "Nov 25, 2024 • Live Studio",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 17,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 11",
+//     score: 90,
+//     time: "Nov 18, 2024 • Live Studio",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 18,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 10",
+//     score: 88,
+//     time: "Aug 15, 2024 • Live Studio",
+//     image: "/images/quiz-book.png",
+//   },
+//   {
+//     id: 19,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 9",
+//     score: 75,
+//     time: "Aug 12, 2024 • Live Studio",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 20,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 8",
+//     score: 94,
+//     time: "Aug 10, 2024 • Live Studio",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 21,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 7",
+//     score: 92,
+//     time: "Aug 2, 2024 • Live Studio",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 22,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 6",
+//     score: 95,
+//     time: "Aug 21, 2024 • Live Studio",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 23,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 5",
+//     score: 86,
+//     time: "Jul 31, 2024 • Live Studio",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 24,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 4",
+//     score: 85,
+//     time: "Jul 29, 2024 • Live Studio",
+//     image: "/images/quiz-img.png",
+//   },
+//   {
+//     id: 25,
+//     quizName: "Studio Quiz",
+//     episode: "Episode 3",
+//     score: 78,
+//     time: "Aug 8, 2024 • Live Studio",
+//     image: "/images/quiz-img.png",
+//   },
+// ];
 
 /* ===================== CARD ===================== */
 
@@ -293,28 +294,28 @@ export default function QuizPerformancePage() {
   const itemsPerPage = 5;
 
   const router = useRouter();
-  // const { data, isLoading, error } = useQuery({
-  //   queryKey: ["scoreHistory"],
-  //   queryFn: async () => {
-  //     try {
-  //       const user = getSessionStorage("user") as string;
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["scoreHistory"],
+    queryFn: async () => {
+      try {
+        const user = getSessionStorage("user") as string;
 
-  //       console.log(user);
-  //       console.log(JSON.parse(user).email);
-  //       // if (!email) throw new Error("user not logged in");
-  //       const email = JSON.parse(user).email;
-  //       const response = await getScoreHistory(email);
-  //       console.log(response.data, "score history data");
-  //       return response.data;
-  //     } catch (err) {
-  //       toast.error("user not logged in");
-  //       router.push("/login");
-  //     }
-  //   },
-  // });
-
-  const allQuizzes = activeTab === "online" ? onlineQuizzes : studioQuizzes;
-
+        console.log(user);
+        console.log(JSON.parse(user).email);
+        // if (!email) throw new Error("user not logged in");
+        const email = JSON.parse(user).email;
+        const response = await getScoreHistory(email);
+        console.log(response.data, "score history data");
+        return response.data;
+      } catch (err) {
+        toast.error("user not logged in");
+        router.push("/login");
+      }
+    },
+  });
+  if (isLoading) return <div>Loading...</div>;
+  const allQuizzes = activeTab === "online" ? data : [];
+  console.log(data, "data in quiz performance page");
   // Calculate pagination
   const totalPages = Math.ceil(allQuizzes.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -334,7 +335,16 @@ export default function QuizPerformancePage() {
   const goToNextPage = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
-
+  const avScore = isNaN(
+    allQuizzes.reduce((acc: number, q: any) => acc + q.score, 0)
+  )
+    ? 0
+    : allQuizzes.reduce((acc: number, q: any) => acc + q.score, 0);
+  console.log(avScore, "average score");
+  console.log(
+    allQuizzes.reduce((acc: number, q: any) => acc + q.score, 0),
+    "total score"
+  );
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900 px-6 py-10">
       <div className="max-w-6xl mx-auto space-y-8">
@@ -396,10 +406,9 @@ export default function QuizPerformancePage() {
               Average Score
             </p>
             <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-              {Math.round(
-                allQuizzes.reduce((acc, q) => acc + q.score, 0) /
-                  allQuizzes.length
-              )}
+              {avScore === 0 || allQuizzes.length === 0
+                ? 0
+                : Math.round(avScore / allQuizzes.length)}
               %
             </p>
           </div>

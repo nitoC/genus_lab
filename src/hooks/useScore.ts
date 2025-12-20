@@ -30,7 +30,6 @@ const useScore = (socketId: ParamValue) => {
   let currentSetter: ((data: any) => void) | null = null;
   const scoreEvent = socketId + "answer";
   const api_key = process.env.NEXT_PUBLIC_API_KEY;
-  const email = localStorage.getItem("email");
 
   const onScore = (data: any) => {
     // questions = data;
@@ -43,14 +42,11 @@ const useScore = (socketId: ParamValue) => {
 
     socket.on(scoreEvent, currentSetter);
 
-    // RETURN CLEANUP to allow caller to unmount properly
-  };
-  const handleDisconnection = (setData: (data: any) => void) => {
-    currentSetter = setData;
-
-    socket.off(scoreEvent, currentSetter);
-
-    // RETURN CLEANUP to allow caller to unmount properly
+    return () => {
+      if (currentSetter) {
+        socket.off(scoreEvent, currentSetter);
+      }
+    };
   };
 
   //   let questions: any;
@@ -68,6 +64,11 @@ const useScore = (socketId: ParamValue) => {
     questions: { number: number; answer: string }[],
     email: string
   ) => {
+    console.log(
+      "Emitting score event with questions and email:",
+      questions,
+      email
+    );
     socket.emit("score", [
       ...questions,
       { id: socketId },
@@ -77,7 +78,7 @@ const useScore = (socketId: ParamValue) => {
   };
   return {
     handleConnection,
-    handleDisconnection,
+
     handleScore,
     // isId,
     // questions,

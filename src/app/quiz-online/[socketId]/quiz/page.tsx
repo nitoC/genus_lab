@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
@@ -214,7 +214,7 @@ export default function LiveQuiz() {
     return found ? (found[1] as string) : null;
   }, [answers, quizData, currentQuestionIndex]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (!scoreHandler) return;
     setSubmitting(true);
     try {
@@ -247,7 +247,7 @@ export default function LiveQuiz() {
     } finally {
       setSubmitting(false);
     }
-  };
+  }, [scoreHandler, answers, router, scoreData]);
 
   // timer effect
   useEffect(() => {
@@ -292,6 +292,7 @@ export default function LiveQuiz() {
         if (typeof sAny?.disconnect === "function") sAny.disconnect();
       } catch (e) {
         // ignore
+        toast.error("Error during cleanup of socket connections");
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

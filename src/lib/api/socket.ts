@@ -7,9 +7,11 @@ import { io } from "socket.io-client";
 const domain = "https://gslb.site";
 
 export const socket = io(domain, {
+  transports: ["websocket"],
   auth: {
     userAgent: "Custom Ws Client",
   },
+  reconnectionAttempts: 5,
 });
 
 socket.on("disconnect", () => {
