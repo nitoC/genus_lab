@@ -69,7 +69,7 @@ const useScore = (socketId: ParamValue) => {
       questions,
       email
     );
-    // console.log("api_key:", api_key);
+    console.log("api_key:", api_key);
     socket.emit("score", [
       ...questions,
       { id: socketId },
