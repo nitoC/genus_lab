@@ -307,11 +307,11 @@ export default function LiveQuiz() {
       quizHandler.handleDisconnect();
     };
   }, [quizHandler]);
-
+  let scoreCleanup: (() => void) | null = null;
   // connect score handler
   useEffect(() => {
     if (!scoreHandler) return;
-    scoreHandler.handleConnection((val: any) => {
+    scoreCleanup = scoreHandler.handleConnection((val: any) => {
       setScoreData(val);
       const latest =
         Array.isArray(val) && val.length ? val[val.length - 1] : null;
@@ -320,7 +320,7 @@ export default function LiveQuiz() {
       }
     });
     return () => {
-      scoreHandler.handleDisconnection();
+      scoreCleanup?.();
     };
   }, [scoreHandler]);
 
