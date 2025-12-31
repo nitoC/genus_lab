@@ -396,7 +396,7 @@ const exploral = () => {
             </Link>
 
             {/* Social Media */}
-            <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+            {/* <div className="p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
               <h3 className="font-semibold mb-2">Social Media</h3>
               <div className="flex gap-4 text-gray-500">
                 <FaFacebookSquare size={28} />
@@ -404,7 +404,7 @@ const exploral = () => {
                 <FaStar size={28} />
                 <FaStar size={28} />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
