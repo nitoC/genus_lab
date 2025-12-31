@@ -29,7 +29,7 @@ interface QuestionItem {
 const useScore = (socketId: ParamValue) => {
   let currentSetter: ((data: any) => void) | null = null;
   const scoreEvent = socketId + "answer";
-  const api_key = process.env.NEXT_PUBLIC_API_KEY;
+  // const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
   // const onScore = (data: any) => {
   //   // questions = data;
@@ -62,20 +62,19 @@ const useScore = (socketId: ParamValue) => {
 
   const handleScore = (
     questions: { number: number; answer: string }[],
-    email: string
+    email: string,
+    api_key: string
   ) => {
+    const payload = [...questions, { id: socketId }, { email }, { api_key }];
+    console.log("Payload to be sent:", payload);
     console.log(
       "Emitting score event with questions and email:",
       questions,
       email
     );
-    // console.log("api_key:", api_key);
-    socket.emit("score", [
-      ...questions,
-      { id: socketId },
-      { email },
-      { api_key },
-    ]);
+    console.log("api_key:", api_key);
+    // console.log("questinos", questions);
+    socket.emit("score", payload);
   };
   return {
     handleConnection,

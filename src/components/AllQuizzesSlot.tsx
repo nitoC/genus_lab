@@ -4,7 +4,7 @@ import Back from "@/components/Buttons/Back";
 import { FaLaptop, FaVideo, FaTrophy } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { getScoreHistory } from "@/lib/api/apis";
+import { getQuizNumber, getScoreHistory } from "@/lib/api/apis";
 import { useRouter } from "next/navigation";
 import { get } from "http";
 import getSessionStorage from "@/utils/getSessionStorage";
@@ -229,7 +229,8 @@ const QuizPerformanceCard = ({ quiz }: { quiz: any }) => {
       {/* Image */}
       <div className="relative w-full md:w-52 h-32 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-600 bg-gradient-to-br from-slate-100 to-blue-50 dark:from-slate-700 dark:to-slate-600">
         <img
-          src={quiz.image}
+          src="/images/quiz-img.png"
+          // src={quiz.image}
           alt={quiz.quizName}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
@@ -239,12 +240,14 @@ const QuizPerformanceCard = ({ quiz }: { quiz: any }) => {
       <div className="flex-1 space-y-3">
         <div className="flex items-center gap-2">
           <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full border border-blue-200 dark:border-blue-800">
-            {quiz.episode}
+            {/* {quiz.episode} */}
+            Episode 1
           </span>
         </div>
 
         <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100 tracking-tight leading-tight">
-          {quiz.quizName}
+          {/* {quiz.quizName} */}
+          Genus Quiz
         </h3>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2">
@@ -261,13 +264,14 @@ const QuizPerformanceCard = ({ quiz }: { quiz: any }) => {
               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          {quiz.time}
+          {/* {quiz.time} */}
+          Aug 5, 2024 • 6:00 PM
         </p>
 
         <div className="flex items-center gap-4 pt-2">
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-              {quiz.score}%
+              {quiz.totalScore}%
             </span>
             <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
               Score
@@ -313,7 +317,30 @@ export default function QuizPerformancePage() {
       }
     },
   });
-  if (isLoading) return <div>Loading...</div>;
+  const {
+    data: numData,
+    isLoading: numIsLoading,
+    error: numError,
+  } = useQuery({
+    queryKey: ["numbe of quizzes"],
+    queryFn: async () => {
+      try {
+        const user = getSessionStorage("user") as string;
+
+        // console.log(user);
+        // console.log(JSON.parse(user).email);
+        // if (!email) throw new Error("user not logged in");
+        const email = JSON.parse(user).email;
+        const response = await getQuizNumber(email);
+        console.log(response.data, "total number of quizzes");
+        return response.data;
+      } catch (err) {
+        toast.error("user not logged in");
+        router.push("/login");
+      }
+    },
+  });
+  if (isLoading || numIsLoading) return <div>Loading...</div>;
   const allQuizzes = activeTab === "online" ? data : [];
   console.log(data, "data in quiz performance page");
   // Calculate pagination
@@ -336,13 +363,13 @@ export default function QuizPerformancePage() {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
   const avScore = isNaN(
-    allQuizzes.reduce((acc: number, q: any) => acc + q.score, 0)
+    allQuizzes.reduce((acc: number, q: any) => acc + q.totalScore, 0)
   )
     ? 0
-    : allQuizzes.reduce((acc: number, q: any) => acc + q.score, 0);
+    : allQuizzes.reduce((acc: number, q: any) => acc + q.totalScore, 0);
   console.log(avScore, "average score");
   console.log(
-    allQuizzes.reduce((acc: number, q: any) => acc + q.score, 0),
+    allQuizzes.reduce((acc: number, q: any) => acc + q.totalScore, 0),
     "total score"
   );
   return (
@@ -391,7 +418,7 @@ export default function QuizPerformancePage() {
         </div>
 
         {/* Stats Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white dark:bg-slate-800 rounded-lg p-5 border border-slate-200 dark:border-slate-700">
             <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Total Quizzes
@@ -413,14 +440,14 @@ export default function QuizPerformancePage() {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 rounded-lg p-5 border border-slate-200 dark:border-slate-700">
+          {/* <div className="bg-white dark:bg-slate-800 rounded-lg p-5 border border-slate-200 dark:border-slate-700">
             <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Top Performances
             </p>
             <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
               {allQuizzes.filter((q: any) => q.score >= 90).length}
             </p>
-          </div>
+          </div> */}
         </div>
 
         {/* Content */}
