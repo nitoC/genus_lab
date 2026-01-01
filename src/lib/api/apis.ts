@@ -21,6 +21,14 @@ export const loginUser = async (payload: any) => {
 };
 export const getScoreHistory = async (email: string) => {
   // console.log(payload, "login user payload");
+  const res = await axiosUser.post("scorehistory/gl_api/v2/history", {
+    email,
+  });
+  console.log(res, "score history");
+  return res;
+};
+export const getScoreTotal = async (email: string) => {
+  // console.log(payload, "login user payload");
   const res = await axiosUser.post("scorehistory/gl_api/v2/total", {
     email,
   });

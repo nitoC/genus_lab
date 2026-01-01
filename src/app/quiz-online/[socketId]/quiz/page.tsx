@@ -39,7 +39,7 @@ const Loader: React.FC<{ text?: string }> = ({ text = "Loading..." }) => (
         d="M4 12a8 8 0 018-8v4l3-3-3-3v4a12 12 0 00-12 12h4z"
       />
     </svg>
-    <span className="text-sm text-gray-300">{text}</span>
+    <span className="text-sm text-gray-200">{text}</span>
   </div>
 );
 
@@ -190,6 +190,8 @@ export default function LiveQuiz() {
   const [quizData, setQuizData] = useState<any[] | null>(null);
   const [scoreData, setScoreData] = useState<any[] | null>(null);
   const [userData, setUserData] = useState<any | null>(null);
+
+  // const [scoreLoader, setscoreLoader] = useState(false)
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(300);
@@ -496,7 +498,7 @@ export default function LiveQuiz() {
                     </div>
                   </div>
                 </>
-              ) : (
+              ) : submitting ? (
                 <div className="w-full text-center">
                   <ScoreScreen
                     handleReview={() => {
@@ -512,6 +514,8 @@ export default function LiveQuiz() {
                     onRetry={retry}
                   />
                 </div>
+              ) : (
+                <Loader text="Calculating your score..." />
               )}
             </div>
           </div>

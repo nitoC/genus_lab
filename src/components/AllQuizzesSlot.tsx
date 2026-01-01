@@ -8,7 +8,8 @@ import { getQuizNumber, getScoreHistory } from "@/lib/api/apis";
 import { useRouter } from "next/navigation";
 import { get } from "http";
 import getSessionStorage from "@/utils/getSessionStorage";
-import { is } from "date-fns/locale";
+// import { is } from "date-fns/locale";
+import { formatDate } from "@/utils/formatDate";
 
 /* ===================== DATA ===================== */
 
@@ -264,14 +265,17 @@ const QuizPerformanceCard = ({ quiz }: { quiz: any }) => {
               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          {/* {quiz.time} */}
-          Aug 5, 2024 • 6:00 PM
+          {`${formatDate(quiz.Date)} • ${quiz.Time.substring(
+            0,
+            5
+          )} ${quiz.Time.substring(quiz.Time.length - 2)}`}
+          {/* Aug 5, 2024 • 6:00 PM */}
         </p>
 
         <div className="flex items-center gap-4 pt-2">
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-              {quiz.totalScore}%
+              {quiz.score}%
             </span>
             <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
               Score
@@ -363,13 +367,13 @@ export default function QuizPerformancePage() {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
   const avScore = isNaN(
-    allQuizzes.reduce((acc: number, q: any) => acc + q.totalScore, 0)
+    allQuizzes.reduce((acc: number, q: any) => acc + Number(q.score), 0)
   )
     ? 0
-    : allQuizzes.reduce((acc: number, q: any) => acc + q.totalScore, 0);
+    : allQuizzes.reduce((acc: number, q: any) => acc + Number(q.score), 0);
   console.log(avScore, "average score");
   console.log(
-    allQuizzes.reduce((acc: number, q: any) => acc + q.totalScore, 0),
+    allQuizzes.reduce((acc: number, q: any) => acc + Number(q.score), 0),
     "total score"
   );
   return (
