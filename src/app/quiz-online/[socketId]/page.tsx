@@ -146,7 +146,7 @@ const QuizLivePage = () => {
             </ul>
 
             <button
-              onClick={() => router.push("/subscribe")}
+              onClick={() => router.push("/profile?tab=Account")}
               className="mt-2 rounded-xl bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700"
             >
               Subscribe Now
