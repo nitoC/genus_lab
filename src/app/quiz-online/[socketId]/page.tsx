@@ -110,7 +110,7 @@ const QuizLivePage = () => {
             </p>
 
             <ul className="list-disc pl-5 text-sm text-gray-600">
-              <li>No pressure — untimed practice</li>
+              <li>No pressure — timed practice</li>
               <li>Same format as live quiz</li>
               <li>Perfect warm-up before going live</li>
             </ul>
